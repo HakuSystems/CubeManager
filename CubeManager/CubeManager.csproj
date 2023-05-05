@@ -8,4 +8,13 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Controls\" />
+      <Folder Include="Enums\" />
+      <Folder Include="Helpers\" />
+      <Folder Include="Models\" />
+      <Folder Include="Resources\Images\" />
+      <Folder Include="Resources\Styles\" />
+    </ItemGroup>
+
 </Project>
