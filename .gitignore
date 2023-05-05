@@ -1,5 +1,69 @@
-bin/
-obj/
-/packages/
-riderModule.iml
-/_ReSharper.Caches/
+# Rider and WPF .gitignore
+
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+*.csproj.user
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+*.exe
+*.pdb
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+*.ilk
+*.log
+*.idb
+*.pch
+*.suo
+*.ipch
+
+# ReSharper files
+_ReSharper.*/
+*.resharper.user
+*.dotsettings.user
+
+# Visual Studio cache files
+*.dbmdl
+*.VC.db
+
+# Rider cache files
+.idea/
+*.DotSettings.user
+
+# WPF specific
+Generated_Code/
+
+# Packages
+*.nupkg
+# The packages folder can be ignored because of Package Restore
+**/packages/*
+# except build/, which is used as an MSBuild target.
+!**/packages/build/
+# Uncomment if necessary however generally it will be regenerated when needed
+#!**/packages/repositories.config
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Windows Installer creation
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# End of Rider and WPF .gitignore
