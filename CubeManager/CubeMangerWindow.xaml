@@ -4,9 +4,200 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:CubeManager"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:materiaDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="CubeMangerWindow" Height="450" Width="800">
+        Height="649"
+        MinHeight="650"
+        MinWidth="1000"
+        Foreground="{DynamicResource MaterialDesignDarkForeground}"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Width="1000"
+        Title="CubeManager"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Normal"
+        ResizeMode="CanResizeWithGrip"
+
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="DemiBold"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+
+
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
         
+        <materiaDesign:Card Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                            Grid.Row="0"
+                            Grid.RowSpan="2"
+                            Grid.Column="0"
+                            >
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="CUBEMANAGER"
+                           FontSize="30"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+                <TextBlock Text="all-in-one productivity and personal management application"
+                           TextAlignment="Center"
+                           FontSize="10"
+                           TextWrapping="WrapWithOverflow"
+                           Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Opacity="0.5"
+                           Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+            </StackPanel>
+        </materiaDesign:Card>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                    Grid.Row="0"
+                    ZIndex="100"
+                    Grid.Column="3"
+                    
+                    >
+            <Button Height="50" HorizontalAlignment="Right"
+                    Style="{StaticResource MaterialDesignIconButton}"
+                    Foreground="{DynamicResource MaterialDesignDarkForeground}" 
+                    Click="MinBtn_OnClick"
+                    x:Name="MinBtn">
+                <Button.Content>
+                    <materiaDesign:PackIcon Kind="Minimize"
+                                            Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+                </Button.Content>
+            </Button>
+            <Button Height="50" HorizontalAlignment="Right"
+                    Style="{StaticResource MaterialDesignIconButton}"
+                    Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                    Click="ClosBtn_OnClick"
+                    x:Name="ClosBtn">
+                <Button.Content>
+                    <materiaDesign:PackIcon Kind="Close"
+                                            Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+                </Button.Content>
+            </Button>
+        </StackPanel>
+        <Grid ColumnSpan="3" Column="1" x:Name="DragGrid" MouseDown="DragGrid_OnMouseDown" Background="{StaticResource MaterialDesignDarkSeparatorBackground}"></Grid>
+        
+        
+        <StackPanel Orientation="Vertical"
+                    Grid.Row="2">
+
+            <Button
+                BorderThickness="0"
+                HorizontalContentAlignment="Left"
+                materiaDesign:ButtonAssist.CornerRadius="0,5,5,0"
+                Style="{DynamicResource MaterialDesignPaperButton}"
+                Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                Foreground="{DynamicResource MaterialDesignDarkForeground}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <materiaDesign:PackIcon
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                            Margin="0,5,5,5" Kind="ToDo" />
+                        <TextBlock
+                            Text="TODOS"
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                            Style="{DynamicResource MaterialDesignButtonTextBlock}" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
+            <Button
+                BorderThickness="0"
+                HorizontalContentAlignment="Left"
+                materiaDesign:ButtonAssist.CornerRadius="0,5,5,0"
+                Style="{DynamicResource MaterialDesignPaperButton}"
+                Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                Foreground="{DynamicResource MaterialDesignDarkForeground}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <materiaDesign:PackIcon
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                            Margin="0,5,5,5" Kind="Subscriptions" />
+                        <TextBlock
+                            Text="SUBSCRIPTIONS"
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                            Style="{DynamicResource MaterialDesignButtonTextBlock}" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
+            <Button
+                BorderThickness="0"
+                HorizontalContentAlignment="Left"
+                materiaDesign:ButtonAssist.CornerRadius="0,5,5,0"
+                Style="{DynamicResource MaterialDesignPaperButton}"
+                Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                Foreground="{DynamicResource MaterialDesignDarkForeground}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <materiaDesign:PackIcon
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                            Margin="0,5,5,5" Kind="Goal" />
+                        <TextBlock
+                            Text="LIFE GOALS"
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                            Style="{DynamicResource MaterialDesignButtonTextBlock}" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="3"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Opacity="0.4">
+            <TextBlock Text="MADE WITH"
+                           TextAlignment="Center"
+                           FontSize="10"
+                           TextWrapping="WrapWithOverflow"
+                           Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Opacity="0.5"
+                           Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+            <materiaDesign:PackIcon 
+                    VerticalAlignment="Center"
+                    Opacity="0.5"
+                    Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                    Margin="5,0,5,0"
+                    Kind="Heart"/>
+            <TextBlock Text="BY HAKUSYSTEMS"
+                           TextAlignment="Center"
+                           FontSize="10"
+                           TextWrapping="WrapWithOverflow"
+                           Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Opacity="0.5"
+                           Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+        </StackPanel>
+        <Frame NavigationUIVisibility="Hidden" x:Name="Frame" Margin="17,50,0,0" Grid.RowSpan="2" Grid.Column="1" />
     </Grid>
+
 </Window>
