@@ -12,7 +12,7 @@ CubeManager is an all-in-one productivity app for managing tasks, events, and ob
 
 Join our Discord server to connect with other users, ask questions, and get the latest updates on CubeManager:
 
-[![Discord](https://img.shields.io/discord/your_server_id?label=Join%20our%20Discord&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/7t4MQFKjUM)
+[![Discord](https://img.shields.io/discord/1103857638481084488?label=Join%20our%20Discord&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/7t4MQFKjUM)
 
 ## Contributing
 
