@@ -30,23 +30,23 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="260"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="260" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        
+
         <materiaDesign:Card Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
                             Grid.Row="0"
                             Grid.RowSpan="2"
-                            Grid.Column="0"
-                            >
+                            Grid.Column="0">
             <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBlock Text="CUBEMANAGER"
                            FontSize="30"
@@ -64,18 +64,65 @@
                            VerticalAlignment="Center"
                            Opacity="0.5"
                            Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+                <Button Height="50" HorizontalAlignment="Right"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        x:Name="debugTestBtn"
+                        Click="DebugTestBtn_OnClick"
+                        Foreground="{DynamicResource MaterialDesignDarkForeground}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <materiaDesign:PackIcon Kind="PlusBold"
+                                                    Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
             </StackPanel>
+
         </materiaDesign:Card>
-        
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
-                    Grid.Row="0"
-                    ZIndex="100"
-                    Grid.Column="3"
+
+        <StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right"
                     
+                    ZIndex="100"
                     >
+            <Button
+                Style="{StaticResource MaterialDesignFlatButton}"
+                Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                BorderBrush="White"
+                BorderThickness="0"
+                x:Name="LvlBtnContent">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="LvlTxtBox" Text="LvL: 0"
+                                   Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                   Margin="5" />
+                        <ProgressBar x:Name="LvlProgbar"
+                                     Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                     Background="{StaticResource MaterialDesignDarkBackground}"
+                                     BorderBrush="{StaticResource MaterialDesignDarkBackground}"
+                                     Width="100" Height="5"
+                                     Margin="5" />
+                        <materiaDesign:PackIcon Kind="Sparkles"
+                                                Height="20"
+                                                Width="20"
+                                                Margin="5"
+                                                Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+
+                        <Button Content="ScoreBoard" Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                materiaDesign:ShadowAssist.ShadowEdges="Bottom"
+                                materiaDesign:ShadowAssist.Darken="True"
+                                materiaDesign:ShadowAssist.ShadowAnimationDuration="0:0:0.5"
+                                materiaDesign:ShadowAssist.ShadowDepth="Depth5"
+                                Background="{StaticResource MaterialDesignDarkBackground}"
+                                BorderBrush="Transparent" />
+
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
             <Button Height="50" HorizontalAlignment="Right"
                     Style="{StaticResource MaterialDesignIconButton}"
-                    Foreground="{DynamicResource MaterialDesignDarkForeground}" 
+                    Foreground="{DynamicResource MaterialDesignDarkForeground}"
                     Click="MinBtn_OnClick"
                     x:Name="MinBtn">
                 <Button.Content>
@@ -94,11 +141,36 @@
                 </Button.Content>
             </Button>
         </StackPanel>
-        <Grid ColumnSpan="3" Column="1" x:Name="DragGrid" MouseDown="DragGrid_OnMouseDown" Background="{StaticResource MaterialDesignDarkSeparatorBackground}"></Grid>
-        
-        
+
+        <Grid ColumnSpan="3" Column="1" x:Name="DragGrid" MouseDown="DragGrid_OnMouseDown"
+              Background="{StaticResource MaterialDesignDarkSeparatorBackground}">
+        </Grid>
+
+
         <StackPanel Orientation="Vertical"
                     Grid.Row="2">
+
+            <Button
+                BorderThickness="0"
+                HorizontalContentAlignment="Left"
+                materiaDesign:ButtonAssist.CornerRadius="0,5,5,0"
+                Style="{DynamicResource MaterialDesignPaperButton}"
+                Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                Foreground="{DynamicResource MaterialDesignDarkForeground}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <materiaDesign:PackIcon
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                            Margin="0,5,5,5" Kind="Schedule" />
+                        <TextBlock
+                            Text="ROUTINE TASKS"
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                            Style="{DynamicResource MaterialDesignButtonTextBlock}" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
 
             <Button
                 BorderThickness="0"
@@ -165,7 +237,95 @@
                     </StackPanel>
                 </Button.Content>
             </Button>
-            
+
+            <Button
+                BorderThickness="0"
+                HorizontalContentAlignment="Left"
+                materiaDesign:ButtonAssist.CornerRadius="0,5,5,0"
+                Style="{DynamicResource MaterialDesignPaperButton}"
+                Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                Foreground="{DynamicResource MaterialDesignDarkForeground}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <materiaDesign:PackIcon
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                            Margin="0,5,5,5" Kind="BirthdayCakeOutline" />
+                        <TextBlock
+                            Text="BIRTHDAYS"
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                            Style="{DynamicResource MaterialDesignButtonTextBlock}" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
+            <Button
+                BorderThickness="0"
+                HorizontalContentAlignment="Left"
+                materiaDesign:ButtonAssist.CornerRadius="0,5,5,0"
+                Style="{DynamicResource MaterialDesignPaperButton}"
+                Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                Foreground="{DynamicResource MaterialDesignDarkForeground}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <materiaDesign:PackIcon
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                            Margin="0,5,5,5" Kind="Calendar" />
+                        <TextBlock
+                            Text="FAMILY CALENDAR"
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                            Style="{DynamicResource MaterialDesignButtonTextBlock}" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
+            <Button
+                BorderThickness="0"
+                HorizontalContentAlignment="Left"
+                materiaDesign:ButtonAssist.CornerRadius="0,5,5,0"
+                Style="{DynamicResource MaterialDesignPaperButton}"
+                Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                Foreground="{DynamicResource MaterialDesignDarkForeground}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <materiaDesign:PackIcon
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                            Margin="0,5,5,5" Kind="NewReleases" />
+                        <TextBlock
+                            Text="GAME RELEASES"
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                            Style="{DynamicResource MaterialDesignButtonTextBlock}" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
+            <Button
+                BorderThickness="0"
+                HorizontalContentAlignment="Left"
+                materiaDesign:ButtonAssist.CornerRadius="0,5,5,0"
+                Style="{DynamicResource MaterialDesignPaperButton}"
+                Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                Foreground="{DynamicResource MaterialDesignDarkForeground}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <materiaDesign:PackIcon
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                            Margin="0,5,5,5" Kind="Timelapse" />
+                        <TextBlock
+                            Text="PLAY TIME"
+                            VerticalAlignment="Center"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                            Style="{DynamicResource MaterialDesignButtonTextBlock}" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
         </StackPanel>
         <StackPanel Orientation="Horizontal"
                     Grid.Row="3"
@@ -173,29 +333,29 @@
                     HorizontalAlignment="Center"
                     Opacity="0.4">
             <TextBlock Text="MADE WITH"
-                           TextAlignment="Center"
-                           FontSize="10"
-                           TextWrapping="WrapWithOverflow"
-                           Style="{StaticResource MaterialDesignCaptionTextBlock}"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Opacity="0.5"
-                           Foreground="{DynamicResource MaterialDesignDarkForeground}" />
-            <materiaDesign:PackIcon 
-                    VerticalAlignment="Center"
-                    Opacity="0.5"
-                    Foreground="{DynamicResource MaterialDesignDarkForeground}"
-                    Margin="5,0,5,0"
-                    Kind="Heart"/>
+                       TextAlignment="Center"
+                       FontSize="10"
+                       TextWrapping="WrapWithOverflow"
+                       Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Opacity="0.5"
+                       Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+            <materiaDesign:PackIcon
+                VerticalAlignment="Center"
+                Opacity="0.5"
+                Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                Margin="5,0,5,0"
+                Kind="Heart" />
             <TextBlock Text="BY HAKUSYSTEMS"
-                           TextAlignment="Center"
-                           FontSize="10"
-                           TextWrapping="WrapWithOverflow"
-                           Style="{StaticResource MaterialDesignCaptionTextBlock}"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Opacity="0.5"
-                           Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+                       TextAlignment="Center"
+                       FontSize="10"
+                       TextWrapping="WrapWithOverflow"
+                       Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Opacity="0.5"
+                       Foreground="{DynamicResource MaterialDesignDarkForeground}" />
         </StackPanel>
         <Frame NavigationUIVisibility="Hidden" x:Name="Frame" Margin="17,50,0,0" Grid.RowSpan="2" Grid.Column="1" />
     </Grid>

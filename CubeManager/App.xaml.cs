@@ -17,7 +17,11 @@ public partial class App : Application
 
     private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
-        MessageBox.Show($"An unhandled exception occurred: {e.Exception.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        if (MessageBox.Show($"An unhandled exception occurred: {e.Exception.Message}", "Error", MessageBoxButton.OK,
+                MessageBoxImage.Error) != MessageBoxResult.None)
+        {
+            //Clipboard.SetText(e.Exception.ToString()); this is for debugging
+        }
         
         e.Handled = true;
     }

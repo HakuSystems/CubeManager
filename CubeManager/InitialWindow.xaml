@@ -10,6 +10,7 @@
         BorderThickness="0"
         WindowState="Minimized"
         WindowStyle="None"
+        ShowInTaskbar="False"
         Loaded="InitialWindow_OnLoaded"
         >
 </Window>
