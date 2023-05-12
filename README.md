@@ -21,6 +21,7 @@ Join our Discord server to connect with other users, ask questions, and get the 
 3. Commit your changes (`git commit -am 'Add your feature'`)
 4. Push to the branch (`git push origin feature/your-feature`)
 5. Create a new Pull Request
+6. If you'd like to collaborate more closely, feel free to DM me on our Discord server.
 
 ## License
 
