@@ -20,7 +20,7 @@ public partial class App : Application
         if (MessageBox.Show($"An unhandled exception occurred: {e.Exception.Message}", "Error", MessageBoxButton.OK,
                 MessageBoxImage.Error) != MessageBoxResult.None)
         {
-            //Clipboard.SetText(e.Exception.ToString()); this is for debugging
+            Clipboard.SetText(e.Exception.ToString()); 
         }
         
         e.Handled = true;

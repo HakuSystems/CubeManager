@@ -81,14 +81,16 @@
 
         </materiaDesign:Card>
 
-        <StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right"
-                    
-                    ZIndex="100"
-                    >
+        <StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+
+                    ZIndex="100">
             <Button
                 Style="{StaticResource MaterialDesignFlatButton}"
                 Foreground="{DynamicResource MaterialDesignDarkForeground}"
                 BorderBrush="White"
+                Height="auto"
+                Width="auto"
                 BorderThickness="0"
                 x:Name="LvlBtnContent">
                 <Button.Content>
@@ -103,6 +105,7 @@
                                      Width="100" Height="5"
                                      Margin="5" />
                         <materiaDesign:PackIcon Kind="Sparkles"
+                                                x:Name="Sparkles"
                                                 Height="20"
                                                 Width="20"
                                                 Margin="5"
@@ -114,7 +117,8 @@
                                 materiaDesign:ShadowAssist.ShadowAnimationDuration="0:0:0.5"
                                 materiaDesign:ShadowAssist.ShadowDepth="Depth5"
                                 Background="{StaticResource MaterialDesignDarkBackground}"
-                                BorderBrush="Transparent" />
+                                BorderBrush="Transparent"
+                                x:Name="ScoreBoardButton" />
 
                     </StackPanel>
                 </Button.Content>
@@ -142,13 +146,13 @@
             </Button>
         </StackPanel>
 
-        <Grid ColumnSpan="3" Column="1" x:Name="DragGrid" MouseDown="DragGrid_OnMouseDown"
+        <Grid Grid.Row="0" ColumnSpan="4" Column="1" x:Name="DragGrid" MouseDown="DragGrid_OnMouseDown"
               Background="{StaticResource MaterialDesignDarkSeparatorBackground}">
         </Grid>
 
 
         <StackPanel Orientation="Vertical"
-                    Grid.Row="2">
+                    Grid.Row="2" Grid.Column="0">
 
             <Button
                 BorderThickness="0"
@@ -328,7 +332,7 @@
 
         </StackPanel>
         <StackPanel Orientation="Horizontal"
-                    Grid.Row="3"
+                    Grid.Row="3" Grid.Column="0"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     Opacity="0.4">
@@ -357,7 +361,6 @@
                        Opacity="0.5"
                        Foreground="{DynamicResource MaterialDesignDarkForeground}" />
         </StackPanel>
-        <Frame NavigationUIVisibility="Hidden" x:Name="Frame" Margin="17,50,0,0" Grid.RowSpan="2" Grid.Column="1" />
     </Grid>
 
 </Window>
