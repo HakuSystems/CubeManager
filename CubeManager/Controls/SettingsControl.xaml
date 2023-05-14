@@ -1,0 +1,65 @@
+<UserControl x:Class="CubeManager.Controls.SettingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:CubeManager.Controls"
+             mc:Ignorable="d"
+             Foreground="{DynamicResource MaterialDesignDarkForeground}"
+             Background="{DynamicResource MaterialDesignDarkBackground}"
+             Loaded="SettingsControl_OnLoaded"
+             d:DesignHeight="450" d:DesignWidth="300">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <materialDesign:PackIcon Kind="SettingsOutline" Height="35" Width="35" VerticalAlignment="Center"
+                                     Margin="5" />
+            <Label Content="Settings" FontSize="24" FontWeight="Bold" VerticalAlignment="Center" />
+
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="20">
+                <materialDesign:Card MouseDown="DopamineCard_OnMouseDown" x:Name="DopamineCard" Margin="0,0,0,10" Padding="10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <Label Content="Enable Dopamine Effects" FontWeight="SemiBold" />
+                            <TextBlock
+                                Text="Activate or deactivate attention-grabbing animations, like the 'level up' effect. These animations are created to stimulate a dopamine response, enhancing the user's experience by making it more enjoyable. Note: this does not affect the main theme of the application."
+                                FontStyle="Italic" FontSize="12" Opacity="0.7"
+                                TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,10,0,0">
+                            <materialDesign:Card
+                                Padding="10"
+                                Height="40"
+                                Width="40"
+                                Background="{DynamicResource MaterialDesignDarkSeparatorBackground}">
+
+                                <CheckBox
+                                    x:Name="DopamineToggle"
+                                    Checked="DopamineToggle_OnChecked"
+                                          Unchecked="DopamineToggle_OnUnchecked"
+                                          />
+                            </materialDesign:Card>
+                        </StackPanel>
+                    </Grid>
+                </materialDesign:Card>
+
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>

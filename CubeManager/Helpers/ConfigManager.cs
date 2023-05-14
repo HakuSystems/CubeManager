@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.IO;
 using CubeManager.Models;
 using Newtonsoft.Json;
@@ -11,31 +12,66 @@ public class ConfigManager
 
     private static readonly string ConfigFilePath = Path.Combine(ConfigFolderPath, "config.json");
 
-    public ConfigData Config { get; private set; }
+    private readonly FileSystemWatcher fileWatcher;
 
     public ConfigManager()
     {
         LoadConfig();
+
+        // Create and configure the FileSystemWatcher to monitor the config file
+        fileWatcher = new FileSystemWatcher(Path.GetDirectoryName(ConfigFilePath))
+        {
+            Filter = Path.GetFileName(ConfigFilePath),
+            NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size
+        };
+
+        fileWatcher.Changed += OnConfigFileChanged;
+
+        fileWatcher.EnableRaisingEvents = true;
     }
+
+    public ConfigData Config { get; private set; }
+
+    private async void OnConfigFileChanged(object sender, FileSystemEventArgs e)
+    {
+        await Task.Delay(100);
+        LoadConfig();
+    }
+
     private void LoadConfig()
     {
-        if (File.Exists(ConfigFilePath))
+        try
         {
-            string json = File.ReadAllText(ConfigFilePath);
-            Config = JsonConvert.DeserializeObject<ConfigData>(json);
+            if (File.Exists(ConfigFilePath))
+            {
+                var json = File.ReadAllText(ConfigFilePath);
+                Config = JsonConvert.DeserializeObject<ConfigData>(json);
+            }
+            else
+            {
+                Config = new ConfigData();
+                SaveConfig();
+            }
         }
-        else
+        catch (IOException ex)
         {
-            Config = new ConfigData();
-            SaveConfig();
+            Debug.WriteLine($"Could not load config: {ex.Message}");
         }
     }
 
     private void SaveConfig()
     {
-        Directory.CreateDirectory(ConfigFolderPath);
-        string json = JsonConvert.SerializeObject(Config, Formatting.Indented);
-        File.WriteAllText(ConfigFilePath, json);
+        try
+        {
+            Directory.CreateDirectory(ConfigFolderPath);
+            var json = JsonConvert.SerializeObject(Config, Formatting.Indented);
+            File.WriteAllText(ConfigFilePath, json);
+            Debug.WriteLine("Config saved");
+        }
+        catch (IOException ex)
+        {
+            Debug.WriteLine($"Could not save config: {ex.Message}");
+        }
     }
 
     public void UpdateConfig(Action<ConfigData> updateAction)

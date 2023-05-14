@@ -3,17 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:CubeManager"
-        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:materiaDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:icons="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Height="649"
+        Height="650"
         MinHeight="650"
-        MinWidth="1000"
+        MinWidth="1200"
         Foreground="{DynamicResource MaterialDesignDarkForeground}"
         WindowStyle="None"
         AllowsTransparency="True"
-        Width="1000"
+        Width="1200"
         Title="CubeManager"
         WindowStartupLocation="CenterScreen"
         WindowState="Normal"
@@ -37,10 +36,8 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="260" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="100" />
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="669*" />
+            <ColumnDefinition Width="271*" />
         </Grid.ColumnDefinitions>
 
         <materiaDesign:Card Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
@@ -64,90 +61,127 @@
                            VerticalAlignment="Center"
                            Opacity="0.5"
                            Foreground="{DynamicResource MaterialDesignDarkForeground}" />
-                <Button Height="50" HorizontalAlignment="Right"
-                        Style="{StaticResource MaterialDesignFlatButton}"
-                        x:Name="debugTestBtn"
-                        Click="DebugTestBtn_OnClick"
-                        Foreground="{DynamicResource MaterialDesignDarkForeground}">
-                    <Button.Content>
-                        <StackPanel Orientation="Horizontal">
-                            <materiaDesign:PackIcon Kind="PlusBold"
-                                                    Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Height="50" HorizontalAlignment="Right"
+                            Style="{StaticResource MaterialDesignIconButton}"
+                            x:Name="SettingsBtn"
+                            Click="SettingsBtn_OnClick"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <materiaDesign:PackIcon Kind="SettingsOutline"
+                                                        Foreground="{DynamicResource MaterialDesignDarkForeground}" />
 
-                        </StackPanel>
-                    </Button.Content>
-                </Button>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button Height="50" HorizontalAlignment="Right"
+                            Style="{StaticResource MaterialDesignIconButton}"
+                            x:Name="DiscordBtn"
+                            Click="DiscordBtn_OnClick"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <icons:PackIconCoolicons Kind="Discord"
+                                                         Height="25"
+                                                         Width="25"
+                                                         Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
             </StackPanel>
 
         </materiaDesign:Card>
 
-        <StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Orientation="Horizontal"
-                    HorizontalAlignment="Right"
 
-                    ZIndex="100">
-            <Button
-                Style="{StaticResource MaterialDesignFlatButton}"
-                Foreground="{DynamicResource MaterialDesignDarkForeground}"
-                BorderBrush="White"
-                Height="auto"
-                Width="auto"
-                BorderThickness="0"
-                x:Name="LvlBtnContent">
+        <Grid Grid.Row="0" Grid.ColumnSpan="2" Column="1" x:Name="DragGrid"
+              HorizontalAlignment="Stretch"
+              MouseDown="DragGrid_OnMouseDown"
+              Background="{StaticResource MaterialDesignDarkSeparatorBackground}">
+
+            <Button Height="50" HorizontalAlignment="Left"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    x:Name="debugTestBtn"
+                    Click="DebugTestBtn_OnClick"
+                    Foreground="{DynamicResource MaterialDesignDarkForeground}">
                 <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock x:Name="LvlTxtBox" Text="LvL: 0"
-                                   Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                   Margin="5" />
-                        <ProgressBar x:Name="LvlProgbar"
-                                     Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                     Background="{StaticResource MaterialDesignDarkBackground}"
-                                     BorderBrush="{StaticResource MaterialDesignDarkBackground}"
-                                     Width="100" Height="5"
-                                     Margin="5" />
-                        <materiaDesign:PackIcon Kind="Sparkles"
-                                                x:Name="Sparkles"
-                                                Height="20"
-                                                Width="20"
-                                                Margin="5"
-                                                Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+                    <TextBlock Text="DEBUG" />
+                </Button.Content>
+            </Button>
 
-                        <Button Content="ScoreBoard" Foreground="{StaticResource MaterialDesignDarkForeground}"
+            <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+
+                        ZIndex="100" Margin="7,0,0,0">
+                <Button
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                    BorderBrush="White"
+                    Height="auto"
+                    Width="auto"
+                    BorderThickness="0"
+                    x:Name="LvlBtnContent">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="LvlTxtBox" Text="LvL: 0"
+                                       Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                       Margin="5" />
+                            <ProgressBar x:Name="LvlProgbar"
+                                         ValueChanged="LvlProgbar_OnValueChanged"
+                                         Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                         Background="{StaticResource MaterialDesignDarkBackground}"
+                                         BorderBrush="{StaticResource MaterialDesignDarkBackground}"
+                                         Width="100" Height="5"
+                                         Margin="5" />
+
+                            <Button
+                                Foreground="{StaticResource MaterialDesignDarkForeground}"
                                 materiaDesign:ShadowAssist.ShadowEdges="Bottom"
                                 materiaDesign:ShadowAssist.Darken="True"
                                 materiaDesign:ShadowAssist.ShadowAnimationDuration="0:0:0.5"
-                                materiaDesign:ShadowAssist.ShadowDepth="Depth5"
                                 Background="{StaticResource MaterialDesignDarkBackground}"
                                 BorderBrush="Transparent"
-                                x:Name="ScoreBoardButton" />
+                                x:Name="ScoreBoardButton">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materiaDesign:PackIcon Kind="Sparkles"
+                                                                x:Name="Sparkles"
+                                                                Height="15"
+                                                                Width="15"
+                                                                Margin="5"
+                                                                Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+                                        <TextBlock Text="ScoreBoard" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
 
-                    </StackPanel>
-                </Button.Content>
-            </Button>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
 
-            <Button Height="50" HorizontalAlignment="Right"
-                    Style="{StaticResource MaterialDesignIconButton}"
-                    Foreground="{DynamicResource MaterialDesignDarkForeground}"
-                    Click="MinBtn_OnClick"
-                    x:Name="MinBtn">
-                <Button.Content>
-                    <materiaDesign:PackIcon Kind="Minimize"
-                                            Foreground="{DynamicResource MaterialDesignDarkForeground}" />
-                </Button.Content>
-            </Button>
-            <Button Height="50" HorizontalAlignment="Right"
-                    Style="{StaticResource MaterialDesignIconButton}"
-                    Foreground="{DynamicResource MaterialDesignDarkForeground}"
-                    Click="ClosBtn_OnClick"
-                    x:Name="ClosBtn">
-                <Button.Content>
-                    <materiaDesign:PackIcon Kind="Close"
-                                            Foreground="{DynamicResource MaterialDesignDarkForeground}" />
-                </Button.Content>
-            </Button>
-        </StackPanel>
-
-        <Grid Grid.Row="0" ColumnSpan="4" Column="1" x:Name="DragGrid" MouseDown="DragGrid_OnMouseDown"
-              Background="{StaticResource MaterialDesignDarkSeparatorBackground}">
+                <Button Height="50" HorizontalAlignment="Right"
+                        Style="{StaticResource MaterialDesignIconButton}"
+                        Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                        Click="MinBtn_OnClick"
+                        x:Name="MinBtn">
+                    <Button.Content>
+                        <materiaDesign:PackIcon Kind="Minimize"
+                                                Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+                    </Button.Content>
+                </Button>
+                <Button Height="50" HorizontalAlignment="Right"
+                        Style="{StaticResource MaterialDesignIconButton}"
+                        Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                        Click="ClosBtn_OnClick"
+                        x:Name="ClosBtn">
+                    <Button.Content>
+                        <materiaDesign:PackIcon Kind="Close"
+                                                Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+                    </Button.Content>
+                </Button>
+            </StackPanel>
         </Grid>
 
 
@@ -361,6 +395,13 @@
                        Opacity="0.5"
                        Foreground="{DynamicResource MaterialDesignDarkForeground}" />
         </StackPanel>
+
+
+        <Frame Grid.Row="1" Grid.Column="1"
+
+               NavigationUIVisibility="Hidden"
+               x:Name="ControlsFrame"
+               Grid.ColumnSpan="2" Grid.RowSpan="2" />
     </Grid>
 
 </Window>
