@@ -20,4 +20,12 @@
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Page Update="Controls\Subscriptions\SubscriptionsControl.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
 </Project>

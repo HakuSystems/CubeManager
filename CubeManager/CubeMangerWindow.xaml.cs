@@ -35,7 +35,7 @@ public partial class CubeMangerWindow : Window
         LvlTxtBox.Text = $"LvL: {CurrentLevelValue}";
         LvlProgbar.Value = CurrentProgressValue;
     }
-
+    
     private void DragGrid_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
         if (e.ChangedButton == MouseButton.Left)
@@ -130,5 +130,10 @@ public partial class CubeMangerWindow : Window
         {
             CreateNoWindow = true
         });
+    }
+
+    private void SubscriptionsBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        ControlsFrame.Navigate(new SubscriptionsControl());
     }
 }

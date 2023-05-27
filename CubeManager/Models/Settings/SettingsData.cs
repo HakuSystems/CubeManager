@@ -2,5 +2,5 @@ namespace CubeManager.Models.Settings;
 
 public class SettingsData
 {
-    public bool EnableDopamineEffects { get; set; }
+    public bool EnableDopamineEffects { get; set; } = true;
 }

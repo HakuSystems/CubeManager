@@ -45,6 +45,7 @@ public class ConfigManager
             if (File.Exists(ConfigFilePath))
             {
                 var json = File.ReadAllText(ConfigFilePath);
+                Debug.WriteLine(json);
                 Config = JsonConvert.DeserializeObject<ConfigData>(json);
             }
             else
