@@ -56,36 +56,6 @@
                     </StackPanel>
                 </Button.Content>
             </Button>
-
-
-            <Button
-                x:Name="DebugBtn"
-                Click="DebugBtn_OnClick"
-                HorizontalAlignment="Left"
-                Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
-                Margin="5"
-                Style="{StaticResource MaterialDesignFlatButton}">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Error"
-                                                 VerticalAlignment="Center"
-                                                 Margin="5"
-                                                 Foreground="{StaticResource MaterialDesignDarkForeground}" />
-                        <TextBlock Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                   Text="Debug"
-                                   VerticalAlignment="Center"
-                                   Margin="5,0,0,0"
-                                   HorizontalAlignment="Left"
-                                   FontSize="15"
-                                   FontWeight="Bold"
-                                   TextWrapping="Wrap"
-                                   TextTrimming="CharacterEllipsis"
-                                   Width="Auto"
-                                   Height="Auto" />
-
-                    </StackPanel>
-                </Button.Content>
-            </Button>
             <materialDesign:Snackbar
                 x:Name="ErrorHandlingSnackbar"
                 MessageQueue="{materialDesign:MessageQueue}"
@@ -370,45 +340,6 @@
                                 </StackPanel>
                             </Expander>
                             <Button Style="{StaticResource MaterialDesignFlatButton}"
-                                    FontSize="15"
-                                    x:Name="OneTimePaymentBtn"
-                                    Click="OneTimePaymentBtn_OnClick"
-                                    Width="auto"
-                                    Height="auto"
-                                    FontWeight="Bold"
-                                    VerticalAlignment="Center"
-                                    HorizontalAlignment="Left"
-                                    VerticalContentAlignment="Center">
-                                <Button.Content>
-                                    <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
-                                        <CheckBox Unchecked="OneTimeCheck_OnUnchecked"
-                                                  Checked="OneTimeCheck_OnChecked" x:Name="OneTimeCheck" />
-                                        <TextBlock Text="One Time Payment" Foreground="White"
-                                                   x:Name="OneTimePaymentBtnText"
-                                                   Margin="5" />
-                                    </StackPanel>
-                                </Button.Content>
-                            </Button>
-                        </StackPanel>
-                        <materialDesign:Card Background="{StaticResource MaterialDesignDarkSeparatorBackground}">
-                            <StackPanel Orientation="Horizontal">
-                                <Button
-                                    x:Name="OpenCalenderBtn"
-                                    Click="OpenCalenderBtn_OnClick"
-                                    FontSize="15"
-                                    Margin="5"
-                                    Style="{StaticResource MaterialDesignFlatButton}"
-                                    Content="Select First Payment Date" />
-                                <TextBlock Text="This is Optional"
-                                           FontWeight="DemiBold"
-                                           x:Name="FirstPaymentSetDate"
-                                           Margin="5"
-                                           FontSize="15"
-                                           VerticalAlignment="Center" />
-                            </StackPanel>
-                        </materialDesign:Card>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                            <Button Style="{StaticResource MaterialDesignFlatButton}"
                                     x:Name="ChangeBackgroundBtn"
                                     Click="ChangeBackgroundBtn_OnClick"
                                     HorizontalAlignment="Right"
@@ -425,7 +356,19 @@
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
-
+                        </StackPanel>
+                        <materialDesign:Card Background="{StaticResource MaterialDesignDarkSeparatorBackground}">
+                            <StackPanel Orientation="Horizontal">
+                                <Button
+                                    x:Name="OpenCalenderBtn"
+                                    Click="OpenCalenderBtn_OnClick"
+                                    FontSize="15"
+                                    Margin="5"
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                    Content="Select First Payment Date" />
+                            </StackPanel>
+                        </materialDesign:Card>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                             <Button
                                 HorizontalAlignment="Right"
                                 x:Name="SaveSubscriptionBtn"

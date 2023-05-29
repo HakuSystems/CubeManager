@@ -9,17 +9,17 @@ namespace CubeManager.Controls;
 
 public partial class SubscriptionsControl : UserControl
 {
+    private Color _colorForCard;
     private DateTime _toPayDate;
-    private Color colorForCard;
 
     public SubscriptionsControl()
     {
         InitializeComponent();
     }
 
-    private ConfigManager _configManager { get; } = new();
+    private ConfigManager ConfigManager { get; } = new();
 
-    private List<Subscription> Subscriptions => _configManager.Config.Subscriptions.Subscriptions;
+    private List<Subscription> Subscriptions => ConfigManager.Config.Subscriptions.Subscriptions;
 
 
     private void SubscriptionsControl_OnLoaded(object sender, RoutedEventArgs e)
@@ -85,7 +85,7 @@ public partial class SubscriptionsControl : UserControl
 
         var subscriptionPrice = new TextBlock
         {
-            Text = subscription.Cost,
+            Text = $"{subscription.Cost} {subscription.Currency}",
             HorizontalAlignment = HorizontalAlignment.Left,
             FontSize = 24,
             FontWeight = FontWeights.Bold,
@@ -130,8 +130,8 @@ public partial class SubscriptionsControl : UserControl
         };
 
         var subscriptionEditButton = new Button();
-        var icon1 = new PackIcon { Kind = PackIconKind.EditOutline };
-        subscriptionEditButton.Content = icon1;
+        var editIcon = new PackIcon { Kind = PackIconKind.EditOutline };
+        subscriptionEditButton.Content = editIcon;
 
         // Accessing style resource
         var iconButtonStyle = Application.Current.Resources["MaterialDesignIconButton"] as Style;
@@ -143,12 +143,12 @@ public partial class SubscriptionsControl : UserControl
         var innerTextStackPanel = new StackPanel { Orientation = Orientation.Vertical };
 
 
-        var timeLeft = CalcDateTimeLeft(subscription.FirstPaymentDate, subscription.Period,
-            subscription.IsOneTimePayment, subscription.PeriodType);
+        var timeLeft = CalcDateTimeLeft(subscription.FirstPaymentDate, subscription.Period, subscription.PeriodType);
 
         var subscriptionLeftShortTime = new TextBlock
         {
             Text = timeLeft,
+            ToolTip = $"Time left until the next payment: {subscription.NextPaymentDate.ToShortDateString()}",
             HorizontalAlignment = HorizontalAlignment.Center,
             FontSize = 24,
             FontWeight = FontWeights.Bold
@@ -166,8 +166,8 @@ public partial class SubscriptionsControl : UserControl
         innerTextStackPanel.Children.Add(subscriptionLeftText);
 
         var subscriptionDeleteButton = new Button();
-        var icon2 = new PackIcon { Kind = PackIconKind.DeleteOutline };
-        subscriptionDeleteButton.Content = icon2;
+        var deleteIcon = new PackIcon { Kind = PackIconKind.DeleteOutline };
+        subscriptionDeleteButton.Content = deleteIcon;
 
         if (iconButtonStyle != null) subscriptionDeleteButton.Style = iconButtonStyle;
 
@@ -188,6 +188,7 @@ public partial class SubscriptionsControl : UserControl
         subscriptionDeleteButton.Click += SubscriptionDeleteBtn_Click(subscription.Id, subscription.Title, card);
         return card;
     }
+
 
     private Brush CreateGradientBrush(Color subscriptionCardColor)
     {
@@ -229,10 +230,9 @@ public partial class SubscriptionsControl : UserControl
                 SubscriptionDescriptionTextBox.Text = subscription.Description;
                 BillingPeriodTextBox.Text = subscription.Period.ToString();
                 PaymentDateCalendarOnDialog.SelectedDate = subscription.FirstPaymentDate;
-                OneTimeCheck.IsChecked = subscription.IsOneTimePayment;
                 BillingExpander.Header = subscription.PeriodType;
                 Subscriptions.Remove(subscription);
-                _configManager.UpdateConfig(config => config.Subscriptions.Subscriptions = Subscriptions);
+                ConfigManager.UpdateConfig(config => config.Subscriptions.Subscriptions = Subscriptions);
                 SubscriptionsStackPanel.Children.Remove(card);
                 SubscriptionScroller.Visibility = Visibility.Collapsed;
                 EditModeScroller.Visibility = Visibility.Visible;
@@ -251,57 +251,48 @@ public partial class SubscriptionsControl : UserControl
             if (subscription != null)
             {
                 Subscriptions.Remove(subscription);
-                _configManager.UpdateConfig(config => config.Subscriptions.Subscriptions = Subscriptions);
+                ConfigManager.UpdateConfig(config => config.Subscriptions.Subscriptions = Subscriptions);
                 SubscriptionsStackPanel.Children.Remove(card);
             }
         };
     }
 
-    private string CalcDateTimeLeft(DateTime firstPaymentDate, int period, bool oneTimePayment, string periodType)
+    private string CalcDateTimeLeft(DateTime firstPaymentDate, int period, string periodType)
     {
-        if (oneTimePayment)
-        {
-            var oneNextPaymentDate = GetPeriodDate(firstPaymentDate, period, periodType);
-            var oneDifference = firstPaymentDate - oneNextPaymentDate;
-
-            var oneTimeDays = Math.Abs(oneDifference.Days);
-            _toPayDate = oneNextPaymentDate;
-            switch (oneTimeDays)
-            {
-                case 0:
-                    return "Today";
-                case var d when d < 30:
-                    return $"{d}D";
-                case var w when w >= 30 && w < 365:
-                    return $"{w / 7}W";
-                case var m when m >= 365:
-                    return $"{m / 30}M";
-                default:
-                    return $"{oneDifference.Days / 365}Y";
-            }
-        }
-
         var nextPaymentDate = GetPeriodDate(firstPaymentDate, period, periodType);
+        var daysLeft = (GetPeriodDate(firstPaymentDate, period, periodType) - DateTime.Now).Days + 1;
+        var weeksLeft = (GetPeriodDate(firstPaymentDate, period, periodType) - DateTime.Now).Days / 7;
+        var monthsLeft = (GetPeriodDate(firstPaymentDate, period, periodType) - DateTime.Now).Days / 30;
+        var yearsLeft = (GetPeriodDate(firstPaymentDate, period, periodType) - DateTime.Now).Days / 365;
 
-        var difference = firstPaymentDate - nextPaymentDate;
 
-        var days = Math.Abs(difference.Days);
+        var difference = GetPeriodDate(firstPaymentDate, period, periodType) - DateTime.Now;
+        var timeLeft = "";
+        if (difference.Days < 0)
+            timeLeft = "0D";
+        else
+            switch (periodType)
+            {
+                case "Day":
+                case "Days":
+                    timeLeft = $"{daysLeft}D";
+                    break;
+                case "Week":
+                case "Weeks":
+                    timeLeft = $"{weeksLeft}W";
+                    break;
+                case "Month":
+                case "Months":
+                    timeLeft = $"{monthsLeft}M";
+                    break;
+                case "Year":
+                case "Years":
+                    timeLeft = $"{yearsLeft}Y";
+                    break;
+            }
 
         _toPayDate = nextPaymentDate;
-
-        switch (days)
-        {
-            case 0:
-                return "Today";
-            case var d when d < 30:
-                return $"{d}D";
-            case var w when w >= 30 && w < 365:
-                return $"{w / 7}W";
-            case var m when m >= 365:
-                return $"{m / 30}M";
-            default:
-                return $"{days / 365}Y";
-        }
+        return timeLeft;
     }
 
 
@@ -341,41 +332,13 @@ public partial class SubscriptionsControl : UserControl
     private void SelectDateBtn_OnClick(object sender, RoutedEventArgs e)
     {
         var selectedDate = PaymentDateCalendarOnDialog.SelectedDate;
-        if (selectedDate.HasValue)
-        {
-            FirstPaymentSetDate.Text = $"Set to: {selectedDate.Value.ToShortDateString()}";
-        }
-        else
+        if (!selectedDate.HasValue)
         {
             ErrorHandlingSnackbar.MessageQueue?.Enqueue("Please Choose a date");
             return;
         }
 
         DialogHostOperation.IsOpen = false;
-    }
-
-    private void OneTimePaymentBtn_OnClick(object sender, RoutedEventArgs e)
-    {
-        OneTimeCheck.IsChecked = !OneTimeCheck.IsChecked;
-    }
-
-    private void OneTimeCheck_OnUnchecked(object sender, RoutedEventArgs e)
-    {
-        BillingExpander.Visibility = Visibility.Visible;
-        BillingPeriodTextBox.Visibility = Visibility.Visible;
-        BilledEveryTextBlock.Visibility = Visibility.Visible;
-        OneTimePaymentBtnText.Foreground = Brushes.White;
-        OpenCalenderBtn.Content = "Select First Payment Date";
-        FirstPaymentSetDate.Text = "This is Optional";
-    }
-
-    private void OneTimeCheck_OnChecked(object sender, RoutedEventArgs e)
-    {
-        BillingExpander.Visibility = Visibility.Collapsed;
-        BillingPeriodTextBox.Visibility = Visibility.Collapsed;
-        BilledEveryTextBlock.Visibility = Visibility.Collapsed;
-        OneTimePaymentBtnText.Foreground = Brushes.Crimson;
-        OpenCalenderBtn.Content = "Select Payment Date";
     }
 
     private void UpdateBillingHeader(string singular, string plural)
@@ -461,31 +424,24 @@ public partial class SubscriptionsControl : UserControl
 
         var description = SubscriptionDescriptionTextBox.Text;
 
-        var isOneTimePayment = OneTimeCheck.IsChecked!.Value;
-
 
         var billingPeriodType = BillingExpander.Header.ToString();
-        if (isOneTimePayment)
-        {
-            billingPeriodType = "One Time Payment";
-            _toPayDate = PaymentDateCalendarOnDialog.SelectedDate!.Value;
-        }
 
-        var firstPaymentDate = Convert.ToDateTime(FirstPaymentSetDate.Text.Contains("Set to:")
-            ? PaymentDateCalendarOnDialog.SelectedDate!.Value.ToShortDateString()
-            : DateTime.Now.ToShortDateString());
-        if (string.IsNullOrEmpty(firstPaymentDate.ToString()) && isOneTimePayment)
+
+        if (string.IsNullOrEmpty(PaymentDateCalendarOnDialog.SelectedDate?.ToShortDateString()))
         {
             ErrorHandlingSnackbar.MessageQueue?.Enqueue(
                 "Payment date is required.");
             return;
         }
 
+        var firstPaymentDate = Convert.ToDateTime(PaymentDateCalendarOnDialog.SelectedDate.Value.ToShortDateString());
+
 
         if (string.IsNullOrEmpty(BillingPeriodTextBox.Text))
             BillingPeriodTextBox.Text = 1.ToString();
 
-        CalcDateTimeLeft(firstPaymentDate, Convert.ToInt32(BillingPeriodTextBox.Text), isOneTimePayment,
+        CalcDateTimeLeft(firstPaymentDate, Convert.ToInt32(BillingPeriodTextBox.Text),
             billingPeriodType);
 
         #endregion
@@ -500,17 +456,16 @@ public partial class SubscriptionsControl : UserControl
             Currency = CurrencyExpander.Header.ToString()?.Substring(10),
             Period = Convert.ToInt32(BillingPeriodTextBox.Text),
             PeriodType = billingPeriodType,
-            IsOneTimePayment = isOneTimePayment,
             FirstPaymentDate = firstPaymentDate,
             NextPaymentDate = _toPayDate,
-            CardColor = colorForCard
+            CardColor = _colorForCard
         };
         SubscriptionScroller.Visibility = Visibility.Visible;
         EditModeScroller.Visibility = Visibility.Collapsed;
         CurrencyExpander.Visibility = Visibility.Collapsed;
 
         Subscriptions.Add(subscription);
-        _configManager.UpdateConfig(config => config.Subscriptions.Subscriptions = Subscriptions);
+        ConfigManager.UpdateConfig(config => config.Subscriptions.Subscriptions = Subscriptions);
 
         var card = CreateCard(subscription);
         SubscriptionsStackPanel.Children.Add(card);
@@ -523,12 +478,6 @@ public partial class SubscriptionsControl : UserControl
             SubscriptionCostTextBox.Text = cost.ToString("0.00");
         else
             SubscriptionCostTextBox.Text = "0.00";
-    }
-
-    private void DebugBtn_OnClick(object sender, RoutedEventArgs e)
-    {
-        Subscriptions.Clear();
-        _configManager.UpdateConfig(config => config.Subscriptions.Subscriptions = Subscriptions);
     }
 
     private void OpenCalenderBtn_OnClick(object sender, RoutedEventArgs e)
@@ -556,7 +505,7 @@ public partial class SubscriptionsControl : UserControl
     private void SelectColorBtn_OnClick(object sender, RoutedEventArgs e)
     {
         EditableCard.Background = CreateGradientBrush(ColorPickerOnDialog.Color);
-        colorForCard = ColorPickerOnDialog.Color;
+        _colorForCard = ColorPickerOnDialog.Color;
         DialogHostOperation.IsOpen = false;
     }
 
