@@ -22,5 +22,4 @@ public class Subscription
 
     public DateTime NextPaymentDate { get; set; } // today + 1 month (Period)
     public Color CardColor { get; set; } // #FF0000
-    public bool isNeatCard { get; set; } // yes no
 }

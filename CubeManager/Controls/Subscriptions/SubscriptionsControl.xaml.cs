@@ -24,6 +24,7 @@ public partial class SubscriptionsControl : UserControl
 
     private void SubscriptionsControl_OnLoaded(object sender, RoutedEventArgs e)
     {
+        EditableCard.Background = CreateGradientBrush(ColorPickerOnDialog.Color);
         if (Subscriptions.Count == 0)
         {
             SubscriptionScroller.Visibility = Visibility.Collapsed;
@@ -35,32 +36,9 @@ public partial class SubscriptionsControl : UserControl
             return;
         }
 
-        foreach (var subscription in Subscriptions)
-        {
-            SubscriptionsStackPanel.Children.Add(CreateCard(subscription));
-            switch (subscription.Title)
-            {
-                case "Netflix":
-                    ShowNeatCard(subscription);
-                    break;
-                case "Spotify":
-                    ShowNeatCard(subscription);
-                    break;
-            }
-        }
+        foreach (var subscription in Subscriptions) SubscriptionsStackPanel.Children.Add(CreateCard(subscription));
     }
 
-    private void ShowNeatCard(Subscription subscription)
-    {
-        //override existing card in the SubscriptionsStackPanel
-        var neatCard = new Card
-        {
-            Margin = new Thickness(0, 0, 0, 10),
-            Padding = new Thickness(10),
-            Background = new SolidColorBrush(subscription.CardColor)
-        };
-        
-    }
 
     private void EuroButton_OnClick(object sender, RoutedEventArgs e)
     {
@@ -83,7 +61,7 @@ public partial class SubscriptionsControl : UserControl
         {
             Margin = new Thickness(0, 0, 0, 10),
             Padding = new Thickness(10),
-            Background = new SolidColorBrush(subscription.CardColor)
+            Background = CreateGradientBrush(subscription.CardColor)
         };
 
         // Create the grid
@@ -211,6 +189,33 @@ public partial class SubscriptionsControl : UserControl
         return card;
     }
 
+    private Brush CreateGradientBrush(Color subscriptionCardColor)
+    {
+        var brush = new LinearGradientBrush
+        {
+            StartPoint = new Point(0, 0),
+            EndPoint = new Point(1, 1)
+        };
+
+        var gradientStop1 = new GradientStop
+        {
+            Color = subscriptionCardColor,
+            Offset = 0
+        };
+
+        var color = new MaterialDesignDarkTheme();
+        var gradientStop2 = new GradientStop
+        {
+            Color = color.MaterialDesignCardBackground,
+            Offset = 1
+        };
+
+        brush.GradientStops.Add(gradientStop1);
+        brush.GradientStops.Add(gradientStop2);
+
+        return brush;
+    }
+
     private RoutedEventHandler SubscriptionEditBtn_Click(Guid subscriptionId, Card card)
     {
         return (sender, args) =>
@@ -254,20 +259,6 @@ public partial class SubscriptionsControl : UserControl
 
     private string CalcDateTimeLeft(DateTime firstPaymentDate, int period, bool oneTimePayment, string periodType)
     {
-        //EXAMPLE
-        // firstPaymentDate = 01.01.2023
-        // period = 2
-        // periodType = "Month" or "Months" alwell as "Year" or "Years"  and "Day" or "Days" and "Week" or "Weeks"
-        // oneTimePayment = false
-
-
-        var nextPaymentDate = GetPeriodDate(firstPaymentDate, period, periodType);
-
-        var difference = firstPaymentDate - nextPaymentDate;
-
-        var days = Math.Abs(difference.Days);
-
-
         if (oneTimePayment)
         {
             var oneNextPaymentDate = GetPeriodDate(firstPaymentDate, period, periodType);
@@ -281,25 +272,32 @@ public partial class SubscriptionsControl : UserControl
                     return "Today";
                 case var d when d < 30:
                     return $"{d}D";
-                case var w when w < 365:
+                case var w when w >= 30 && w < 365:
                     return $"{w / 7}W";
-                case var m when m < 365:
+                case var m when m >= 365:
                     return $"{m / 30}M";
                 default:
-                    return $"{oneDifference / 365}Y";
+                    return $"{oneDifference.Days / 365}Y";
             }
         }
 
+        var nextPaymentDate = GetPeriodDate(firstPaymentDate, period, periodType);
+
+        var difference = firstPaymentDate - nextPaymentDate;
+
+        var days = Math.Abs(difference.Days);
+
         _toPayDate = nextPaymentDate;
+
         switch (days)
         {
             case 0:
                 return "Today";
             case var d when d < 30:
                 return $"{d}D";
-            case var w when w < 365:
+            case var w when w >= 30 && w < 365:
                 return $"{w / 7}W";
-            case var m when m < 365:
+            case var m when m >= 365:
                 return $"{m / 30}M";
             default:
                 return $"{days / 365}Y";
@@ -467,7 +465,11 @@ public partial class SubscriptionsControl : UserControl
 
 
         var billingPeriodType = BillingExpander.Header.ToString();
-        if (isOneTimePayment) billingPeriodType = "One Time Payment";
+        if (isOneTimePayment)
+        {
+            billingPeriodType = "One Time Payment";
+            _toPayDate = PaymentDateCalendarOnDialog.SelectedDate!.Value;
+        }
 
         var firstPaymentDate = Convert.ToDateTime(FirstPaymentSetDate.Text.Contains("Set to:")
             ? PaymentDateCalendarOnDialog.SelectedDate!.Value.ToShortDateString()
@@ -501,8 +503,7 @@ public partial class SubscriptionsControl : UserControl
             IsOneTimePayment = isOneTimePayment,
             FirstPaymentDate = firstPaymentDate,
             NextPaymentDate = _toPayDate,
-            CardColor = colorForCard,
-            isNeatCard = false
+            CardColor = colorForCard
         };
         SubscriptionScroller.Visibility = Visibility.Visible;
         EditModeScroller.Visibility = Visibility.Collapsed;
@@ -554,7 +555,7 @@ public partial class SubscriptionsControl : UserControl
 
     private void SelectColorBtn_OnClick(object sender, RoutedEventArgs e)
     {
-        EditableCard.Background = new SolidColorBrush(ColorPickerOnDialog.Color);
+        EditableCard.Background = CreateGradientBrush(ColorPickerOnDialog.Color);
         colorForCard = ColorPickerOnDialog.Color;
         DialogHostOperation.IsOpen = false;
     }
@@ -566,19 +567,5 @@ public partial class SubscriptionsControl : UserControl
         PaymentDateCalendarOnDialog.Visibility = Visibility.Collapsed;
         ColorPickerOnDialog.Visibility = Visibility.Collapsed;
         SelectColorBtnOnDialog.Visibility = Visibility.Collapsed;
-    }
-
-    private void SpotifyTemplateBtn_OnClick(object sender, RoutedEventArgs e)
-    {
-        EditableCard.Background = new SolidColorBrush(Color.FromRgb(21, 69, 25));
-        colorForCard = Color.FromRgb(21, 69, 25);
-        SubscriptionNameTextBox.Text = "Spotify";
-    }
-
-    private void NetflixTemplateBtn_OnClick(object sender, RoutedEventArgs e)
-    {
-        EditableCard.Background = new SolidColorBrush(Color.FromRgb(69, 23, 21));
-        colorForCard = Color.FromRgb(69, 23, 21);
-        SubscriptionNameTextBox.Text = "Netflix";
     }
 }

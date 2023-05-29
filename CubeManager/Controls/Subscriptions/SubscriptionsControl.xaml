@@ -407,7 +407,7 @@
                                            VerticalAlignment="Center" />
                             </StackPanel>
                         </materialDesign:Card>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                             <Button Style="{StaticResource MaterialDesignFlatButton}"
                                     x:Name="ChangeBackgroundBtn"
                                     Click="ChangeBackgroundBtn_OnClick"
@@ -425,57 +425,6 @@
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
-
-
-                            <Expander Header="Select Template"
-                                      Margin="5"
-                                      Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
-                                      materialDesign:ShadowAssist.Darken="True"
-                                      x:Name="TemplateExpander">
-                                <StackPanel Orientation="Vertical">
-                                    <Button
-                                        x:Name="SpotifyTemplateBtn"
-                                        Click="SpotifyTemplateBtn_OnClick"
-                                        HorizontalContentAlignment="Left"
-                                        Margin="5"
-                                        Style="{StaticResource MaterialDesignFlatButton}">
-                                        <Button.Content>
-                                            <StackPanel Orientation="Horizontal">
-                                                <materialDesign:PackIcon Margin="5"
-                                                                         Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                                         VerticalAlignment="Center" Kind="Spotify"
-                                                                         HorizontalAlignment="Left" />
-                                                <TextBlock Text="Spotify"
-                                                           Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                           FontSize="15"
-                                                           VerticalAlignment="Center" HorizontalAlignment="Left" />
-
-                                            </StackPanel>
-                                        </Button.Content>
-                                    </Button>
-                                    <Button
-                                        x:Name="NetflixTemplateBtn"
-                                        Click="NetflixTemplateBtn_OnClick"
-                                        HorizontalContentAlignment="Left"
-                                        Margin="5"
-                                        Style="{StaticResource MaterialDesignFlatButton}">
-                                        <Button.Content>
-                                            <StackPanel Orientation="Horizontal">
-                                                <materialDesign:PackIcon Margin="5"
-                                                                         Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                                         VerticalAlignment="Center" Kind="Netflix"
-                                                                         HorizontalAlignment="Left" />
-                                                <TextBlock Text="Netflix"
-                                                           Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                           FontSize="15"
-                                                           VerticalAlignment="Center" HorizontalAlignment="Left" />
-
-                                            </StackPanel>
-                                        </Button.Content>
-                                    </Button>
-                                </StackPanel>
-                            </Expander>
-
 
                             <Button
                                 HorizontalAlignment="Right"
