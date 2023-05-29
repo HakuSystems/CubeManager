@@ -18,25 +18,38 @@ public partial class SubscriptionsControl : UserControl
     }
 
     private ConfigManager ConfigManager { get; } = new();
-
     private List<Subscription> Subscriptions => ConfigManager.Config.Subscriptions.Subscriptions;
 
-
     private void SubscriptionsControl_OnLoaded(object sender, RoutedEventArgs e)
+    {
+        UpdateUi();
+    }
+
+    private void UpdateUi()
     {
         EditableCard.Background = CreateGradientBrush(ColorPickerOnDialog.Color);
         if (Subscriptions.Count == 0)
         {
-            SubscriptionScroller.Visibility = Visibility.Collapsed;
-            EditModeScroller.Visibility = Visibility.Visible;
-            if (int.TryParse(BillingPeriodTextBox.Text, out var billingPeriod) && billingPeriod > 1)
-                BillingExpander.Header = "Months";
-            else
-                BillingExpander.Header = "Month";
+            SwitchToEditMode();
             return;
         }
 
         foreach (var subscription in Subscriptions) SubscriptionsStackPanel.Children.Add(CreateCard(subscription));
+    }
+
+    private void SwitchToEditMode()
+    {
+        SubscriptionScroller.Visibility = Visibility.Collapsed;
+        EditModeScroller.Visibility = Visibility.Visible;
+        UpdateBillingHeader();
+    }
+
+    private void UpdateBillingHeader()
+    {
+        if (int.TryParse(BillingPeriodTextBox.Text, out var billingPeriod) && billingPeriod > 1)
+            BillingExpander.Header = "Months";
+        else
+            BillingExpander.Header = "Month";
     }
 
 
@@ -341,15 +354,6 @@ public partial class SubscriptionsControl : UserControl
         DialogHostOperation.IsOpen = false;
     }
 
-    private void UpdateBillingHeader(string singular, string plural)
-    {
-        if (int.TryParse(BillingPeriodTextBox.Text, out var billingPeriod) && billingPeriod > 1)
-            BillingExpander.Header = plural;
-        else
-            BillingExpander.Header = singular;
-        BillingExpander.IsExpanded = false;
-    }
-
     private void UpdateButtonText(Button button, string singular, string plural)
     {
         if (int.TryParse(BillingPeriodTextBox.Text, out var billingPeriod) && billingPeriod > 1)
@@ -360,7 +364,7 @@ public partial class SubscriptionsControl : UserControl
 
     private void UpdateBillingHeaderAndButtonText(string singular, string plural)
     {
-        UpdateBillingHeader(singular, plural);
+        UpdateBillingHeader();
         UpdateButtonText(DayBillingBtn, "Day", "Days");
         UpdateButtonText(WeekBillingBtn, "Week", "Weeks");
         UpdateButtonText(MonthBillingBtn, "Month", "Months");
@@ -400,27 +404,10 @@ public partial class SubscriptionsControl : UserControl
 
     private void SaveSubscriptionBtn_OnClick(object sender, RoutedEventArgs e)
     {
+        if (!ValidateInputs())
+            return;
+
         #region Checking for Compilations
-
-        var title = SubscriptionNameTextBox.Text;
-        if (string.IsNullOrEmpty(title))
-        {
-            ErrorHandlingSnackbar.MessageQueue?.Enqueue("Title is required.");
-            return;
-        }
-
-        if (string.IsNullOrEmpty(SubscriptionCostTextBox.Text) ||
-            !decimal.TryParse(SubscriptionCostTextBox.Text, out var cost))
-        {
-            ErrorHandlingSnackbar.MessageQueue?.Enqueue("Price is required.");
-            return;
-        }
-
-        if (CurrencyExpander.Header.Equals("Currency:") || string.IsNullOrEmpty(CurrencyExpander.Header.ToString()))
-        {
-            ErrorHandlingSnackbar.MessageQueue?.Enqueue("Currency is required.");
-            return;
-        }
 
         var description = SubscriptionDescriptionTextBox.Text;
 
@@ -428,18 +415,8 @@ public partial class SubscriptionsControl : UserControl
         var billingPeriodType = BillingExpander.Header.ToString();
 
 
-        if (string.IsNullOrEmpty(PaymentDateCalendarOnDialog.SelectedDate?.ToShortDateString()))
-        {
-            ErrorHandlingSnackbar.MessageQueue?.Enqueue(
-                "Payment date is required.");
-            return;
-        }
-
         var firstPaymentDate = Convert.ToDateTime(PaymentDateCalendarOnDialog.SelectedDate.Value.ToShortDateString());
 
-
-        if (string.IsNullOrEmpty(BillingPeriodTextBox.Text))
-            BillingPeriodTextBox.Text = 1.ToString();
 
         CalcDateTimeLeft(firstPaymentDate, Convert.ToInt32(BillingPeriodTextBox.Text),
             billingPeriodType);
@@ -447,7 +424,53 @@ public partial class SubscriptionsControl : UserControl
         #endregion
 
 
-        var subscription = new Subscription
+        var subscription = CreateSubscription();
+        AddSubscription(subscription);
+    }
+
+    private bool ValidateInputs()
+    {
+        if (string.IsNullOrEmpty(SubscriptionNameTextBox.Text))
+        {
+            ErrorHandlingSnackbar.MessageQueue?.Enqueue("Title is required.");
+            return false;
+        }
+
+        if (string.IsNullOrEmpty(SubscriptionCostTextBox.Text) ||
+            !decimal.TryParse(SubscriptionCostTextBox.Text, out var cost))
+        {
+            ErrorHandlingSnackbar.MessageQueue?.Enqueue("Price is required.");
+            return false;
+        }
+
+        if (CurrencyExpander.Header.Equals("Currency:") || string.IsNullOrEmpty(CurrencyExpander.Header.ToString()))
+        {
+            ErrorHandlingSnackbar.MessageQueue?.Enqueue("Currency is required.");
+            return false;
+        }
+
+        if (string.IsNullOrEmpty(PaymentDateCalendarOnDialog.SelectedDate?.ToShortDateString()))
+        {
+            ErrorHandlingSnackbar.MessageQueue?.Enqueue("Payment date is required.");
+            return false;
+        }
+
+        if (string.IsNullOrEmpty(BillingPeriodTextBox.Text))
+            BillingPeriodTextBox.Text = "1";
+
+        return true;
+    }
+
+    private Subscription CreateSubscription()
+    {
+        var title = SubscriptionNameTextBox.Text;
+        var description = SubscriptionDescriptionTextBox.Text;
+        var billingPeriodType = BillingExpander.Header.ToString();
+        var firstPaymentDate = Convert.ToDateTime(PaymentDateCalendarOnDialog.SelectedDate.Value.ToShortDateString());
+
+        CalcDateTimeLeft(firstPaymentDate, Convert.ToInt32(BillingPeriodTextBox.Text), billingPeriodType);
+
+        return new Subscription
         {
             Id = Guid.NewGuid(),
             Title = title,
@@ -460,15 +483,24 @@ public partial class SubscriptionsControl : UserControl
             NextPaymentDate = _toPayDate,
             CardColor = _colorForCard
         };
-        SubscriptionScroller.Visibility = Visibility.Visible;
-        EditModeScroller.Visibility = Visibility.Collapsed;
-        CurrencyExpander.Visibility = Visibility.Collapsed;
+    }
 
+    private void AddSubscription(Subscription subscription)
+    {
         Subscriptions.Add(subscription);
         ConfigManager.UpdateConfig(config => config.Subscriptions.Subscriptions = Subscriptions);
 
         var card = CreateCard(subscription);
         SubscriptionsStackPanel.Children.Add(card);
+
+        SwitchToSubscriptionView();
+    }
+
+    private void SwitchToSubscriptionView()
+    {
+        SubscriptionScroller.Visibility = Visibility.Visible;
+        EditModeScroller.Visibility = Visibility.Collapsed;
+        CurrencyExpander.Visibility = Visibility.Collapsed;
     }
 
     private void SubscriptionPriceTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
