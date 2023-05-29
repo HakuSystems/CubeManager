@@ -1,10 +1,11 @@
-using System.Runtime.InteropServices.JavaScript;
+using System.Windows.Media;
 
 namespace CubeManager.Models.Subscriptions;
 
 public class SubscriptionsData
 {
     public List<Subscription> Subscriptions { get; set; } = new();
+    public Color BackgroundColor { get; set; }
 }
 
 public class Subscription
@@ -18,6 +19,8 @@ public class Subscription
     public string? PeriodType { get; set; } // Month
     public bool IsOneTimePayment { get; set; } // yes no
     public DateTime FirstPaymentDate { get; set; } // today
-    
+
     public DateTime NextPaymentDate { get; set; } // today + 1 month (Period)
+    public Color CardColor { get; set; } // #FF0000
+    public bool isNeatCard { get; set; } // yes no
 }

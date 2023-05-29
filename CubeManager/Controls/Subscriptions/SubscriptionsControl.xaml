@@ -56,6 +56,8 @@
                     </StackPanel>
                 </Button.Content>
             </Button>
+
+
             <Button
                 x:Name="DebugBtn"
                 Click="DebugBtn_OnClick"
@@ -106,39 +108,73 @@
         <ScrollViewer Grid.Row="1" Grid.Column="1" Visibility="Visible" x:Name="EditModeScroller"
                       VerticalScrollBarVisibility="Auto">
             <materialDesign:DialogHost
-                VerticalAlignment="Center"
                 CloseOnClickAway="True"
                 DialogTheme="Dark"
+                MinWidth="500"
+                MinHeight="400"
+                DialogClosed="DialogHostOperation_OnDialogClosed"
                 x:Name="DialogHostOperation">
 
                 <materialDesign:DialogHost.DialogContent>
-                    <StackPanel>
-                        <Calendar x:Name="PaymentDateCalendar" />
-                        <Button
-                            x:Name="SelectDateBtn"
-                            Click="SelectDateBtn_OnClick"
-                            FontSize="15"
-                            Margin="5"
-                            Foreground="White"
-                            Style="{StaticResource MaterialDesignFlatButton}"
-                            Content="Select Date" />
-                    </StackPanel>
+                    <materialDesign:Card
+                        Padding="15"
+                        MinWidth="500"
+                        MinHeight="400">
+                        <StackPanel>
+                            <Calendar x:Name="PaymentDateCalendarOnDialog" Visibility="Collapsed" />
+                            <Button
+                                x:Name="SelectDateBtnOnDialog"
+                                Visibility="Collapsed"
+                                Click="SelectDateBtn_OnClick"
+                                FontSize="15"
+                                Margin="5"
+                                Foreground="White"
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                Content="Select Date" />
+                            <materialDesign:ColorPicker Visibility="Collapsed"
+                                                        Height="450"
+                                                        x:Name="ColorPickerOnDialog"
+                                                        VerticalAlignment="Bottom" />
+                            <Button x:Name="SelectColorBtnOnDialog" Visibility="Collapsed" Margin="5"
+                                    Click="SelectColorBtn_OnClick">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                                VerticalAlignment="Stretch">
+
+                                        <materialDesign:PackIcon Kind="Colorize"
+                                                                 VerticalAlignment="Center"
+                                                                 Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                                                                 Height="30" Width="30" />
+                                        <TextBlock Text="Change Color"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                                                   FontSize="20"
+                                                   FontWeight="Bold" />
+                                    </StackPanel>
+
+                                </Button.Content>
+
+                            </Button>
+                        </StackPanel>
+                    </materialDesign:Card>
+
                 </materialDesign:DialogHost.DialogContent>
 
 
-                <StackPanel ZIndex="100" Orientation="Vertical">
+                <StackPanel ZIndex="100" VerticalAlignment="Top" Orientation="Vertical">
                     <GroupBox Header="Edit this Example">
-                        <materialDesign:Card Margin="0,0,0,10" Padding="10">
+                        <materialDesign:Card x:Name="EditableCard"
+                                             Margin="0,0,0,10" Padding="10">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition Width="auto" />
                                 </Grid.ColumnDefinitions>
-
                                 <StackPanel Grid.Column="0">
                                     <StackPanel
                                         Orientation="Vertical"
-                                        HorizontalAlignment="Left">
+                                        HorizontalAlignment="Stretch">
+
                                         <TextBox materialDesign:HintAssist.Hint="Subscription Title"
                                                  FontWeight="SemiBold"
                                                  x:Name="SubscriptionNameTextBox" />
@@ -357,8 +393,8 @@
                         <materialDesign:Card Background="{StaticResource MaterialDesignDarkSeparatorBackground}">
                             <StackPanel Orientation="Horizontal">
                                 <Button
-                                    x:Name="FirstPaymentBtn"
-                                    Click="FirstPaymentBtn_OnClick"
+                                    x:Name="OpenCalenderBtn"
+                                    Click="OpenCalenderBtn_OnClick"
                                     FontSize="15"
                                     Margin="5"
                                     Style="{StaticResource MaterialDesignFlatButton}"
@@ -371,19 +407,95 @@
                                            VerticalAlignment="Center" />
                             </StackPanel>
                         </materialDesign:Card>
-                        <Button Style="{StaticResource MaterialDesignFlatAccentButton}"
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                    x:Name="ChangeBackgroundBtn"
+                                    Click="ChangeBackgroundBtn_OnClick"
+                                    HorizontalAlignment="Right"
+                                    VerticalContentAlignment="Center">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Color"
+                                                                 Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                                 VerticalAlignment="Center" Margin="5" />
+                                        <TextBlock Text="Change Background Color "
+                                                   Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                   VerticalAlignment="Center" />
+
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+
+
+                            <Expander Header="Select Template"
+                                      Margin="5"
+                                      Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                                      materialDesign:ShadowAssist.Darken="True"
+                                      x:Name="TemplateExpander">
+                                <StackPanel Orientation="Vertical">
+                                    <Button
+                                        x:Name="SpotifyTemplateBtn"
+                                        Click="SpotifyTemplateBtn_OnClick"
+                                        HorizontalContentAlignment="Left"
+                                        Margin="5"
+                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                        <Button.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <materialDesign:PackIcon Margin="5"
+                                                                         Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                                         VerticalAlignment="Center" Kind="Spotify"
+                                                                         HorizontalAlignment="Left" />
+                                                <TextBlock Text="Spotify"
+                                                           Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                           FontSize="15"
+                                                           VerticalAlignment="Center" HorizontalAlignment="Left" />
+
+                                            </StackPanel>
+                                        </Button.Content>
+                                    </Button>
+                                    <Button
+                                        x:Name="NetflixTemplateBtn"
+                                        Click="NetflixTemplateBtn_OnClick"
+                                        HorizontalContentAlignment="Left"
+                                        Margin="5"
+                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                        <Button.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <materialDesign:PackIcon Margin="5"
+                                                                         Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                                         VerticalAlignment="Center" Kind="Netflix"
+                                                                         HorizontalAlignment="Left" />
+                                                <TextBlock Text="Netflix"
+                                                           Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                           FontSize="15"
+                                                           VerticalAlignment="Center" HorizontalAlignment="Left" />
+
+                                            </StackPanel>
+                                        </Button.Content>
+                                    </Button>
+                                </StackPanel>
+                            </Expander>
+
+
+                            <Button
                                 HorizontalAlignment="Right"
                                 x:Name="SaveSubscriptionBtn"
                                 Click="SaveSubscriptionBtn_OnClick"
                                 VerticalContentAlignment="Center">
-                            <Button.Content>
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="ContentSave" VerticalAlignment="Center" Margin="5" />
-                                    <TextBlock Text="Save subscriiption" VerticalAlignment="Center" />
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="ContentSave"
+                                                                 Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                                 VerticalAlignment="Center" Margin="5" />
+                                        <TextBlock Text="Save subscriiption"
+                                                   Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                   VerticalAlignment="Center" />
 
-                                </StackPanel>
-                            </Button.Content>
-                        </Button>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+
                     </StackPanel>
                 </StackPanel>
             </materialDesign:DialogHost>
