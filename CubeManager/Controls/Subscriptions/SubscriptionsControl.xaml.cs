@@ -34,24 +34,23 @@ public partial class SubscriptionsControl : UserControl
             return;
         }
 
-        foreach (var subscription in Subscriptions) SubscriptionsStackPanel.Children.Add(CreateCard(subscription));
+        //Subscriptions.Sort by NextPaymentDate
+        Subscriptions.Sort((subscription1, subscription2) =>
+            subscription1.NextPaymentDate.CompareTo(subscription2.NextPaymentDate));
+        //show sorted subscriptions with CreateCard
+        foreach (var subscription in Subscriptions)
+            SubscriptionsStackPanel.Children.Add(CreateCard(subscription));
     }
 
     private void SwitchToEditMode()
     {
         SubscriptionScroller.Visibility = Visibility.Collapsed;
         EditModeScroller.Visibility = Visibility.Visible;
-        UpdateBillingHeader();
     }
 
-    private void UpdateBillingHeader()
+    private void UpdateBillingHeader(Expander billingExpander, string singular, string plural)
     {
-        if (int.TryParse(BillingPeriodTextBox.Text, out var billingPeriod) && billingPeriod > 1)
-            BillingExpander.Header = "Months";
-        else
-            BillingExpander.Header = "Month";
     }
-
 
     private void EuroButton_OnClick(object sender, RoutedEventArgs e)
     {
@@ -364,31 +363,35 @@ public partial class SubscriptionsControl : UserControl
 
     private void UpdateBillingHeaderAndButtonText(string singular, string plural)
     {
-        UpdateBillingHeader();
-        UpdateButtonText(DayBillingBtn, "Day", "Days");
-        UpdateButtonText(WeekBillingBtn, "Week", "Weeks");
-        UpdateButtonText(MonthBillingBtn, "Month", "Months");
-        UpdateButtonText(YearBillingBtn, "Year", "Years");
+        UpdateButtonText(DayBillingBtn, singular, plural);
+        UpdateButtonText(WeekBillingBtn, singular, plural);
+        UpdateButtonText(MonthBillingBtn, singular, plural);
+        UpdateButtonText(YearBillingBtn, singular, plural);
+        //UpdateBillingHeader(BillingExpander,singular, plural);
     }
 
     private void DayBillingBtn_OnClick(object sender, RoutedEventArgs e)
     {
         UpdateBillingHeaderAndButtonText("Day", "Days");
+        BillingExpander.IsExpanded = false;
     }
 
     private void MonthBillingBtn_OnClick(object sender, RoutedEventArgs e)
     {
         UpdateBillingHeaderAndButtonText("Month", "Months");
+        BillingExpander.IsExpanded = false;
     }
 
     private void WeekBillingBtn_OnClick(object sender, RoutedEventArgs e)
     {
         UpdateBillingHeaderAndButtonText("Week", "Weeks");
+        BillingExpander.IsExpanded = false;
     }
 
     private void YearBillingBtn_OnClick(object sender, RoutedEventArgs e)
     {
         UpdateBillingHeaderAndButtonText("Year", "Years");
+        BillingExpander.IsExpanded = false;
     }
 
     private void BillingPeriodTextBox_OnTextChanged(object sender, TextChangedEventArgs e)

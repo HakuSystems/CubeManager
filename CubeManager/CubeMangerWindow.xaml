@@ -235,6 +235,7 @@
             <Button
                 BorderThickness="0"
                 x:Name="SubscriptionsBtn"
+                IsEnabled="False"
                 Click="SubscriptionsBtn_OnClick"
                 HorizontalContentAlignment="Left"
                 materiaDesign:ButtonAssist.CornerRadius="0,5,5,0"
@@ -248,7 +249,7 @@
                             Foreground="{DynamicResource MaterialDesignDarkForeground}"
                             Margin="0,5,5,5" Kind="Subscriptions" />
                         <TextBlock
-                            Text="SUBSCRIPTIONS (Working on)"
+                            Text="SUBSCRIPTIONS (buggy)"
                             VerticalAlignment="Center"
                             Foreground="{DynamicResource MaterialDesignDarkForeground}"
                             Style="{DynamicResource MaterialDesignButtonTextBlock}" />
