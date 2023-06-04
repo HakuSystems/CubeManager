@@ -10,7 +10,6 @@ namespace CubeManager.Controls;
 
 public partial class SettingsControl : UserControl
 {
-    private readonly ConfigManager _configManager = new();
     private readonly Dictionary<Card, Color> originalColors = new();
 
     public SettingsControl()
@@ -21,8 +20,14 @@ public partial class SettingsControl : UserControl
 
     private bool EnableDopamineEffects
     {
-        get => _configManager.Config.Settings.EnableDopamineEffects;
-        set => _configManager.UpdateConfig(config => config.Settings.EnableDopamineEffects = value);
+        get => ConfigManager.Instance.Config.Settings.EnableDopamineEffects;
+        set => ConfigManager.Instance.UpdateConfig(config => config.Settings.EnableDopamineEffects = value);
+    }
+
+    private bool EnableDebugConsole
+    {
+        get => ConfigManager.Instance.Config.Settings.EnableDebugConsole;
+        set => ConfigManager.Instance.UpdateConfig(config => config.Settings.EnableDebugConsole = value);
     }
 
 
@@ -84,11 +89,30 @@ public partial class SettingsControl : UserControl
 
     private void SettingsControl_OnLoaded(object sender, RoutedEventArgs e)
     {
+        Console.WriteLine("SettingsControl_OnLoaded");
         DopamineToggle.IsChecked = EnableDopamineEffects;
+        DebugLogCardCheckBox.IsChecked = EnableDebugConsole;
     }
 
     private void DopamineCard_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
         DopamineToggle.IsChecked = !DopamineToggle.IsChecked;
+    }
+
+    private void DebugLogCard_OnMouseDown(object sender, MouseButtonEventArgs e)
+    {
+        DebugLogCardCheckBox.IsChecked = !DebugLogCardCheckBox.IsChecked;
+    }
+
+    private void DebugLogCardCheckBox_OnChecked(object sender, RoutedEventArgs e)
+    {
+        AnimationMaterialCard(DebugLogCard, true);
+        EnableDebugConsole = true;
+    }
+
+    private void DebugLogCardCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
+    {
+        AnimationMaterialCard(DebugLogCard, false);
+        EnableDebugConsole = false;
     }
 }

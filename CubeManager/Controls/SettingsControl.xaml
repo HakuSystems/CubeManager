@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:local="clr-namespace:CubeManager.Controls"
              mc:Ignorable="d"
              Foreground="{DynamicResource MaterialDesignDarkForeground}"
              Background="{DynamicResource MaterialDesignDarkBackground}"
@@ -26,7 +25,8 @@
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="20">
-                <materialDesign:Card MouseDown="DopamineCard_OnMouseDown" x:Name="DopamineCard" Margin="0,0,0,10" Padding="10">
+                <materialDesign:Card MouseDown="DopamineCard_OnMouseDown" x:Name="DopamineCard" Margin="0,0,0,10"
+                                     Padding="10">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -38,7 +38,7 @@
                             <TextBlock
                                 Text="Activate or deactivate attention-grabbing animations, like the 'level up' effect. These animations are created to stimulate a dopamine response, enhancing the user's experience by making it more enjoyable. Note: this does not affect the main theme of the application."
                                 FontStyle="Italic" FontSize="12" Opacity="0.7"
-                                TextWrapping="Wrap"/>
+                                TextWrapping="Wrap" />
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,10,0,0">
@@ -51,13 +51,42 @@
                                 <CheckBox
                                     x:Name="DopamineToggle"
                                     Checked="DopamineToggle_OnChecked"
-                                          Unchecked="DopamineToggle_OnUnchecked"
-                                          />
+                                    Unchecked="DopamineToggle_OnUnchecked" />
                             </materialDesign:Card>
                         </StackPanel>
                     </Grid>
                 </materialDesign:Card>
+                <materialDesign:Card x:Name="DebugLogCard" MouseDown="DebugLogCard_OnMouseDown" Margin="0,0,0,10"
+                                     Padding="10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
 
+                        <StackPanel Grid.Column="0">
+                            <Label Content="Logging" FontWeight="SemiBold" />
+                            <TextBlock
+                                Text="Open log window on startup"
+                                FontStyle="Italic" FontSize="12" Opacity="0.7"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,10,0,0">
+                            <materialDesign:Card
+                                Padding="10"
+                                Height="40"
+                                Width="40"
+                                Background="{DynamicResource MaterialDesignDarkSeparatorBackground}">
+
+                                <CheckBox
+                                    x:Name="DebugLogCardCheckBox"
+                                    Checked="DebugLogCardCheckBox_OnChecked"
+                                    Unchecked="DebugLogCardCheckBox_OnUnchecked" />
+                            </materialDesign:Card>
+                        </StackPanel>
+                    </Grid>
+                </materialDesign:Card>
             </StackPanel>
         </ScrollViewer>
 

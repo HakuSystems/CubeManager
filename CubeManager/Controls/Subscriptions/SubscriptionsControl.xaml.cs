@@ -17,8 +17,7 @@ public partial class SubscriptionsControl : UserControl
         InitializeComponent();
     }
 
-    private ConfigManager ConfigManager { get; } = new();
-    private List<Subscription> Subscriptions => ConfigManager.Config.Subscriptions.Subscriptions;
+    private List<Subscription> Subscriptions => ConfigManager.Instance.Config.Subscriptions.Subscriptions;
 
     private void SubscriptionsControl_OnLoaded(object sender, RoutedEventArgs e)
     {
@@ -244,7 +243,7 @@ public partial class SubscriptionsControl : UserControl
                 PaymentDateCalendarOnDialog.SelectedDate = subscription.FirstPaymentDate;
                 BillingExpander.Header = subscription.PeriodType;
                 Subscriptions.Remove(subscription);
-                ConfigManager.UpdateConfig(config => config.Subscriptions.Subscriptions = Subscriptions);
+                ConfigManager.Instance.UpdateConfig(config => config.Subscriptions.Subscriptions = Subscriptions);
                 SubscriptionsStackPanel.Children.Remove(card);
                 SubscriptionScroller.Visibility = Visibility.Collapsed;
                 EditModeScroller.Visibility = Visibility.Visible;
@@ -263,7 +262,7 @@ public partial class SubscriptionsControl : UserControl
             if (subscription != null)
             {
                 Subscriptions.Remove(subscription);
-                ConfigManager.UpdateConfig(config => config.Subscriptions.Subscriptions = Subscriptions);
+                ConfigManager.Instance.UpdateConfig(config => config.Subscriptions.Subscriptions = Subscriptions);
                 SubscriptionsStackPanel.Children.Remove(card);
             }
         };
@@ -491,7 +490,7 @@ public partial class SubscriptionsControl : UserControl
     private void AddSubscription(Subscription subscription)
     {
         Subscriptions.Add(subscription);
-        ConfigManager.UpdateConfig(config => config.Subscriptions.Subscriptions = Subscriptions);
+        ConfigManager.Instance.UpdateConfig(config => config.Subscriptions.Subscriptions = Subscriptions);
 
         var card = CreateCard(subscription);
         SubscriptionsStackPanel.Children.Add(card);
