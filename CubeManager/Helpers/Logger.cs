@@ -11,6 +11,7 @@ public class Logger
     public Logger()
     {
         if (!Directory.Exists(LogDirectory)) Directory.CreateDirectory(LogDirectory);
+        AllocConsole();
         //HandleConsole(); TODO: Fix console
         DeleteOldLogs();
     }
@@ -43,7 +44,6 @@ public class Logger
             LogSeverity.Critical => ConsoleColor.DarkRed,
             LogSeverity.Warning => ConsoleColor.Yellow,
             LogSeverity.PrioInfo => ConsoleColor.Cyan,
-            LogSeverity.Log => ConsoleColor.DarkGray,
             LogSeverity.Info => ConsoleColor.White,
             LogSeverity.Debug => ConsoleColor.DarkGray,
             _ => ConsoleColor.White
@@ -113,12 +113,7 @@ public class Logger
         Log(LogSeverity.Debug, message);
     }
 
-    public void LogMessage(string message)
-    {
-        Log(LogSeverity.Log, message);
-    }
-
-    public static void PrioInfo(string message)
+    public void PrioInfo(string message)
     {
         Log(LogSeverity.PrioInfo, message);
     }
@@ -140,7 +135,6 @@ public class Logger
         Critical,
         Warning,
         PrioInfo,
-        Log,
         Info,
         Debug
     }

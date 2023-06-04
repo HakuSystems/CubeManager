@@ -235,7 +235,6 @@
             <Button
                 BorderThickness="0"
                 x:Name="SubscriptionsBtn"
-                IsEnabled="False"
                 Click="SubscriptionsBtn_OnClick"
                 HorizontalContentAlignment="Left"
                 materiaDesign:ButtonAssist.CornerRadius="0,5,5,0"

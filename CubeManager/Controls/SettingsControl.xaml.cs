@@ -10,10 +10,12 @@ namespace CubeManager.Controls;
 
 public partial class SettingsControl : UserControl
 {
+    private readonly Logger _logger;
     private readonly Dictionary<Card, Color> originalColors = new();
 
     public SettingsControl()
     {
+        _logger = new Logger();
         InitializeComponent();
     }
 
@@ -37,6 +39,7 @@ public partial class SettingsControl : UserControl
 
         if (activationStatus)
         {
+            _logger.Debug($"Animating card {card.Name} to green");
             if (!originalColors.ContainsKey(card))
                 originalColors[card] = solidColorBrush.Color; // Store the original color
 
@@ -52,9 +55,11 @@ public partial class SettingsControl : UserControl
             card.Background = solidColorBrush;
 
             solidColorBrush.BeginAnimation(SolidColorBrush.ColorProperty, colorAnimation);
+            _logger.Debug($"Card {card.Name} animated to green");
         }
         else
         {
+            _logger.Debug($"Animating card {card.Name} to original color");
             if (!originalColors
                     .ContainsKey(card))
                 return; // If there is no stored original color for this card, we can't animate it
@@ -71,47 +76,54 @@ public partial class SettingsControl : UserControl
             card.Background = solidColorBrush;
 
             solidColorBrush.BeginAnimation(SolidColorBrush.ColorProperty, colorAnimation);
+            _logger.Debug($"Card {card.Name} animated to original color");
         }
     }
 
 
     private void DopamineToggle_OnChecked(object sender, RoutedEventArgs e)
     {
+        _logger.Debug("DopamineToggle_OnChecked");
         AnimationMaterialCard(DopamineCard, true);
         EnableDopamineEffects = true;
     }
 
     private void DopamineToggle_OnUnchecked(object sender, RoutedEventArgs e)
     {
+        _logger.Debug("DopamineToggle_OnUnchecked");
         AnimationMaterialCard(DopamineCard, false);
         EnableDopamineEffects = false;
     }
 
     private void SettingsControl_OnLoaded(object sender, RoutedEventArgs e)
     {
-        Console.WriteLine("SettingsControl_OnLoaded");
+        _logger.Debug("SettingsControl_OnLoaded");
         DopamineToggle.IsChecked = EnableDopamineEffects;
         DebugLogCardCheckBox.IsChecked = EnableDebugConsole;
     }
 
     private void DopamineCard_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
+        _logger.Debug("DopamineCard_OnMouseDown");
         DopamineToggle.IsChecked = !DopamineToggle.IsChecked;
     }
 
     private void DebugLogCard_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
+        _logger.Debug("DebugLogCard_OnMouseDown");
         DebugLogCardCheckBox.IsChecked = !DebugLogCardCheckBox.IsChecked;
     }
 
     private void DebugLogCardCheckBox_OnChecked(object sender, RoutedEventArgs e)
     {
+        _logger.Debug("DebugLogCardCheckBox_OnChecked");
         AnimationMaterialCard(DebugLogCard, true);
         EnableDebugConsole = true;
     }
 
     private void DebugLogCardCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
     {
+        _logger.Debug("DebugLogCardCheckBox_OnUnchecked");
         AnimationMaterialCard(DebugLogCard, false);
         EnableDebugConsole = false;
     }
