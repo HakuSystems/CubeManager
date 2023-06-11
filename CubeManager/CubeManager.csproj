@@ -9,11 +9,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Resources\Images\" />
-      <Folder Include="Resources\Styles\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
       <PackageReference Include="MaterialDesignColors" Version="2.1.2" />
       <PackageReference Include="MaterialDesignThemes" Version="4.8.0" />
@@ -21,10 +16,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Page Update="Controls\Subscriptions\SubscriptionsControl.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
+      <Page Update="Controls\SubscriptionsControl.xaml">
+          <Generator>MSBuild:Compile</Generator>
+          <XamlRuntime>Wpf</XamlRuntime>
+          <SubType>Designer</SubType>
       </Page>
     </ItemGroup>
 

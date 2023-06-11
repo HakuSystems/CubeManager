@@ -99,7 +99,6 @@ public partial class SettingsControl : UserControl
     {
         _logger.Debug("SettingsControl_OnLoaded");
         DopamineToggle.IsChecked = EnableDopamineEffects;
-        DebugLogCardCheckBox.IsChecked = EnableDebugConsole;
     }
 
     private void DopamineCard_OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -108,23 +107,15 @@ public partial class SettingsControl : UserControl
         DopamineToggle.IsChecked = !DopamineToggle.IsChecked;
     }
 
-    private void DebugLogCard_OnMouseDown(object sender, MouseButtonEventArgs e)
+    private void ThemeCard_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
-        _logger.Debug("DebugLogCard_OnMouseDown");
-        DebugLogCardCheckBox.IsChecked = !DebugLogCardCheckBox.IsChecked;
+        _logger.Debug("ThemeCard_OnMouseDown");
+        DialogHostOperation.IsOpen = true;
     }
 
-    private void DebugLogCardCheckBox_OnChecked(object sender, RoutedEventArgs e)
+    private void DialogHostOperation_OnDialogClosed(object sender, DialogClosedEventArgs eventargs)
     {
-        _logger.Debug("DebugLogCardCheckBox_OnChecked");
-        AnimationMaterialCard(DebugLogCard, true);
-        EnableDebugConsole = true;
-    }
-
-    private void DebugLogCardCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
-    {
-        _logger.Debug("DebugLogCardCheckBox_OnUnchecked");
-        AnimationMaterialCard(DebugLogCard, false);
-        EnableDebugConsole = false;
+        _logger.Debug("DialogHostOperation_OnDialogClosed");
+        DialogHostOperation.IsOpen = false;
     }
 }

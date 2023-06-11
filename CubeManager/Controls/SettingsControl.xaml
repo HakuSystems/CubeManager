@@ -10,85 +10,117 @@
              Loaded="SettingsControl_OnLoaded"
              d:DesignHeight="450" d:DesignWidth="300">
 
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal">
-            <materialDesign:PackIcon Kind="SettingsOutline" Height="35" Width="35" VerticalAlignment="Center"
-                                     Margin="5" />
-            <Label Content="Settings" FontSize="24" FontWeight="Bold" VerticalAlignment="Center" />
+    <materialDesign:DialogHost
+        CloseOnClickAway="True"
+        IsOpen="False"
+        DialogTheme="Dark"
+        DialogClosed="DialogHostOperation_OnDialogClosed"
+        x:Name="DialogHostOperation">
 
-        </StackPanel>
+        <!--Dialog-->
+        <materialDesign:DialogHost.DialogContent>
+            <!--Dialog Theme Related-->
+            <materialDesign:Card Padding="20" Margin="0,0,0,10">
+                <StackPanel Orientation="Vertical">
+                    <materialDesign:PackIcon Kind="InformationOutline" Height="35" Width="35"
+                                             VerticalAlignment="Center" Margin="5" />
+                    <Label Content="Information" FontSize="24" FontWeight="Bold" VerticalAlignment="Center" />
+                    <TextBlock
+                        Text="This application is still in development. If you find any bugs, please report them to the developer. If you have any suggestions, please let the developer know. Thank you for using this application!"
+                        FontStyle="Italic" FontSize="12" Opacity="0.7"
+                        TextWrapping="Wrap" />
 
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <StackPanel Margin="20">
-                <materialDesign:Card MouseDown="DopamineCard_OnMouseDown" x:Name="DopamineCard" Margin="0,0,0,10"
-                                     Padding="10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
+                </StackPanel>
+            </materialDesign:Card>
+            <!--Dialog Theme Related-->
 
-                        <StackPanel Grid.Column="0">
-                            <Label Content="Enable Dopamine Effects" FontWeight="SemiBold" />
-                            <TextBlock
-                                Text="Activate or deactivate attention-grabbing animations, like the 'level up' effect. These animations are created to stimulate a dopamine response, enhancing the user's experience by making it more enjoyable. Note: this does not affect the main theme of the application."
-                                FontStyle="Italic" FontSize="12" Opacity="0.7"
-                                TextWrapping="Wrap" />
-                        </StackPanel>
+        </materialDesign:DialogHost.DialogContent>
+        <!--Dialog-->
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,10,0,0">
-                            <materialDesign:Card
-                                Padding="10"
-                                Height="40"
-                                Width="40"
-                                Background="{DynamicResource MaterialDesignDarkSeparatorBackground}">
 
-                                <CheckBox
-                                    x:Name="DopamineToggle"
-                                    Checked="DopamineToggle_OnChecked"
-                                    Unchecked="DopamineToggle_OnUnchecked" />
-                            </materialDesign:Card>
-                        </StackPanel>
-                    </Grid>
-                </materialDesign:Card>
-                <materialDesign:Card x:Name="DebugLogCard" MouseDown="DebugLogCard_OnMouseDown" Margin="0,0,0,10"
-                                     Padding="10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="SettingsOutline" Height="35" Width="35" VerticalAlignment="Center"
+                                         Margin="5" />
+                <Label Content="Settings" FontSize="24" FontWeight="Bold" VerticalAlignment="Center" />
 
-                        <StackPanel Grid.Column="0">
-                            <Label Content="Logging" FontWeight="SemiBold" />
-                            <TextBlock
-                                Text="Open log window on startup"
-                                FontStyle="Italic" FontSize="12" Opacity="0.7"
-                                TextWrapping="Wrap" />
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,10,0,0">
-                            <materialDesign:Card
-                                Padding="10"
-                                Height="40"
-                                Width="40"
-                                Background="{DynamicResource MaterialDesignDarkSeparatorBackground}">
-
-                                <CheckBox
-                                    x:Name="DebugLogCardCheckBox"
-                                    Checked="DebugLogCardCheckBox_OnChecked"
-                                    Unchecked="DebugLogCardCheckBox_OnUnchecked" />
-                            </materialDesign:Card>
-                        </StackPanel>
-                    </Grid>
-                </materialDesign:Card>
             </StackPanel>
-        </ScrollViewer>
 
-    </Grid>
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="20">
+                    <!--Dopamine Effects-->
+                    <materialDesign:Card MouseDown="DopamineCard_OnMouseDown" x:Name="DopamineCard" Margin="0,0,0,10"
+                                         Padding="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <Label Content="Enable Dopamine Effects" FontWeight="SemiBold" />
+                                <TextBlock
+                                    Text="Activate or deactivate attention-grabbing animations, like the 'level up' effect. These animations are created to stimulate a dopamine response, enhancing the user's experience by making it more enjoyable. Note: this does not affect the main theme of the application."
+                                    FontStyle="Italic" FontSize="12" Opacity="0.7"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,10,0,0">
+                                <materialDesign:Card
+                                    Padding="10"
+                                    Height="40"
+                                    Width="40"
+                                    Background="{DynamicResource MaterialDesignDarkSeparatorBackground}">
+
+                                    <CheckBox
+                                        x:Name="DopamineToggle"
+                                        Checked="DopamineToggle_OnChecked"
+                                        Unchecked="DopamineToggle_OnUnchecked" />
+                                </materialDesign:Card>
+                            </StackPanel>
+                        </Grid>
+                    </materialDesign:Card>
+                    <!--Dopamine Effects-->
+
+                    <!--Theme-->
+                    <materialDesign:Card x:Name="ThemeCard" MouseDown="ThemeCard_OnMouseDown" Margin="0,0,0,10"
+                                         Padding="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <Label Content="Theme" FontWeight="SemiBold" />
+                                <TextBlock
+                                    Text="Change the Theme of the application. Note: this does not affect the dopamine effects."
+                                    FontStyle="Italic" FontSize="12" Opacity="0.7"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,10,0,0">
+                                <materialDesign:Card
+                                    Padding="10"
+                                    Height="40"
+                                    Width="40"
+                                    Background="{DynamicResource MaterialDesignDarkSeparatorBackground}">
+
+                                    <materialDesign:PackIcon Kind="Palette" Foreground="White" />
+
+                                </materialDesign:Card>
+                            </StackPanel>
+                        </Grid>
+                    </materialDesign:Card>
+                    <!--Theme-->
+                </StackPanel>
+            </ScrollViewer>
+
+        </Grid>
+    </materialDesign:DialogHost>
 </UserControl>
