@@ -26,12 +26,6 @@ public partial class SettingsControl : UserControl
         set => ConfigManager.Instance.UpdateConfig(config => config.Settings.EnableDopamineEffects = value);
     }
 
-    private bool EnableDebugConsole
-    {
-        get => ConfigManager.Instance.Config.Settings.EnableDebugConsole;
-        set => ConfigManager.Instance.UpdateConfig(config => config.Settings.EnableDebugConsole = value);
-    }
-
 
     private void AnimationMaterialCard(Card card, bool activationStatus)
     {
@@ -105,12 +99,6 @@ public partial class SettingsControl : UserControl
     {
         _logger.Debug("DopamineCard_OnMouseDown");
         DopamineToggle.IsChecked = !DopamineToggle.IsChecked;
-    }
-
-    private void ThemeCard_OnMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        _logger.Debug("ThemeCard_OnMouseDown");
-        DialogHostOperation.IsOpen = true;
     }
 
     private void DialogHostOperation_OnDialogClosed(object sender, DialogClosedEventArgs eventargs)

@@ -86,38 +86,6 @@
                         </Grid>
                     </materialDesign:Card>
                     <!--Dopamine Effects-->
-
-                    <!--Theme-->
-                    <materialDesign:Card x:Name="ThemeCard" MouseDown="ThemeCard_OnMouseDown" Margin="0,0,0,10"
-                                         Padding="10">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="auto" />
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel Grid.Column="0">
-                                <Label Content="Theme" FontWeight="SemiBold" />
-                                <TextBlock
-                                    Text="Change the Theme of the application. Note: this does not affect the dopamine effects."
-                                    FontStyle="Italic" FontSize="12" Opacity="0.7"
-                                    TextWrapping="Wrap" />
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,10,0,0">
-                                <materialDesign:Card
-                                    Padding="10"
-                                    Height="40"
-                                    Width="40"
-                                    Background="{DynamicResource MaterialDesignDarkSeparatorBackground}">
-
-                                    <materialDesign:PackIcon Kind="Palette" Foreground="White" />
-
-                                </materialDesign:Card>
-                            </StackPanel>
-                        </Grid>
-                    </materialDesign:Card>
-                    <!--Theme-->
                 </StackPanel>
             </ScrollViewer>
 

@@ -12,28 +12,12 @@ public class Logger
     {
         if (!Directory.Exists(LogDirectory)) Directory.CreateDirectory(LogDirectory);
         AllocConsole();
-        //HandleConsole(); TODO: Fix console
         DeleteOldLogs();
     }
 
-    private void HandleConsole()
-    {
-        if (ConfigManager.Instance.Config.Settings.EnableDebugConsole)
-        {
-            AllocConsole();
-            Console.Title = "CubeManager";
-        }
-        else
-        {
-            FreeConsole();
-        }
-    }
 
     [DllImport("Kernel32")]
     private static extern void AllocConsole();
-
-    [DllImport("Kernel32")]
-    private static extern void FreeConsole();
 
     private static ConsoleColor GetLogColor(LogSeverity severity)
     {
