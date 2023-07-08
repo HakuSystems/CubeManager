@@ -155,7 +155,6 @@ public partial class TodosControl : UserControl
         InfoSnackbar.MessageQueue?.Enqueue(message);
     }
 
-    #region cardcreate
 
     private void AddTodoCard(TodoItem todo)
     {
@@ -392,6 +391,4 @@ public partial class TodosControl : UserControl
 
         return null;
     }
-
-    #endregion
 }
