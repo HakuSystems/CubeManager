@@ -101,16 +101,18 @@
               MouseDown="DragGrid_OnMouseDown"
               Background="{StaticResource MaterialDesignDarkSeparatorBackground}">
 
-            <Button Height="50" HorizontalAlignment="Left"
-                    Style="{StaticResource MaterialDesignFlatButton}"
-                    x:Name="debugTestBtn"
-                    Click="DebugTestBtn_OnClick"
-                    Foreground="{DynamicResource MaterialDesignDarkForeground}">
-                <Button.Content>
-                    <TextBlock Text="DEBUG" />
-                </Button.Content>
-            </Button>
-
+            <materiaDesign:Card Background="Gold"
+                                Margin="5"
+                                VerticalAlignment="Center"
+                                Width="auto"
+                                HorizontalAlignment="Left"
+                                >
+                <TextBlock Text="ALPHA VERSION" Margin="5"
+                           FontFamily="Roboto"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource MaterialDesignDarkBackground}"
+                           Style="{StaticResource MaterialDesignHeadline5TextBlock}"/>
+            </materiaDesign:Card>
             <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal"
                         HorizontalAlignment="Right"
 
@@ -216,6 +218,8 @@
                 materiaDesign:ButtonAssist.CornerRadius="0,5,5,0"
                 Style="{DynamicResource MaterialDesignPaperButton}"
                 Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                x:Name="TodosBtn"
+                Click="TodosBtn_OnClick"
                 Foreground="{DynamicResource MaterialDesignDarkForeground}">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">

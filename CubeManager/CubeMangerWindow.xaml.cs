@@ -54,11 +54,15 @@ public partial class CubeMangerWindow : Window
 
     private void ClosBtn_OnClick(object sender, RoutedEventArgs e)
     {
+        var dialog = MessageBox.Show("Are you sure you want to exit? Notifications wont Work.", "Exit",
+            MessageBoxButton.YesNo, MessageBoxImage.Question);
+        if (dialog == MessageBoxResult.No) return;
         Close();
         _logger.Info("Closed CubeManagerWindow");
     }
 
-    private void DebugTestBtn_OnClick(object sender, RoutedEventArgs e)
+
+    public void DoLevelUp()
     {
         LvlProgbar.Value += 10;
         _logger.Debug($"DebugTestBtn clicked, Progress updated to: {LvlProgbar.Value}");
@@ -146,5 +150,12 @@ public partial class CubeMangerWindow : Window
     {
         ControlsFrame.Navigate(new SubscriptionsControl());
         _logger.Debug("SubscriptionsControl navigated");
+    }
+
+
+    private void TodosBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        ControlsFrame.Navigate(new TodosControl());
+        _logger.Debug("TodosControl navigated");
     }
 }

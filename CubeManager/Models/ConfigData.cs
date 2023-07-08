@@ -11,4 +11,5 @@ public class ConfigData
     public ScoreBoardData ScoreBoard { get; set; } = new();
     public SettingsData Settings { get; set; } = new();
     public SubscriptionsData Subscriptions { get; set; } = new();
+    public TodoData Todo { get; set; } = new();
 }

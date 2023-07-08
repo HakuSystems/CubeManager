@@ -14,25 +14,12 @@ public class ConfigManager
     private static readonly object _lock = new();
     private readonly Logger _logger;
 
-    private readonly FileSystemWatcher fileWatcher;
 
     private ConfigManager()
     {
         _logger = new Logger();
         _logger.Info("ConfigManager initialized");
         LoadConfig();
-
-        // Create and configure the FileSystemWatcher to monitor the config file
-        fileWatcher = new FileSystemWatcher(Path.GetDirectoryName(ConfigFilePath))
-        {
-            Filter = Path.GetFileName(ConfigFilePath),
-            NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size
-        };
-
-        fileWatcher.Changed += OnConfigFileChanged;
-
-        fileWatcher.EnableRaisingEvents = true;
-        _logger.Info("FileSystemWatcher configured for config file changes");
     }
 
     public static ConfigManager Instance
@@ -49,13 +36,6 @@ public class ConfigManager
     }
 
     public ConfigData Config { get; private set; }
-
-    private async void OnConfigFileChanged(object sender, FileSystemEventArgs e)
-    {
-        _logger.Debug("Config file changed detected");
-        await Task.Delay(100);
-        LoadConfig();
-    }
 
     private void LoadConfig()
     {
