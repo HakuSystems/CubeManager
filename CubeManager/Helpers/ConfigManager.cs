@@ -18,7 +18,7 @@ public class ConfigManager
     private ConfigManager()
     {
         _logger = new Logger();
-        _logger.Info("ConfigManager initialized");
+        _logger.Info("Initializing ConfigManager");
         LoadConfig();
     }
 
@@ -44,19 +44,20 @@ public class ConfigManager
             if (File.Exists(ConfigFilePath))
             {
                 var json = File.ReadAllText(ConfigFilePath);
-                _logger.Debug("Config file read successfully");
+                _logger.Info("Config file read successfully");
                 Config = JsonConvert.DeserializeObject<ConfigData>(json);
+                _logger.PrioInfo("Config Loaded successfully");
             }
             else
             {
                 Config = new ConfigData();
                 SaveConfig();
-                _logger.Debug("Config file not found. New config created and saved");
+                _logger.PrioInfo("No existing config. A new config created and saved");
             }
         }
         catch (IOException ex)
         {
-            _logger.Error($"Could not load config: {ex.Message}");
+            _logger.ErrSilent($"Could not load config: {ex.Message}");
         }
     }
 
@@ -67,7 +68,7 @@ public class ConfigManager
             Directory.CreateDirectory(ConfigFolderPath);
             var json = JsonConvert.SerializeObject(Config, Formatting.Indented);
             File.WriteAllText(ConfigFilePath, json);
-            _logger.Info("Config saved successfully");
+            _logger.PrioInfo("Config saved successfully");
         }
         catch (IOException ex)
         {
@@ -77,9 +78,9 @@ public class ConfigManager
 
     public void UpdateConfig(Action<ConfigData> updateAction)
     {
-        _logger.Debug("Updating config");
+        _logger.Info("Updating config");
         updateAction?.Invoke(Config);
         SaveConfig();
-        _logger.Info("Config updated and saved");
+        _logger.PrioInfo("Config updated and saved");
     }
 }

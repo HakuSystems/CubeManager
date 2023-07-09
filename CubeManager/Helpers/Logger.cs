@@ -11,7 +11,7 @@ public class Logger
     public Logger()
     {
         if (!Directory.Exists(LogDirectory)) Directory.CreateDirectory(LogDirectory);
-        //AllocConsole();
+        AllocConsole();
         DeleteOldLogs();
     }
 

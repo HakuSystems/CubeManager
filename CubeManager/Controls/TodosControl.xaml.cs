@@ -12,6 +12,8 @@ public partial class TodosControl : UserControl
     private readonly Brush _darkBackground;
     private readonly Brush _darkSeparatorBackground;
     private readonly Logger _logger;
+    private bool _isEditMode;
+    private Guid _selectedTodoId;
 
     public TodosControl()
     {
@@ -25,6 +27,7 @@ public partial class TodosControl : UserControl
 
     private void TodosControl_OnLoaded(object sender, RoutedEventArgs e)
     {
+        _isEditMode = false;
         foreach (var todo in ConfigManager.Instance.Config.Todo.Todos)
         {
             var card = CreateCard(todo);
@@ -34,6 +37,7 @@ public partial class TodosControl : UserControl
 
         TodoNewCalendar.SelectedDate = DateTime.Now;
         TodoNewTimePicker.SelectedTime = DateTime.Now;
+        _logger.PrioInfo("TodosControl loaded successfully");
         TryClearSnackbarQueue();
     }
 
@@ -78,12 +82,45 @@ public partial class TodosControl : UserControl
 
     private void TodoNewAddBtn_OnClick(object sender, RoutedEventArgs e)
     {
+        if (_isEditMode)
+            UpdateTodo(_selectedTodoId);
+        else
+            AddNewTodo();
+    }
+
+    private void UpdateTodo(Guid toEditTodoId)
+    {
+        var todo = CreateTodoFromInputFields();
+        if (!ValidationCheck(todo)) return;
+
+        var oldCard = TodoList.Children.OfType<Card>().FirstOrDefault(card => (Guid)card.Tag == toEditTodoId);
+        if (oldCard == null) return;
+        TodoList.Children.Remove(oldCard);
+
+        AddTodoCard(todo);
+
+        var oldTodo = Todos.FirstOrDefault(t => t.Id == toEditTodoId);
+        if (oldTodo == null) return;
+        Todos.Remove(oldTodo);
+        UpdateConfig();
+
+        ResetInputFields();
+        ToggleTodoButtonVisibility();
+        TodoNewAddBtn.Content = "Add";
+        _selectedTodoId = Guid.Empty;
+        _isEditMode = false;
+    }
+
+    private void AddNewTodo()
+    {
+        _logger.PrioInfo("Adding new todo started");
         var todo = CreateTodoFromInputFields();
         if (!ValidationCheck(todo)) return;
 
         AddTodoCard(todo);
         ResetInputFields();
         ToggleTodoButtonVisibility();
+        _logger.PrioInfo("New todo added successfully.");
     }
 
     private TodoItem CreateTodoFromInputFields()
@@ -129,6 +166,7 @@ public partial class TodosControl : UserControl
 
         TryClearSnackbarQueue();
         EnqueueSnackbar(warningMessage);
+        _logger.Warn("Todo validation failed: " + warningMessage);
         return false;
     }
 
@@ -180,7 +218,7 @@ public partial class TodosControl : UserControl
 
     private void PlaySound()
     {
-        // define your sound play method here todo
+        // define sound play method here todo
     }
 
     private void LevelUp()
@@ -203,11 +241,13 @@ public partial class TodosControl : UserControl
     {
         Todos.Add(todo);
         UpdateConfig();
+        _logger.PrioInfo($"Todo saved with id: {todo.Id}");
     }
 
     private void UpdateConfig()
     {
         ConfigManager.Instance.UpdateConfig(config => config.Todo.Todos = Todos);
+        _logger.PrioInfo("Todo config updated");
     }
 
     private Card CreateCard(TodoItem todo)
@@ -215,7 +255,9 @@ public partial class TodosControl : UserControl
         return new Card
         {
             Background = _darkSeparatorBackground,
-            Content = CreateContent(todo)
+            Content = CreateContent(todo),
+            // ReSharper disable once HeapView.BoxingAllocation
+            Tag = todo.Id
         };
     }
 
@@ -316,8 +358,17 @@ public partial class TodosControl : UserControl
             switch (kind)
             {
                 case PackIconKind.Edit:
-                    //Todo: Edit Functionality
-                    MessageBox.Show("Edit");
+                    var todoToEdit = Todos.FirstOrDefault(todo => todo.Id == id);
+                    if (todoToEdit == null)
+                    {
+                        EnqueueSnackbar("Todo not found");
+                        return;
+                    }
+
+                    _selectedTodoId = id;
+                    _isEditMode = true;
+                    ChangetoEditDesign(todoToEdit);
+                    ToggleTodoInputVisibility();
                     break;
                 case PackIconKind.Delete:
                     LevelUp();
@@ -339,10 +390,28 @@ public partial class TodosControl : UserControl
         return button;
     }
 
+    private void ChangetoEditDesign(TodoItem todoToEdit)
+    {
+        TodoNewInput.Text = todoToEdit.Title;
+        TodoNewDescription.Text = todoToEdit.Description;
+        TodoNewCalendar.SelectedDate = todoToEdit.DueDate;
+        TodoNewTimePicker.SelectedTime = todoToEdit.DueTime;
+        TodoNewAddBtn.Content = "Save";
+    }
+
     private TodoItem FindAssociatedTodoWithCard(Card card, Guid id)
     {
         var idBlock = FindTextBlock(card, id.ToString());
-        var todoId = Guid.Parse(idBlock.Text);
+
+        if (idBlock == null)
+            return null; //ignore since its getting deleted anyway
+
+        Guid todoId;
+        if (!Guid.TryParse(idBlock.Text, out todoId))
+        {
+            return null;
+        }
+
         return Todos.FirstOrDefault(todo => todo.Id == todoId);
     }
 
