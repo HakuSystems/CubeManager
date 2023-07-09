@@ -5,6 +5,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using CubeManager.Helpers;
 using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
 
 namespace CubeManager.Controls;
 
@@ -24,6 +25,18 @@ public partial class SettingsControl : UserControl
     {
         get => ConfigManager.Instance.Config.Settings.EnableDopamineEffects;
         set => ConfigManager.Instance.UpdateConfig(config => config.Settings.EnableDopamineEffects = value);
+    }
+
+    private bool EnableSound
+    {
+        get => ConfigManager.Instance.Config.Settings.EnableSound;
+        set => ConfigManager.Instance.UpdateConfig(config => config.Settings.EnableSound = value);
+    }
+
+    private string SoundPath
+    {
+        get => ConfigManager.Instance.Config.Settings.SoundPath;
+        set => ConfigManager.Instance.UpdateConfig(config => config.Settings.SoundPath = value);
     }
 
 
@@ -70,6 +83,12 @@ public partial class SettingsControl : UserControl
         }
     }
 
+    private void DialogHostOperation_OnDialogClosed(object sender, DialogClosedEventArgs eventargs)
+    {
+        DialogHostOperation.IsOpen = false;
+    }
+
+    #region Dopamine
 
     private void DopamineToggle_OnChecked(object sender, RoutedEventArgs e)
     {
@@ -88,6 +107,8 @@ public partial class SettingsControl : UserControl
     private void SettingsControl_OnLoaded(object sender, RoutedEventArgs e)
     {
         DopamineToggle.IsChecked = EnableDopamineEffects;
+        SoundToggle.IsChecked = EnableSound;
+        SelectedSoundTxtBlock.Text = SoundPath?.ToString().Split('\\').LastOrDefault();
     }
 
     private void DopamineCard_OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -95,8 +116,44 @@ public partial class SettingsControl : UserControl
         DopamineToggle.IsChecked = !DopamineToggle.IsChecked;
     }
 
-    private void DialogHostOperation_OnDialogClosed(object sender, DialogClosedEventArgs eventargs)
+    #endregion
+
+    #region Sound
+
+    private void SoundToggle_OnChecked(object sender, RoutedEventArgs e)
     {
-        DialogHostOperation.IsOpen = false;
+        AnimationMaterialCard(SoundCard, true);
+        ConfigManager.Instance.UpdateConfig(config => config.Settings.EnableSound = true);
+        _logger.Info("Sound has been enabled.");
     }
+
+    private void SoundToggle_OnUnchecked(object sender, RoutedEventArgs e)
+    {
+        AnimationMaterialCard(SoundCard, false);
+        ConfigManager.Instance.UpdateConfig(config => config.Settings.EnableSound = false);
+        _logger.Info("Sound has been disabled.");
+    }
+
+    private void SoundCard_OnMouseDown(object sender, MouseButtonEventArgs e)
+    {
+        SoundToggle.IsChecked = !SoundToggle.IsChecked;
+    }
+
+
+    private void SearchSoundBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        var openFileDialog = new OpenFileDialog
+        {
+            Filter = "Audio files (*.mp3, *.wav)|*.mp3;*.wav",
+            Title = "Select a sound file"
+        };
+
+        if (openFileDialog.ShowDialog() == true)
+        {
+            SoundPath = openFileDialog.FileName;
+            SelectedSoundTxtBlock.Text = SoundPath?.ToString().Split('\\').LastOrDefault();
+        }
+    }
+
+    #endregion
 }

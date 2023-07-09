@@ -4,6 +4,7 @@ using System.Windows.Media;
 using CubeManager.Helpers;
 using CubeManager.Models;
 using MaterialDesignThemes.Wpf;
+using NAudio.Wave;
 
 namespace CubeManager.Controls;
 
@@ -14,6 +15,8 @@ public partial class TodosControl : UserControl
     private readonly Logger _logger;
     private bool _isEditMode;
     private Guid _selectedTodoId;
+    private AudioFileReader audioFileReader;
+    private IWavePlayer waveOutDevice;
 
     public TodosControl()
     {
@@ -218,7 +221,39 @@ public partial class TodosControl : UserControl
 
     private void PlaySound()
     {
-        // define sound play method here todo
+        if (!ConfigManager.Instance.Config.Settings.EnableSound) return;
+
+        var soundpath = ConfigManager.Instance.Config.Settings.SoundPath;
+        if (soundpath == null) return;
+        PlayAudio(soundpath);
+    }
+
+    private void PlayAudio(string audioFilePath)
+    {
+        DisposeWave();
+
+        waveOutDevice = new WaveOut();
+        audioFileReader = new AudioFileReader(audioFilePath);
+
+        audioFileReader.Volume = 0.30f;
+        waveOutDevice.Init(audioFileReader);
+        waveOutDevice.Play();
+    }
+
+    private void DisposeWave()
+    {
+        if (waveOutDevice != null)
+        {
+            waveOutDevice.Stop();
+            waveOutDevice.Dispose();
+            waveOutDevice = null;
+        }
+
+        if (audioFileReader != null)
+        {
+            audioFileReader.Dispose();
+            audioFileReader = null;
+        }
     }
 
     private void LevelUp()
@@ -384,6 +419,7 @@ public partial class TodosControl : UserControl
                         }
                     }
 
+                    PlaySound();
                     break;
             }
         };
@@ -407,10 +443,7 @@ public partial class TodosControl : UserControl
             return null; //ignore since its getting deleted anyway
 
         Guid todoId;
-        if (!Guid.TryParse(idBlock.Text, out todoId))
-        {
-            return null;
-        }
+        if (!Guid.TryParse(idBlock.Text, out todoId)) return null;
 
         return Todos.FirstOrDefault(todo => todo.Id == todoId);
     }
