@@ -33,7 +33,6 @@ public partial class SettingsControl : UserControl
 
         if (activationStatus)
         {
-            _logger.Debug($"Animating card {card.Name} to green");
             if (!originalColors.ContainsKey(card))
                 originalColors[card] = solidColorBrush.Color; // Store the original color
 
@@ -49,11 +48,9 @@ public partial class SettingsControl : UserControl
             card.Background = solidColorBrush;
 
             solidColorBrush.BeginAnimation(SolidColorBrush.ColorProperty, colorAnimation);
-            _logger.Debug($"Card {card.Name} animated to green");
         }
         else
         {
-            _logger.Debug($"Animating card {card.Name} to original color");
             if (!originalColors
                     .ContainsKey(card))
                 return; // If there is no stored original color for this card, we can't animate it
@@ -70,40 +67,36 @@ public partial class SettingsControl : UserControl
             card.Background = solidColorBrush;
 
             solidColorBrush.BeginAnimation(SolidColorBrush.ColorProperty, colorAnimation);
-            _logger.Debug($"Card {card.Name} animated to original color");
         }
     }
 
 
     private void DopamineToggle_OnChecked(object sender, RoutedEventArgs e)
     {
-        _logger.Debug("DopamineToggle_OnChecked");
         AnimationMaterialCard(DopamineCard, true);
         EnableDopamineEffects = true;
+        _logger.Info("Dopamine effects have been enabled.");
     }
 
     private void DopamineToggle_OnUnchecked(object sender, RoutedEventArgs e)
     {
-        _logger.Debug("DopamineToggle_OnUnchecked");
         AnimationMaterialCard(DopamineCard, false);
         EnableDopamineEffects = false;
+        _logger.Info("Dopamine effects have been disabled.");
     }
 
     private void SettingsControl_OnLoaded(object sender, RoutedEventArgs e)
     {
-        _logger.Debug("SettingsControl_OnLoaded");
         DopamineToggle.IsChecked = EnableDopamineEffects;
     }
 
     private void DopamineCard_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
-        _logger.Debug("DopamineCard_OnMouseDown");
         DopamineToggle.IsChecked = !DopamineToggle.IsChecked;
     }
 
     private void DialogHostOperation_OnDialogClosed(object sender, DialogClosedEventArgs eventargs)
     {
-        _logger.Debug("DialogHostOperation_OnDialogClosed");
         DialogHostOperation.IsOpen = false;
     }
 }

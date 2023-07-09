@@ -17,7 +17,7 @@ public partial class CubeMangerWindow : Window
     {
         _logger = new Logger();
         InitializeComponent();
-        _logger.Info("CubeManagerWindow initialized");
+        _logger.PrioInfo("CubeManagerWindow initialized");
     }
 
     private double CurrentProgressValue
@@ -43,7 +43,6 @@ public partial class CubeMangerWindow : Window
     private void DragGrid_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
         if (e.ChangedButton == MouseButton.Left) DragMove();
-        _logger.Debug("DragGrid MouseDown event");
     }
 
     private void MinBtn_OnClick(object sender, RoutedEventArgs e)
@@ -58,18 +57,17 @@ public partial class CubeMangerWindow : Window
             MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (dialog == MessageBoxResult.No) return;
         Close();
-        _logger.Info("Closed CubeManagerWindow");
+        _logger.PrioInfo("Closed CubeManagerWindow");
     }
 
 
     public void DoLevelUp()
     {
         LvlProgbar.Value += 10;
-        _logger.Debug($"DebugTestBtn clicked, Progress updated to: {LvlProgbar.Value}");
         if (!LvlProgbar.Value.Equals(100)) return;
         LvlTxtBox.Text = $"LvL: {++CurrentLevelValue}";
         LvlProgbar.Value = 0;
-        _logger.Debug($"Level updated to: {CurrentLevelValue}");
+        _logger.Info($"Level updated to: {CurrentLevelValue}");
         LevelUp();
     }
 
@@ -127,13 +125,13 @@ public partial class CubeMangerWindow : Window
     private void LvlProgbar_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
         CurrentProgressValue = e.NewValue;
-        _logger.Debug($"Progress value changed to: {CurrentProgressValue}");
+        _logger.Info($"Progress value changed to: {CurrentProgressValue}");
     }
 
     private void SettingsBtn_OnClick(object sender, RoutedEventArgs e)
     {
         ControlsFrame.Navigate(new SettingsControl());
-        _logger.Debug("SettingsControl navigated");
+        _logger.Info("Navigated to SettingsControl");
     }
 
     private void DiscordBtn_OnClick(object sender, RoutedEventArgs e)
@@ -143,19 +141,19 @@ public partial class CubeMangerWindow : Window
         {
             CreateNoWindow = true
         });
-        _logger.Info("Discord link opened");
+        _logger.PrioInfo("Opened Discord link");
     }
 
     private void SubscriptionsBtn_OnClick(object sender, RoutedEventArgs e)
     {
         ControlsFrame.Navigate(new SubscriptionsControl());
-        _logger.Debug("SubscriptionsControl navigated");
+        _logger.Info("Navigated to SubscriptionsControl");
     }
 
 
     private void TodosBtn_OnClick(object sender, RoutedEventArgs e)
     {
         ControlsFrame.Navigate(new TodosControl());
-        _logger.Debug("TodosControl navigated");
+        _logger.Info("Navigated to TodosControl");
     }
 }
