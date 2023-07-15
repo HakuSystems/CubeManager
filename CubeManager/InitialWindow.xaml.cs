@@ -1,5 +1,6 @@
 using System.Windows;
 using CubeManager.Helpers;
+using CubeManager.Notifications;
 
 namespace CubeManager;
 
@@ -10,9 +11,12 @@ public partial class InitialWindow : Window
     public InitialWindow()
     {
         _logger = new Logger();
+        NotificationHandler = new NotificationHandler();
         InitializeComponent();
         _logger.Info("InitialWindow initialized");
     }
+
+    private NotificationHandler NotificationHandler { get; set; }
 
     private void InitialWindow_OnLoaded(object sender, RoutedEventArgs e)
     {

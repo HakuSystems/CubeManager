@@ -4,7 +4,6 @@ using System.Windows.Media;
 using CubeManager.Helpers;
 using CubeManager.Models;
 using MaterialDesignThemes.Wpf;
-using NAudio.Wave;
 
 namespace CubeManager.Controls;
 
@@ -13,10 +12,9 @@ public partial class TodosControl : UserControl
     private readonly Brush _darkBackground;
     private readonly Brush _darkSeparatorBackground;
     private readonly Logger _logger;
+    private readonly SoundManager _soundManager = new();
     private bool _isEditMode;
     private Guid _selectedTodoId;
-    private AudioFileReader audioFileReader;
-    private IWavePlayer waveOutDevice;
 
     public TodosControl()
     {
@@ -154,16 +152,16 @@ public partial class TodosControl : UserControl
         {
             warningMessage = "Time cannot be empty";
         }
-        else
-        {
-            var selectedDate = todo.DueDate.Date;
-            var selectedTime = todo.DueTime.TimeOfDay;
-
-            if (selectedDate < DateTime.Now.Date)
-                warningMessage = "Date cannot be in the past";
-            else if (selectedDate == DateTime.Now.Date && selectedTime < DateTime.Now.AddMinutes(5).TimeOfDay)
-                warningMessage = "Time should be at least 5 minutes from now";
-        }
+        // else
+        // {
+        //     var selectedDate = todo.DueDate.Date;
+        //     var selectedTime = todo.DueTime.TimeOfDay;
+        //
+        //     if (selectedDate < DateTime.Now.Date)
+        //         warningMessage = "Date cannot be in the past";
+        //     else if (selectedDate == DateTime.Now.Date && selectedTime < DateTime.Now.AddMinutes(5).TimeOfDay)
+        //         warningMessage = "Time should be at least 5 minutes from now";
+        // }
 
         if (warningMessage == null) return true;
 
@@ -225,35 +223,7 @@ public partial class TodosControl : UserControl
 
         var soundpath = ConfigManager.Instance.Config.Settings.SoundPath;
         if (soundpath == null) return;
-        PlayAudio(soundpath);
-    }
-
-    private void PlayAudio(string audioFilePath)
-    {
-        DisposeWave();
-
-        waveOutDevice = new WaveOut();
-        audioFileReader = new AudioFileReader(audioFilePath);
-
-        audioFileReader.Volume = 0.30f;
-        waveOutDevice.Init(audioFileReader);
-        waveOutDevice.Play();
-    }
-
-    private void DisposeWave()
-    {
-        if (waveOutDevice != null)
-        {
-            waveOutDevice.Stop();
-            waveOutDevice.Dispose();
-            waveOutDevice = null;
-        }
-
-        if (audioFileReader != null)
-        {
-            audioFileReader.Dispose();
-            audioFileReader = null;
-        }
+        _soundManager.PlayAudio(soundpath);
     }
 
     private void LevelUp()
