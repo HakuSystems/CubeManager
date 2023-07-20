@@ -222,7 +222,6 @@ public partial class TodosControl : UserControl
         if (!ConfigManager.Instance.Config.Settings.EnableSound) return;
 
         var soundpath = ConfigManager.Instance.Config.Settings.SoundPath;
-        if (soundpath == null) return;
         _soundManager.PlayAudio(soundpath);
     }
 

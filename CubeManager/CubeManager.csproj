@@ -27,4 +27,23 @@
     </ItemGroup>
 
 
+    <ItemGroup>
+        <None Remove="Sounds\attentionCloseNotificataion.wav"/>
+        <Resource Include="Resources\attentionCloseNotificataion.wav"/>
+        <None Remove="Sounds\attentionNotification.wav"/>
+        <Resource Include="Resources\attentionNotification.wav"/>
+        <None Remove="Sounds\confirmedNotification1.wav"/>
+        <Resource Include="Resources\confirmedNotification1.wav"/>
+        <None Remove="Sounds\confirmedNotification2.wav"/>
+        <Resource Include="Resources\confirmedNotification2.wav"/>
+        <None Remove="Sounds\finished_task.wav"/>
+        <Resource Include="Resources\finished_task.wav"/>
+        <None Remove="Sounds\minimize.wav"/>
+        <Resource Include="Resources\minimize.wav"/>
+        <None Remove="Sounds\notification1.wav"/>
+        <Resource Include="Resources\notification1.wav"/>
+        <None Remove="Sounds\notification2.wav"/>
+        <Resource Include="Resources\notification2.wav"/>
+    </ItemGroup>
+
 </Project>
