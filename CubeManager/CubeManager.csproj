@@ -28,22 +28,19 @@
 
 
     <ItemGroup>
-        <None Remove="Sounds\attentionCloseNotificataion.wav"/>
-        <Resource Include="Resources\attentionCloseNotificataion.wav"/>
-        <None Remove="Sounds\attentionNotification.wav"/>
-        <Resource Include="Resources\attentionNotification.wav"/>
-        <None Remove="Sounds\confirmedNotification1.wav"/>
-        <Resource Include="Resources\confirmedNotification1.wav"/>
-        <None Remove="Sounds\confirmedNotification2.wav"/>
-        <Resource Include="Resources\confirmedNotification2.wav"/>
-        <None Remove="Sounds\finished_task.wav"/>
-        <Resource Include="Resources\finished_task.wav"/>
-        <None Remove="Sounds\minimize.wav"/>
-        <Resource Include="Resources\minimize.wav"/>
-        <None Remove="Sounds\notification1.wav"/>
-        <Resource Include="Resources\notification1.wav"/>
-        <None Remove="Sounds\notification2.wav"/>
-        <Resource Include="Resources\notification2.wav"/>
+        <None Remove="Resources\CheckboxOn.wav"/>
+        <Resource Include="Resources\CheckboxOn.wav"/>
+        <None Remove="Resources\checkboxOff.wav"/>
+        <Resource Include="Resources\checkboxOff.wav"/>
+        <None Remove="Resources\creditsGet.wav"/>
+        <Resource Include="Resources\creditsGet.wav"/>
+        <None Remove="Resources\hover.wav"/>
+        <Resource Include="Resources\hover.wav"/>
+        <None Remove="Resources\taskComplete.wav"/>
+        <None Remove="Resources\click.wav"/>
+        <Resource Include="Resources\click.wav"/>
+        <None Remove="Resources\success.wav"/>
+        <Resource Include="Resources\success.wav"/>
     </ItemGroup>
 
 </Project>

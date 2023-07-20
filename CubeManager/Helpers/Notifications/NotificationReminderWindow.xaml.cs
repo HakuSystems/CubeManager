@@ -33,6 +33,6 @@ public partial class NotificationReminderWindow : Window
 
     private void NotificationReminderWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.Settings.SoundPath);
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.TaskComplete);
     }
 }

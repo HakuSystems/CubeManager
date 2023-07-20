@@ -63,6 +63,7 @@
                            Foreground="{DynamicResource MaterialDesignDarkForeground}" />
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Height="50" HorizontalAlignment="Right"
+                            MouseEnter="SettingsBtn_OnMouseEnter"
                             Style="{StaticResource MaterialDesignIconButton}"
                             x:Name="SettingsBtn"
                             Click="SettingsBtn_OnClick"
@@ -79,6 +80,7 @@
                             Style="{StaticResource MaterialDesignIconButton}"
                             x:Name="DiscordBtn"
                             Click="DiscordBtn_OnClick"
+                            MouseEnter="DiscordBtn_OnMouseEnter"
                             Foreground="{DynamicResource MaterialDesignDarkForeground}">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal">
@@ -167,6 +169,7 @@
                         Style="{StaticResource MaterialDesignIconButton}"
                         Foreground="{DynamicResource MaterialDesignDarkForeground}"
                         Click="MinBtn_OnClick"
+                        MouseEnter="MinBtn_OnMouseEnter"
                         x:Name="MinBtn">
                     <Button.Content>
                         <materiaDesign:PackIcon Kind="Minimize"
@@ -177,6 +180,7 @@
                         Style="{StaticResource MaterialDesignIconButton}"
                         Foreground="{DynamicResource MaterialDesignDarkForeground}"
                         Click="ClosBtn_OnClick"
+                        MouseEnter="ClosBtn_OnMouseEnter"
                         x:Name="ClosBtn">
                     <Button.Content>
                         <materiaDesign:PackIcon Kind="Close"
@@ -191,6 +195,9 @@
                     Grid.Row="2" Grid.Column="0">
 
             <Button
+                x:Name="RoutineBtn"
+                MouseEnter="RoutineBtn_OnMouseEnter"
+                Click="RoutineBtn_OnClick"
                 BorderThickness="0"
                 HorizontalContentAlignment="Left"
                 materiaDesign:ButtonAssist.CornerRadius="0,5,5,0"
@@ -219,6 +226,7 @@
                 Style="{DynamicResource MaterialDesignPaperButton}"
                 Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
                 x:Name="TodosBtn"
+                MouseEnter="TodosBtn_OnMouseEnter"
                 Click="TodosBtn_OnClick"
                 Foreground="{DynamicResource MaterialDesignDarkForeground}">
                 <Button.Content>
@@ -240,6 +248,7 @@
                 BorderThickness="0"
                 x:Name="SubscriptionsBtn"
                 Click="SubscriptionsBtn_OnClick"
+                MouseEnter="SubscriptionsBtn_OnMouseEnter"
                 HorizontalContentAlignment="Left"
                 materiaDesign:ButtonAssist.CornerRadius="0,5,5,0"
                 Style="{DynamicResource MaterialDesignPaperButton}"
@@ -263,6 +272,9 @@
             <Button
                 BorderThickness="0"
                 HorizontalContentAlignment="Left"
+                x:Name="LifeGoalsBtn"
+                MouseEnter="LifeGoalsBtn_OnMouseEnter"
+                Click="LifeGoalsBtn_OnClick"
                 materiaDesign:ButtonAssist.CornerRadius="0,5,5,0"
                 Style="{DynamicResource MaterialDesignPaperButton}"
                 Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
@@ -284,6 +296,9 @@
 
             <Button
                 BorderThickness="0"
+                x:Name="BirthdaysBtn"
+                MouseEnter="BirthdaysBtn_OnMouseEnter"
+                Click="BirthdaysBtn_OnClick"
                 HorizontalContentAlignment="Left"
                 materiaDesign:ButtonAssist.CornerRadius="0,5,5,0"
                 Style="{DynamicResource MaterialDesignPaperButton}"
@@ -306,6 +321,9 @@
 
             <Button
                 BorderThickness="0"
+                x:Name="FamilyCalendarBtn"
+                MouseEnter="FamilyCalendarBtn_OnMouseEnter"
+                Click="FamilyCalendarBtn_OnClick"
                 HorizontalContentAlignment="Left"
                 materiaDesign:ButtonAssist.CornerRadius="0,5,5,0"
                 Style="{DynamicResource MaterialDesignPaperButton}"
@@ -327,6 +345,9 @@
             </Button>
 
             <Button
+                x:Name="GameReleasesBtn"
+                MouseEnter="GameReleasesBtn_OnMouseEnter"
+                Click="GameReleasesBtn_OnClick"
                 BorderThickness="0"
                 HorizontalContentAlignment="Left"
                 materiaDesign:ButtonAssist.CornerRadius="0,5,5,0"
@@ -350,6 +371,9 @@
 
             <Button
                 BorderThickness="0"
+                x:Name="PlayTimeBtn"
+                MouseEnter="PlayTimeBtn_OnMouseEnter"
+                Click="PlayTimeBtn_OnClick"
                 HorizontalContentAlignment="Left"
                 materiaDesign:ButtonAssist.CornerRadius="0,5,5,0"
                 Style="{DynamicResource MaterialDesignPaperButton}"

@@ -212,17 +212,9 @@ public partial class TodosControl : UserControl
 
     private void OnCardMouseDown(Guid id, Card card)
     {
-        PlaySound();
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.CreditsGet);
         LevelUp();
         RemoveCard(id, card);
-    }
-
-    private void PlaySound()
-    {
-        if (!ConfigManager.Instance.Config.Settings.EnableSound) return;
-
-        var soundpath = ConfigManager.Instance.Config.Settings.SoundPath;
-        _soundManager.PlayAudio(soundpath);
     }
 
     private void LevelUp()
@@ -388,7 +380,7 @@ public partial class TodosControl : UserControl
                         }
                     }
 
-                    PlaySound();
+                    _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.CreditsGet);
                     break;
             }
         };

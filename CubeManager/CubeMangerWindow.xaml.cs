@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -12,6 +11,8 @@ namespace CubeManager;
 public partial class CubeMangerWindow : Window
 {
     private readonly Logger _logger;
+
+    private readonly SoundManager _soundManager = new();
 
     public CubeMangerWindow()
     {
@@ -49,6 +50,7 @@ public partial class CubeMangerWindow : Window
     {
         WindowState = WindowState.Minimized;
         _logger.Info("Minimized CubeManagerWindow");
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
     }
 
     private void ClosBtn_OnClick(object sender, RoutedEventArgs e)
@@ -69,6 +71,7 @@ public partial class CubeMangerWindow : Window
         LvlProgbar.Value = 0;
         _logger.Info($"Level updated to: {CurrentLevelValue}");
         LevelUp();
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.TaskComplete);
     }
 
     private void LevelUp()
@@ -78,7 +81,7 @@ public partial class CubeMangerWindow : Window
             From = 1,
             To = 1.5,
             Duration = new Duration(TimeSpan.FromSeconds(0.2)),
-            AutoReverse = true,
+            AutoReverse = true
         };
         LvlTxtBox.RenderTransform = new ScaleTransform();
         LvlTxtBox.RenderTransformOrigin = new Point(0.5, 0.5);
@@ -94,7 +97,7 @@ public partial class CubeMangerWindow : Window
             From = originalBrush.Color,
             To = Colors.Red,
             Duration = new Duration(TimeSpan.FromSeconds(0.4)),
-            AutoReverse = true,
+            AutoReverse = true
         };
         animatableBrush.BeginAnimation(SolidColorBrush.ColorProperty, colorAnimation);
 
@@ -119,7 +122,7 @@ public partial class CubeMangerWindow : Window
             RepeatBehavior = new RepeatBehavior(5)
         };
         ScoreBoardButton.Opacity = 1;
-        ScoreBoardButton.BeginAnimation(Button.OpacityProperty, flashAnimation);
+        ScoreBoardButton.BeginAnimation(OpacityProperty, flashAnimation);
     }
 
     private void LvlProgbar_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -132,6 +135,7 @@ public partial class CubeMangerWindow : Window
     {
         ControlsFrame.Navigate(new SettingsControl());
         _logger.Info("Navigated to SettingsControl");
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
     }
 
     private void DiscordBtn_OnClick(object sender, RoutedEventArgs e)
@@ -142,12 +146,14 @@ public partial class CubeMangerWindow : Window
             CreateNoWindow = true
         });
         _logger.PrioInfo("Opened Discord link");
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
     }
 
     private void SubscriptionsBtn_OnClick(object sender, RoutedEventArgs e)
     {
         ControlsFrame.Navigate(new SubscriptionsControl());
         _logger.Info("Navigated to SubscriptionsControl");
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
     }
 
 
@@ -155,5 +161,96 @@ public partial class CubeMangerWindow : Window
     {
         ControlsFrame.Navigate(new TodosControl());
         _logger.Info("Navigated to TodosControl");
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
+    }
+
+    private void RoutineBtn_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
+    }
+
+    private void RoutineBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
+    }
+
+    private void TodosBtn_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
+    }
+
+    private void SubscriptionsBtn_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
+    }
+
+    private void LifeGoalsBtn_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
+    }
+
+    private void LifeGoalsBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
+    }
+
+    private void BirthdaysBtn_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
+    }
+
+    private void BirthdaysBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
+    }
+
+    private void FamilyCalendarBtn_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
+    }
+
+    private void FamilyCalendarBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
+    }
+
+    private void GameReleasesBtn_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
+    }
+
+    private void GameReleasesBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
+    }
+
+    private void PlayTimeBtn_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
+    }
+
+    private void PlayTimeBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
+    }
+
+    private void SettingsBtn_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
+    }
+
+    private void DiscordBtn_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
+    }
+
+    private void MinBtn_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
+    }
+
+    private void ClosBtn_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
     }
 }

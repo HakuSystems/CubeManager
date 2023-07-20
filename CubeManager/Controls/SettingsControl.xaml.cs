@@ -4,6 +4,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using CubeManager.Helpers;
+using CubeManager.Models;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 
@@ -12,6 +13,7 @@ namespace CubeManager.Controls;
 public partial class SettingsControl : UserControl
 {
     private readonly Logger _logger;
+    private readonly SoundManager _soundManager = new();
     private readonly Dictionary<Card, Color> originalColors = new();
 
     public SettingsControl()
@@ -31,12 +33,6 @@ public partial class SettingsControl : UserControl
     {
         get => ConfigManager.Instance.Config.Settings.EnableSound;
         set => ConfigManager.Instance.UpdateConfig(config => config.Settings.EnableSound = value);
-    }
-
-    private string SoundPath
-    {
-        get => ConfigManager.Instance.Config.Settings.SoundPath;
-        set => ConfigManager.Instance.UpdateConfig(config => config.Settings.SoundPath = value);
     }
 
 
@@ -95,6 +91,7 @@ public partial class SettingsControl : UserControl
         AnimationMaterialCard(DopamineCard, true);
         EnableDopamineEffects = true;
         _logger.Info("Dopamine effects have been enabled.");
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.CheckboxOn);
     }
 
     private void DopamineToggle_OnUnchecked(object sender, RoutedEventArgs e)
@@ -102,13 +99,13 @@ public partial class SettingsControl : UserControl
         AnimationMaterialCard(DopamineCard, false);
         EnableDopamineEffects = false;
         _logger.Info("Dopamine effects have been disabled.");
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.CheckboxOff);
     }
 
     private void SettingsControl_OnLoaded(object sender, RoutedEventArgs e)
     {
         DopamineToggle.IsChecked = EnableDopamineEffects;
         SoundToggle.IsChecked = EnableSound;
-        SelectedSoundTxtBlock.Text = SoundPath?.ToString().Split('\\').LastOrDefault();
     }
 
     private void DopamineCard_OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -125,10 +122,12 @@ public partial class SettingsControl : UserControl
         AnimationMaterialCard(SoundCard, true);
         ConfigManager.Instance.UpdateConfig(config => config.Settings.EnableSound = true);
         _logger.Info("Sound has been enabled.");
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.CheckboxOn);
     }
 
     private void SoundToggle_OnUnchecked(object sender, RoutedEventArgs e)
     {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.CheckboxOff);
         AnimationMaterialCard(SoundCard, false);
         ConfigManager.Instance.UpdateConfig(config => config.Settings.EnableSound = false);
         _logger.Info("Sound has been disabled.");
@@ -140,7 +139,34 @@ public partial class SettingsControl : UserControl
     }
 
 
-    private void SearchSoundBtn_OnClick(object sender, RoutedEventArgs e)
+    private readonly Dictionary<string, Action<SoundSettings, string>> SoundOptionActions
+        = new()
+        {
+            { "Button Hover Sound", (settings, path) => settings.ButtonHover = path },
+            { "Button Click Sound", (settings, path) => settings.ButtonClick = path },
+            { "Get Level Sound", (settings, path) => settings.CreditsGet = path },
+            { "Task Complete Sound", (settings, path) => settings.TaskComplete = path },
+            { "Checkbox off Sound", (settings, path) => settings.CheckboxOff = path },
+            { "Checkbox on Sound", (settings, path) => settings.CheckboxOn = path }
+        };
+
+    private void SoundOptionsListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var selectedSoundOption = ((ListBoxItem)SoundOptionsListBox.SelectedItem)?.Content.ToString();
+
+        if (SoundOptionActions.TryGetValue(selectedSoundOption, out var action))
+        {
+            SelectedSoundTxtBlock.Text = $"Selected: {selectedSoundOption}";
+            OpenFileDialogAndChangeSoundPath(selectedSoundOption, action);
+        }
+        else
+        {
+            SelectedSoundTxtBlock.Text = "No Selected Sound";
+        }
+    }
+
+    private void OpenFileDialogAndChangeSoundPath(string soundOptionName,
+        Action<SoundSettings, string> updateSoundPathAction)
     {
         var openFileDialog = new OpenFileDialog
         {
@@ -148,11 +174,23 @@ public partial class SettingsControl : UserControl
             Title = "Select a sound file"
         };
 
-        if (openFileDialog.ShowDialog() == true)
-        {
-            SoundPath = openFileDialog.FileName;
-            SelectedSoundTxtBlock.Text = SoundPath?.ToString().Split('\\').LastOrDefault();
-        }
+        if (openFileDialog.ShowDialog() != true) return;
+
+        var selectedSoundPath = openFileDialog.FileName;
+
+        // update settings object based on button type
+        ConfigManager.Instance.UpdateConfig(config => updateSoundPathAction(config.SoundSettings, selectedSoundPath));
+    }
+
+    private void ResetSoundsBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
+        ConfigManager.Instance.UpdateConfig(config => { config.SoundSettings = new SoundSettings(); });
+    }
+
+    private void ResetSoundsBtn_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
     }
 
     #endregion

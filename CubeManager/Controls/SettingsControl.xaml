@@ -94,16 +94,23 @@
                                     Text="Toggle this to enable or disable sound effects, such as when a task gets completed."
                                     FontStyle="Italic" FontSize="12" Opacity="0.7"
                                     TextWrapping="Wrap" />
-                                <!-- Search for Audio -->
-                                <StackPanel Orientation="Vertical">
-                                    <Button Content="Change Audio" x:Name="SearchSoundBtn"
-                                            Click="SearchSoundBtn_OnClick" Margin="5"
-                                            HorizontalAlignment="Left"
-                                            Style="{StaticResource MaterialDesignFlatButton}" />
-                                    <TextBlock Text="No Selected Audio" x:Name="SelectedSoundTxtBlock"
+                                <!-- Sound Settings -->
+                                <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                                    <Label Content="Change Sound for" FontWeight="SemiBold" />
+                                    <ListBox x:Name="SoundOptionsListBox"
+                                             SelectionChanged="SoundOptionsListBox_OnSelectionChanged">
+                                        <ListBoxItem Content="Button Hover Sound" />
+                                        <ListBoxItem Content="Button Click Sound" />
+                                        <ListBoxItem Content="Get Level Sound" />
+                                        <ListBoxItem Content="Task Complete Sound" />
+                                        <ListBoxItem Content="Checkbox off Sound" />
+                                        <ListBoxItem Content="Checkbox on Sound" />
+                                    </ListBox>
+                                    <TextBlock Text="No Selected Sound" x:Name="SelectedSoundTxtBlock"
                                                HorizontalAlignment="Center" Opacity="0.2" />
+                                    <Button Content="Reset" Foreground="White" x:Name="ResetSoundsBtn" Click="ResetSoundsBtn_OnClick" MouseEnter="ResetSoundsBtn_OnMouseEnter" Style="{StaticResource MaterialDesignFlatButton}"/>
                                 </StackPanel>
-                                <!-- Search for Audio -->
+                                <!-- Sound Settings -->
                             </StackPanel>
 
                             <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,10,0,0">
