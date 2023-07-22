@@ -43,6 +43,8 @@
         <Resource Include="Resources\click.wav"/>
         <None Remove="Resources\success.wav"/>
         <Resource Include="Resources\success.wav"/>
+        <None Remove="Resources\Logo.png"/>
+        <Resource Include="Resources\Logo.png"/>
     </ItemGroup>
 
 </Project>

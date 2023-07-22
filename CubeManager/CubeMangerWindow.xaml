@@ -14,6 +14,7 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Title="CubeManager"
+        Loaded="CubeMangerWindow_OnLoaded"
         WindowStartupLocation="CenterScreen"
         WindowState="Normal"
         ResizeMode="CanResizeWithGrip"
@@ -30,7 +31,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
-            <RowDefinition Height="100" />
+            <RowDefinition Height="200" />
             <RowDefinition Height="*" />
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
@@ -45,6 +46,18 @@
                             Grid.RowSpan="2"
                             Grid.Column="0">
             <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                
+                <TextBlock Text="CurrentVersionHere"
+                           x:Name="VersionTxtBlock"
+                           Foreground="White"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                           Padding="5"
+                           Opacity="0.2"
+                           Margin="0,5,0,0"
+                           FontSize="10" 
+                />
+                <Image Source="Resources/Logo.png" Height="100" Width="100"/>
                 <TextBlock Text="CUBEMANAGER"
                            FontSize="30"
                            HorizontalAlignment="Center"
@@ -104,16 +117,19 @@
               Background="{StaticResource MaterialDesignDarkSeparatorBackground}">
 
             <materiaDesign:Card Background="Gold"
-                                Margin="5"
+                                Padding="5"
                                 VerticalAlignment="Center"
                                 Width="auto"
-                                HorizontalAlignment="Left"
-                                >
-                <TextBlock Text="ALPHA VERSION" Margin="5"
-                           FontFamily="Roboto"
-                           FontWeight="Bold"
-                           Foreground="{StaticResource MaterialDesignDarkBackground}"
-                           Style="{StaticResource MaterialDesignHeadline5TextBlock}"/>
+                                HorizontalAlignment="Left">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="BETA VERSION"
+                               VerticalAlignment="Center"
+                               FontFamily="Roboto"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource MaterialDesignDarkBackground}"
+                               Style="{StaticResource MaterialDesignHeadline5TextBlock}" />
+                </StackPanel>
+
             </materiaDesign:Card>
             <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal"
                         HorizontalAlignment="Right"
@@ -192,10 +208,12 @@
 
 
         <StackPanel Orientation="Vertical"
-                    Grid.Row="2" Grid.Column="0">
+                    Grid.Row="2"
+                    Grid.Column="0">
 
             <Button
                 x:Name="RoutineBtn"
+                IsEnabled="False"
                 MouseEnter="RoutineBtn_OnMouseEnter"
                 Click="RoutineBtn_OnClick"
                 BorderThickness="0"
@@ -271,6 +289,7 @@
 
             <Button
                 BorderThickness="0"
+                IsEnabled="False"
                 HorizontalContentAlignment="Left"
                 x:Name="LifeGoalsBtn"
                 MouseEnter="LifeGoalsBtn_OnMouseEnter"
@@ -295,6 +314,7 @@
             </Button>
 
             <Button
+                IsEnabled="False"
                 BorderThickness="0"
                 x:Name="BirthdaysBtn"
                 MouseEnter="BirthdaysBtn_OnMouseEnter"
@@ -320,6 +340,7 @@
             </Button>
 
             <Button
+                IsEnabled="False"
                 BorderThickness="0"
                 x:Name="FamilyCalendarBtn"
                 MouseEnter="FamilyCalendarBtn_OnMouseEnter"
@@ -345,6 +366,7 @@
             </Button>
 
             <Button
+                IsEnabled="False"
                 x:Name="GameReleasesBtn"
                 MouseEnter="GameReleasesBtn_OnMouseEnter"
                 Click="GameReleasesBtn_OnClick"
@@ -370,6 +392,7 @@
             </Button>
 
             <Button
+                IsEnabled="False"
                 BorderThickness="0"
                 x:Name="PlayTimeBtn"
                 MouseEnter="PlayTimeBtn_OnMouseEnter"

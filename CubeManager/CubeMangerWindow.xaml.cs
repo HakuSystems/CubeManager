@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -252,5 +253,10 @@ public partial class CubeMangerWindow : Window
     private void ClosBtn_OnMouseEnter(object sender, MouseEventArgs e)
     {
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
+    }
+
+    private void CubeMangerWindow_OnLoaded(object sender, RoutedEventArgs e)
+    {
+        VersionTxtBlock.Text = $"V{Assembly.GetExecutingAssembly().GetName().Version}";
     }
 }
