@@ -142,9 +142,9 @@ public partial class SettingsControl : UserControl
     private readonly Dictionary<string, Action<SoundSettings, string>> SoundOptionActions
         = new()
         {
-            { "Button Hover Sound", (settings, path) => settings.ButtonHover = path },
-            { "Button Click Sound", (settings, path) => settings.ButtonClick = path },
-            { "Get Level Sound", (settings, path) => settings.CreditsGet = path },
+            { "Hover Sound", (settings, path) => settings.ButtonHover = path },
+            { "Click Sound", (settings, path) => settings.ButtonClick = path },
+            { "Level Sound", (settings, path) => settings.CreditsGet = path },
             { "Task Complete Sound", (settings, path) => settings.TaskComplete = path },
             { "Checkbox off Sound", (settings, path) => settings.CheckboxOff = path },
             { "Checkbox on Sound", (settings, path) => settings.CheckboxOn = path }

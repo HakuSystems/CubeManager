@@ -152,16 +152,6 @@ public partial class TodosControl : UserControl
         {
             warningMessage = "Time cannot be empty";
         }
-        // else
-        // {
-        //     var selectedDate = todo.DueDate.Date;
-        //     var selectedTime = todo.DueTime.TimeOfDay;
-        //
-        //     if (selectedDate < DateTime.Now.Date)
-        //         warningMessage = "Date cannot be in the past";
-        //     else if (selectedDate == DateTime.Now.Date && selectedTime < DateTime.Now.AddMinutes(5).TimeOfDay)
-        //         warningMessage = "Time should be at least 5 minutes from now";
-        // }
 
         if (warningMessage == null) return true;
 

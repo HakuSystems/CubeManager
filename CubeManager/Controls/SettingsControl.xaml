@@ -8,7 +8,7 @@
              Foreground="{DynamicResource MaterialDesignDarkForeground}"
              Background="{DynamicResource MaterialDesignDarkBackground}"
              Loaded="SettingsControl_OnLoaded"
-             d:DesignHeight="450" d:DesignWidth="300">
+             d:DesignHeight="850" d:DesignWidth="800">
 
 
     <materialDesign:DialogHost
@@ -54,7 +54,9 @@
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="20">
                     <!--Dopamine Effects-->
-                    <materialDesign:Card MouseDown="DopamineCard_OnMouseDown" x:Name="DopamineCard" Margin="0,0,0,10"
+                    <materialDesign:Card MouseDown="DopamineCard_OnMouseDown"
+                                         ToolTip="Dopamine Settings"
+                                         x:Name="DopamineCard" Margin="0,0,0,10"
                                          Padding="10">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -81,7 +83,7 @@
                     <!--Dopamine Effects-->
                     <!--Sound Effects-->
                     <materialDesign:Card MouseDown="SoundCard_OnMouseDown" x:Name="SoundCard" Margin="0,0,0,10"
-                                         Padding="10">
+                                         Padding="10" ToolTip="Sound Settings">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -92,32 +94,31 @@
                                 <Label Content="Enable Sound Effects" FontWeight="SemiBold" />
                                 <TextBlock
                                     Text="Toggle this to enable or disable sound effects, such as when a task gets completed."
-                                    FontStyle="Italic" FontSize="12" Opacity="0.7"
-                                    TextWrapping="Wrap" />
-                                <!-- Sound Settings -->
+                                    FontStyle="Italic" FontSize="12" Opacity="0.7" TextWrapping="Wrap" />
                                 <StackPanel Orientation="Vertical" Margin="10,0,0,0">
                                     <Label Content="Change Sound for" FontWeight="SemiBold" />
                                     <ListBox x:Name="SoundOptionsListBox"
-                                             SelectionChanged="SoundOptionsListBox_OnSelectionChanged">
-                                        <ListBoxItem Content="Button Hover Sound" />
-                                        <ListBoxItem Content="Button Click Sound" />
-                                        <ListBoxItem Content="Get Level Sound" />
+                                             SelectionChanged="SoundOptionsListBox_OnSelectionChanged"
+                                             ToolTip="Click an Sound to assign a new one">
+                                        <ListBoxItem Content="Hover Sound" />
+                                        <ListBoxItem Content="Click Sound" />
+                                        <ListBoxItem Content="Level Sound" />
                                         <ListBoxItem Content="Task Complete Sound" />
                                         <ListBoxItem Content="Checkbox off Sound" />
                                         <ListBoxItem Content="Checkbox on Sound" />
                                     </ListBox>
                                     <TextBlock Text="No Selected Sound" x:Name="SelectedSoundTxtBlock"
                                                HorizontalAlignment="Center" Opacity="0.2" />
-                                    <Button Content="Reset" Foreground="White" x:Name="ResetSoundsBtn" Click="ResetSoundsBtn_OnClick" MouseEnter="ResetSoundsBtn_OnMouseEnter" Style="{StaticResource MaterialDesignFlatButton}"/>
+                                    <Button Content="Reset" Foreground="White" x:Name="ResetSoundsBtn"
+                                            Click="ResetSoundsBtn_OnClick" MouseEnter="ResetSoundsBtn_OnMouseEnter"
+                                            Style="{StaticResource MaterialDesignFlatButton}"
+                                            ToolTip="Reset sound settings to defaults" />
                                 </StackPanel>
-                                <!-- Sound Settings -->
                             </StackPanel>
 
                             <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,10,0,0">
-                                <CheckBox
-                                    x:Name="SoundToggle"
-                                    Checked="SoundToggle_OnChecked"
-                                    Unchecked="SoundToggle_OnUnchecked" />
+                                <CheckBox x:Name="SoundToggle" Checked="SoundToggle_OnChecked"
+                                          Unchecked="SoundToggle_OnUnchecked"/>
                             </StackPanel>
                         </Grid>
                     </materialDesign:Card>
