@@ -2,10 +2,11 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net8.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
+        <TargetFramework>net7.0-windows</TargetFramework>
+        <LangVersion>default</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
