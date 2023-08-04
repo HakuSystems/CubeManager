@@ -27,6 +27,11 @@
           <XamlRuntime>Wpf</XamlRuntime>
           <SubType>Designer</SubType>
       </Page>
+      <Page Update="Todos\TodoControl.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
     </ItemGroup>
 
 
@@ -47,5 +52,7 @@
         <None Remove="Resources\Logo.png"/>
         <Resource Include="Resources\Logo.png"/>
     </ItemGroup>
+
+
 
 </Project>

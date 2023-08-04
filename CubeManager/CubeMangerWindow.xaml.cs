@@ -6,6 +6,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using CubeManager.Controls;
 using CubeManager.Helpers;
+using CubeManager.Todos;
 
 namespace CubeManager;
 
@@ -160,7 +161,7 @@ public partial class CubeMangerWindow : Window
 
     private void TodosBtn_OnClick(object sender, RoutedEventArgs e)
     {
-        ControlsFrame.Navigate(new TodosControl());
+        ControlsFrame.Navigate(new TodoControl());
         _logger.Info("Navigated to TodosControl");
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
     }

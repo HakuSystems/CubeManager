@@ -3,6 +3,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using CubeManager.Helpers;
 using CubeManager.Models;
+using CubeManager.Todos;
+using CubeManager.Todos.Models;
 using MaterialDesignThemes.Wpf;
 
 namespace CubeManager.Controls;
