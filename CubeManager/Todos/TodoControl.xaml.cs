@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using CubeManager.Helpers;
 using CubeManager.Todos.Models;
 using MaterialDesignThemes.Wpf;
@@ -18,6 +19,7 @@ public partial class TodoControl : UserControl
 
     private void TodoControl_OnLoaded(object sender, RoutedEventArgs e)
     {
+        HideDialogHostContents();
         SetDefaultValues();
         GetValuesFromConfig();
         UpdateAny();
@@ -119,8 +121,8 @@ public partial class TodoControl : UserControl
 
     private void FolderList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (FolderList.SelectedItem != null)
-            TodoData.Settings[0].SelectedFolder = ((FolderItem)FolderList.SelectedItem).Id;
+        if (FolderList.SelectedItem == null) return;
+        TodoData.Settings[0].SelectedFolder = ((FolderItem)FolderList.SelectedItem).Id;
         UpdateConfig();
     }
 
@@ -133,6 +135,14 @@ public partial class TodoControl : UserControl
     private void DialogHostOperation_OnDialogClosing(object sender, DialogClosingEventArgs eventargs)
     {
         TodoGrid.IsEnabled = true;
+        HideDialogHostContents();
+    }
+
+    private void HideDialogHostContents()
+    {
+        DialogSelectDateText.Visibility = Visibility.Collapsed;
+        DialogTodoNewCalendar.Visibility = Visibility.Collapsed;
+        AddFolderGrid.Visibility = Visibility.Collapsed;
     }
 
     private void AddFolderBtn_OnClick(object sender, RoutedEventArgs e)
@@ -233,5 +243,149 @@ public partial class TodoControl : UserControl
     {
         if (e.Key == Key.Enter)
             AddTodoBtn_OnClick(sender, e);
+    }
+
+    private void AddTodoDateBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        var contextMenu = new ContextMenu();
+        contextMenu.Items.Add(new MenuItem { Header = $"Today | {DateTime.Today.DayOfWeek}" });
+        contextMenu.Items.Add(new MenuItem { Header = $"Tomorrow | {DateTime.Today.AddDays(1).DayOfWeek}" });
+        contextMenu.Items.Add(new MenuItem { Header = "Next Week | Monday" }); // Always Monday
+        contextMenu.Items.Add(new MenuItem { Header = "Select Date" });
+        if (AddTodoDateBtn.Content is StackPanel)
+            contextMenu.Items.Add(new MenuItem { Header = "Remove Date", Foreground = Brushes.Red });
+
+
+        contextMenu.PlacementTarget = AddTodoDateBtn;
+        contextMenu.IsOpen = true;
+
+        contextMenu.AddHandler(MenuItem.ClickEvent, new RoutedEventHandler((o, args) =>
+        {
+            switch (((MenuItem)args.OriginalSource).Header.ToString())
+            {
+                case var s when s.StartsWith("Today"):
+                    AddTodoDateBtn.Content = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal,
+                        Margin = new Thickness(5),
+                        Children =
+                        {
+                            new PackIcon
+                            {
+                                Kind = PackIconKind.CalendarToday,
+                                Margin = new Thickness(0, 0, 5, 0),
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            },
+                            new TextBlock
+                            {
+                                Text = DateTime.Today.DayOfWeek.ToString(),
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            }
+                        }
+                    };
+                    break;
+                case var s when s.StartsWith("Tomorrow"):
+                    AddTodoDateBtn.Content = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal,
+                        Margin = new Thickness(5),
+                        Children =
+                        {
+                            new PackIcon
+                            {
+                                Kind = PackIconKind.CalendarPlus,
+                                Margin = new Thickness(0, 0, 5, 0),
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            },
+                            new TextBlock
+                            {
+                                Text = DateTime.Today.AddDays(1).DayOfWeek.ToString(),
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            }
+                        }
+                    };
+                    break;
+                case "Next Week | Monday":
+                    var nextMonday = DateTime.Today.AddDays(1);
+                    while (nextMonday.DayOfWeek != DayOfWeek.Monday)
+                        nextMonday = nextMonday.AddDays(1);
+                    AddTodoDateBtn.Content = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal,
+                        Margin = new Thickness(5),
+                        Children =
+                        {
+                            new PackIcon
+                            {
+                                Kind = PackIconKind.CalendarWeek,
+                                Margin = new Thickness(0, 0, 5, 0),
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            },
+                            new TextBlock
+                            {
+                                Text = nextMonday.ToShortDateString(),
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            }
+                        }
+                    };
+                    break;
+                case "Select Date":
+                    DialogHostOperation.IsOpen = true;
+                    TimeOrDatePickerGrid.Visibility = Visibility.Visible;
+                    DialogTodoNewCalendar.Visibility = Visibility.Visible;
+                    DialogSelectDateText.Visibility = Visibility.Visible;
+                    DialogTodoNewCalendar.SelectedDate = DateTime.Today;
+                    ChangeToSelectedDate();
+                    break;
+                case "Remove Date":
+                    // Remove the date
+                    AddTodoDateBtn.Content = new PackIcon
+                    {
+                        Kind = PackIconKind.Calendar,
+                        Margin = new Thickness(5),
+                        VerticalAlignment = VerticalAlignment.Center,
+                        HorizontalAlignment = HorizontalAlignment.Center
+                    };
+                    break;
+                default:
+                    throw new InvalidOperationException("Unrecognized menu item");
+            }
+        }));
+    }
+
+    private void DialogTodoNewCalendar_OnSelectedDateChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        ChangeToSelectedDate();
+    }
+
+    private void ChangeToSelectedDate()
+    {
+        AddTodoDateBtn.Content = new StackPanel
+        {
+            Orientation = Orientation.Horizontal,
+            Margin = new Thickness(5),
+            Children =
+            {
+                new PackIcon
+                {
+                    Kind = PackIconKind.Calendar,
+                    Margin = new Thickness(0, 0, 5, 0),
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                },
+                new TextBlock
+                {
+                    Text = DialogTodoNewCalendar.SelectedDate.GetValueOrDefault().ToShortDateString(),
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                }
+            }
+        };
     }
 }
