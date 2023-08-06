@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,6 +20,9 @@ public partial class TodoControl : UserControl
 
     private void TodoControl_OnLoaded(object sender, RoutedEventArgs e)
     {
+        //DialogTimePicker is 24h only if the windows time format is 24h
+        DialogTimePicker.Is24Hours = CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern.Contains("H");
+        
         HideDialogHostContents();
         SetDefaultValues();
         GetValuesFromConfig();
@@ -140,9 +144,10 @@ public partial class TodoControl : UserControl
 
     private void HideDialogHostContents()
     {
-        DialogSelectDateText.Visibility = Visibility.Collapsed;
+        DialogSelectDateAndTimeText.Visibility = Visibility.Collapsed;
         DialogTodoNewCalendar.Visibility = Visibility.Collapsed;
         AddFolderGrid.Visibility = Visibility.Collapsed;
+        DialogTimePicker.Visibility = Visibility.Collapsed;
     }
 
     private void AddFolderBtn_OnClick(object sender, RoutedEventArgs e)
@@ -339,8 +344,9 @@ public partial class TodoControl : UserControl
                     DialogHostOperation.IsOpen = true;
                     TimeOrDatePickerGrid.Visibility = Visibility.Visible;
                     DialogTodoNewCalendar.Visibility = Visibility.Visible;
-                    DialogSelectDateText.Visibility = Visibility.Visible;
+                    DialogSelectDateAndTimeText.Visibility = Visibility.Visible;
                     DialogTodoNewCalendar.SelectedDate = DateTime.Today;
+                    DialogSelectDateAndTimeText.Text = "Select Date";
                     ChangeToSelectedDate();
                     break;
                 case "Remove Date":
@@ -387,5 +393,123 @@ public partial class TodoControl : UserControl
                 }
             }
         };
+    }
+
+    private void AddTodoTimeBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        //later that day (+3hours), tomorrow (in the morning), cutom time
+        var contextMenu = new ContextMenu();
+        contextMenu.Items.Add(new MenuItem { Header = "Later that day" });
+        contextMenu.Items.Add(new MenuItem { Header = "Next Hour" });
+        contextMenu.Items.Add(new MenuItem { Header = "Custom time" });
+        if (AddTodoTimeBtn.Content is StackPanel)
+            contextMenu.Items.Add(new MenuItem { Header = "Remove Time", Foreground = Brushes.Red });
+        
+        contextMenu.PlacementTarget = AddTodoDateBtn;
+        contextMenu.IsOpen = true;
+
+        contextMenu.AddHandler(MenuItem.ClickEvent, new RoutedEventHandler((o, args) =>
+        {
+            switch (((MenuItem)args.OriginalSource).Header.ToString())
+            {
+                case "Later that day":
+                    AddTodoTimeBtn.Content = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal,
+                        Margin = new Thickness(5),
+                        Children =
+                        {
+                            new PackIcon
+                            {
+                                Kind = PackIconKind.Clock,
+                                Margin = new Thickness(0, 0, 5, 0),
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            },
+                            new TextBlock
+                            {
+                                Text = $"+3 Hours | {DateTime.Now.AddHours(3).ToShortTimeString()}",
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            }
+                        }
+                    };
+                    break;
+                case "Next Hour":
+                    AddTodoTimeBtn.Content = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal,
+                        Margin = new Thickness(5),
+                        Children =
+                        {
+                            new PackIcon
+                            {
+                                Kind = PackIconKind.Clock,
+                                Margin = new Thickness(0, 0, 5, 0),
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            },
+                            new TextBlock
+                            {
+                                Text = $"Next Hour | {DateTime.Now.AddHours(1).ToShortTimeString()}",
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            }
+                        }
+                    };
+                    break;
+                case "Custom time":
+                    DialogHostOperation.IsOpen = true;
+                    TimeOrDatePickerGrid.Visibility = Visibility.Visible;
+                    DialogSelectDateAndTimeText.Text = "Select time";
+                    DialogSelectDateAndTimeText.Visibility = Visibility.Visible;
+                    DialogTimePicker.Visibility = Visibility.Visible;
+                    DialogTimePicker.SelectedTime = DateTime.Today;
+                    ChangeToSelectedTime();
+                    break;
+                case "Remove Time":
+                    AddTodoTimeBtn.Content = new PackIcon
+                    {
+                        Kind = PackIconKind.Clock,
+                        Margin = new Thickness(5),
+                        VerticalAlignment = VerticalAlignment.Center,
+                        HorizontalAlignment = HorizontalAlignment.Center
+                    };
+                    break;
+                default:
+                    throw new InvalidOperationException("Unrecognized menu item");
+            }
+        }));
+        
+    }
+
+    private void ChangeToSelectedTime()
+    {
+        AddTodoTimeBtn.Content = new StackPanel
+        {
+            Orientation = Orientation.Horizontal,
+            Margin = new Thickness(5),
+            Children =
+            {
+                new PackIcon
+                {
+                    Kind = PackIconKind.Clock,
+                    Margin = new Thickness(0, 0, 5, 0),
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                },
+                new TextBlock
+                {
+                    Text = DialogTimePicker.SelectedTime.GetValueOrDefault().ToShortTimeString(),
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                }
+            }
+        };
+    }
+
+    private void DialogTimePicker_OnSelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+    {
+        ChangeToSelectedTime();
     }
 }
