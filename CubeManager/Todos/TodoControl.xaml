@@ -273,13 +273,19 @@
                         </Button.Content>
                     </Button>
                 </materialdesign:Card>
-                <Button Style="{StaticResource MaterialDesignIconButton}">
-                    <StackPanel Orientation="Horizontal">
-                        <materialdesign:PackIcon Kind="Autorenew"
-                                                 Margin="5"
-                                                 HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    </StackPanel>
-                </Button>
+                <materialdesign:Card HorizontalAlignment="Center" Margin="5,0,0,0" VerticalAlignment="Center">
+                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                            Foreground="White"
+                            x:Name="RenewTodoBtn"
+                            Margin="5"
+                            Click="RenewTodoBtn_OnClick">
+                        <Button.Content>
+                            <materialdesign:PackIcon Kind="Autorenew"
+                                                     Margin="5"
+                                                     HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Button.Content>
+                    </Button>
+                </materialdesign:Card>
 
             </StackPanel>
             <!-- statusbar Section -->

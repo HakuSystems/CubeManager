@@ -22,7 +22,7 @@ public partial class TodoControl : UserControl
     {
         //DialogTimePicker is 24h only if the windows time format is 24h
         DialogTimePicker.Is24Hours = CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern.Contains("H");
-        
+
         HideDialogHostContents();
         SetDefaultValues();
         GetValuesFromConfig();
@@ -397,14 +397,13 @@ public partial class TodoControl : UserControl
 
     private void AddTodoTimeBtn_OnClick(object sender, RoutedEventArgs e)
     {
-        //later that day (+3hours), tomorrow (in the morning), cutom time
         var contextMenu = new ContextMenu();
         contextMenu.Items.Add(new MenuItem { Header = "Later that day" });
         contextMenu.Items.Add(new MenuItem { Header = "Next Hour" });
         contextMenu.Items.Add(new MenuItem { Header = "Custom time" });
         if (AddTodoTimeBtn.Content is StackPanel)
             contextMenu.Items.Add(new MenuItem { Header = "Remove Time", Foreground = Brushes.Red });
-        
+
         contextMenu.PlacementTarget = AddTodoDateBtn;
         contextMenu.IsOpen = true;
 
@@ -480,7 +479,6 @@ public partial class TodoControl : UserControl
                     throw new InvalidOperationException("Unrecognized menu item");
             }
         }));
-        
     }
 
     private void ChangeToSelectedTime()
@@ -511,5 +509,129 @@ public partial class TodoControl : UserControl
     private void DialogTimePicker_OnSelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
     {
         ChangeToSelectedTime();
+    }
+
+    private void RenewTodoBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        var contextMenu = new ContextMenu();
+        contextMenu.Items.Add(new MenuItem { Header = "Daily" });
+        contextMenu.Items.Add(new MenuItem { Header = "Weekly" });
+        contextMenu.Items.Add(new MenuItem { Header = "Monthly" });
+        contextMenu.Items.Add(new MenuItem { Header = "Yearly" });
+        if (RenewTodoBtn.Content is StackPanel)
+            contextMenu.Items.Add(new MenuItem { Header = "Dont Renew", Foreground = Brushes.Red });
+
+        contextMenu.PlacementTarget = RenewTodoBtn;
+        contextMenu.IsOpen = true;
+
+        contextMenu.AddHandler(MenuItem.ClickEvent, new RoutedEventHandler((o, args) =>
+        {
+            switch (((MenuItem)args.OriginalSource).Header.ToString())
+            {
+                case "Daily":
+                    RenewTodoBtn.Content = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal,
+                        Margin = new Thickness(5),
+                        Children =
+                        {
+                            new PackIcon
+                            {
+                                Kind = PackIconKind.Autorenew,
+                                Margin = new Thickness(0, 0, 5, 0),
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            },
+                            new TextBlock
+                            {
+                                Text = "Daily",
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            }
+                        }
+                    };
+                    break;
+                case "Weekly":
+                    RenewTodoBtn.Content = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal,
+                        Margin = new Thickness(5),
+                        Children =
+                        {
+                            new PackIcon
+                            {
+                                Kind = PackIconKind.Autorenew,
+                                Margin = new Thickness(0, 0, 5, 0),
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            },
+                            new TextBlock
+                            {
+                                Text = "Weekly",
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            }
+                        }
+                    };
+                    break;
+                case "Monthly":
+                    RenewTodoBtn.Content = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal,
+                        Margin = new Thickness(5),
+                        Children =
+                        {
+                            new PackIcon
+                            {
+                                Kind = PackIconKind.Autorenew,
+                                Margin = new Thickness(0, 0, 5, 0),
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            },
+                            new TextBlock
+                            {
+                                Text = "Monthly",
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            }
+                        }
+                    };
+                    break;
+                case "Yearly":
+                    RenewTodoBtn.Content = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal,
+                        Margin = new Thickness(5),
+                        Children =
+                        {
+                            new PackIcon
+                            {
+                                Kind = PackIconKind.Autorenew,
+                                Margin = new Thickness(0, 0, 5, 0),
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            },
+                            new TextBlock
+                            {
+                                Text = "Yearly",
+                                VerticalAlignment = VerticalAlignment.Center,
+                                HorizontalAlignment = HorizontalAlignment.Center
+                            }
+                        }
+                    };
+                    break;
+                case "Dont Renew":
+                    RenewTodoBtn.Content = new PackIcon
+                    {
+                        Kind = PackIconKind.Autorenew,
+                        Margin = new Thickness(0, 0, 5, 0),
+                        VerticalAlignment = VerticalAlignment.Center,
+                        HorizontalAlignment = HorizontalAlignment.Center
+                    };
+                    break;
+                default:
+                    throw new InvalidOperationException("Unrecognized menu item");
+            }
+        }));
     }
 }
