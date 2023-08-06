@@ -8,4 +8,5 @@ public class FolderItem
     public Guid Id { get; set; }
     public string Name { get; set; }
     public PackIconKind IconKind { get; set; }
+    public bool isDefault { get; set; }
 }

@@ -238,6 +238,7 @@
                                    VerticalAlignment="Center" Margin="5" />
                         <ComboBox
                             x:Name="FolderComboBox"
+                            SelectionChanged="FolderComboBox_OnSelectionChanged"
                             Margin="10"
                             ItemTemplate="{StaticResource FolderItemTemplate}"
                             ItemsSource="{Binding Folders}"

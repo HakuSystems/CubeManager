@@ -105,21 +105,24 @@ public partial class TodoControl : UserControl
         {
             Name = "All",
             IconKind = PackIconKind.ToDo,
-            Id = Guid.NewGuid()
+            Id = Guid.NewGuid(),
+            isDefault = true
         });
 
         TodoData.Folders.Add(new FolderItem
         {
             Name = "Important",
             IconKind = PackIconKind.Star,
-            Id = Guid.NewGuid()
+            Id = Guid.NewGuid(),
+            isDefault = true
         });
 
         TodoData.Folders.Add(new FolderItem
         {
             Name = "Planned",
             IconKind = PackIconKind.Clock,
-            Id = Guid.NewGuid()
+            Id = Guid.NewGuid(),
+            isDefault = true
         });
     }
 
@@ -127,7 +130,37 @@ public partial class TodoControl : UserControl
     {
         if (FolderList.SelectedItem == null) return;
         TodoData.Settings[0].SelectedFolder = ((FolderItem)FolderList.SelectedItem).Id;
-        UpdateConfig();
+
+        if (Mouse.RightButton != MouseButtonState.Pressed) return;
+        if (FolderList.SelectedItem is FolderItem folderItem && folderItem.isDefault)
+            return;
+
+        var newTread = new Thread(() =>
+        {
+            Dispatcher.Invoke(() =>
+            {
+                var contextMenu = new ContextMenu();
+                contextMenu.Items.Add(new MenuItem { Header = "Delete Folder", Foreground = Brushes.Red });
+
+                contextMenu.PlacementTarget = FolderList;
+                contextMenu.IsOpen = true;
+
+                contextMenu.AddHandler(MenuItem.ClickEvent, new RoutedEventHandler((o, args) =>
+                {
+                    switch (((MenuItem)args.OriginalSource).Header.ToString())
+                    {
+                        case "Delete Folder":
+                            TodoData.Folders.Remove((FolderItem)FolderList.SelectedItem);
+                            FolderList.Items.Remove(FolderList.SelectedItem);
+                            UpdateAny();
+                            break;
+                        default:
+                            throw new InvalidOperationException("Unrecognized menu item");
+                    }
+                }));
+            });
+        });
+        newTread.Start();
     }
 
 
@@ -633,5 +666,14 @@ public partial class TodoControl : UserControl
                     throw new InvalidOperationException("Unrecognized menu item");
             }
         }));
+    }
+
+    private void FolderComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (FolderList.SelectedItem is FolderItem folder)
+            FolderComboBox.SelectedItem = folder;
+
+        if (FolderComboBox.SelectedItem is not FolderItem)
+            FolderList.SelectedItem = FolderList.Items[0];
     }
 }
