@@ -3,6 +3,7 @@ using CubeManager.Models.Settings;
 using CubeManager.Models.Subscriptions;
 using CubeManager.Models.Version;
 using CubeManager.Todos;
+using CubeManager.ZenQuotes;
 
 namespace CubeManager.Models;
 
@@ -14,4 +15,5 @@ public class ConfigData
     public SoundSettings SoundSettings { get; set; } = new();
     public SubscriptionsData Subscriptions { get; set; } = new();
     public TodoData Todo { get; set; } = new();
+    public QuoteData Quote { get; set; } = new();
 }

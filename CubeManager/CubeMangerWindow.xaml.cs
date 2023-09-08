@@ -7,6 +7,7 @@ using System.Windows.Media.Animation;
 using CubeManager.Controls;
 using CubeManager.Helpers;
 using CubeManager.Todos;
+using CubeManager.ZenQuotes;
 
 namespace CubeManager;
 
@@ -258,6 +259,7 @@ public partial class CubeMangerWindow : Window
 
     private void CubeMangerWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
-        VersionTxtBlock.Text = $"V{Assembly.GetExecutingAssembly().GetName().Version}";
+        VersionTxtBlock.Text = $"V{Assembly.GetExecutingAssembly().GetName().Version} Beta";
+        QuoteTxtBlock.Text = new FetchQuote().RetrieveQuote();
     }
 }
