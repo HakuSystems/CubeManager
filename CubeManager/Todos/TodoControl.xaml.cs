@@ -53,7 +53,6 @@ public partial class TodoControl : UserControl
     private void UpdateAny()
     {
         SetFolderItems();
-        UpdateStatusBar();
         SetSelectedFolder();
         UpdateConfig();
     }
@@ -67,18 +66,6 @@ public partial class TodoControl : UserControl
             FolderList.Items.Add(folder);
             FolderComboBox.Items.Add(folder);
         }
-    }
-
-    private void UpdateStatusBar()
-    {
-        StatusBar.Text =
-            $"Total Folders: {TodoData.Settings[0].TotalFolders} |" +
-            $" Total Todos: {TodoData.Settings[0].TotalTodos} |" +
-            $" Total Important Todos: {TodoData.Settings[0].TotalImportantTodos} |" +
-            $" Total Planned Todos: {TodoData.Settings[0].TotalPlannedTodos} |" +
-            $" Total Completed Todos: {TodoData.Settings[0].TotalCompletedTodos}";
-        if (TodoData.Settings[0].TotalFolders != 3)
-            StatusBar.Text += $" | Total Custom Folders: {TodoData.Settings[0].TotalFolders - 3}";
     }
 
     private void SetDefaultValues()
@@ -104,6 +91,7 @@ public partial class TodoControl : UserControl
         TodoData.Folders.Add(new FolderItem
         {
             Name = "All",
+            TotalContent = TodoData.Settings[0].TotalTodos.ToString(),
             IconKind = PackIconKind.ToDo,
             Id = Guid.NewGuid(),
             isDefault = true
@@ -112,6 +100,7 @@ public partial class TodoControl : UserControl
         TodoData.Folders.Add(new FolderItem
         {
             Name = "Important",
+            TotalContent = TodoData.Settings[0].TotalImportantTodos.ToString(),
             IconKind = PackIconKind.Star,
             Id = Guid.NewGuid(),
             isDefault = true
@@ -120,6 +109,7 @@ public partial class TodoControl : UserControl
         TodoData.Folders.Add(new FolderItem
         {
             Name = "Planned",
+            TotalContent = TodoData.Settings[0].TotalPlannedTodos.ToString(),
             IconKind = PackIconKind.Clock,
             Id = Guid.NewGuid(),
             isDefault = true
@@ -256,6 +246,7 @@ public partial class TodoControl : UserControl
         TodoData.Folders.Add(new FolderItem
         {
             Name = AddFolderDialogBtnTextBlock.Text,
+            TotalContent = "0",
             IconKind = ((PackIcon)ChangeFolderIconDialogBtn.Content).Kind,
             Id = Guid.NewGuid()
         });
@@ -274,7 +265,19 @@ public partial class TodoControl : UserControl
 
     private void AddTodoBtn_OnClick(object sender, RoutedEventArgs e)
     {
-        throw new NotImplementedException();
+        var dueDate = DialogTodoNewCalendar.SelectedDate;
+        var dueTime = DialogTimePicker.SelectedTime;
+        string? repeat = null;
+        FolderItem? inFolder = null;
+        
+        if (RenewTodoBtn.Content is StackPanel)
+            repeat = ((TextBlock)((StackPanel)RenewTodoBtn.Content).Children[1]).Text;
+        if (FolderComboBox.SelectedItem is FolderItem)
+            inFolder = (FolderItem)FolderComboBox.SelectedItem;
+
+        if (string.IsNullOrEmpty(AddTodoTextBox.Text)) return;
+        ActiveListContent.Items.Add(CreateCardUi(AddTodoTextBox.Text, null, dueDate, dueTime, repeat, false, false,
+            inFolder));
     }
 
     private void AddTodoTextBox_OnKeyDown(object sender, KeyEventArgs e)
@@ -559,121 +562,327 @@ public partial class TodoControl : UserControl
 
         contextMenu.AddHandler(MenuItem.ClickEvent, new RoutedEventHandler((o, args) =>
         {
-            switch (((MenuItem)args.OriginalSource).Header.ToString())
+            RenewTodoBtn.Content = ((MenuItem)args.OriginalSource).Header.ToString() switch
             {
-                case "Daily":
-                    RenewTodoBtn.Content = new StackPanel
+                "Daily" => new StackPanel
+                {
+                    Orientation = Orientation.Horizontal,
+                    Margin = new Thickness(5),
+                    Children =
                     {
-                        Orientation = Orientation.Horizontal,
-                        Margin = new Thickness(5),
-                        Children =
+                        new PackIcon
                         {
-                            new PackIcon
-                            {
-                                Kind = PackIconKind.Autorenew,
-                                Margin = new Thickness(0, 0, 5, 0),
-                                VerticalAlignment = VerticalAlignment.Center,
-                                HorizontalAlignment = HorizontalAlignment.Center
-                            },
-                            new TextBlock
-                            {
-                                Text = "Daily",
-                                VerticalAlignment = VerticalAlignment.Center,
-                                HorizontalAlignment = HorizontalAlignment.Center
-                            }
-                        }
-                    };
-                    break;
-                case "Weekly":
-                    RenewTodoBtn.Content = new StackPanel
-                    {
-                        Orientation = Orientation.Horizontal,
-                        Margin = new Thickness(5),
-                        Children =
+                            Kind = PackIconKind.Autorenew,
+                            Margin = new Thickness(0, 0, 5, 0),
+                            VerticalAlignment = VerticalAlignment.Center,
+                            HorizontalAlignment = HorizontalAlignment.Center
+                        },
+                        new TextBlock
                         {
-                            new PackIcon
-                            {
-                                Kind = PackIconKind.Autorenew,
-                                Margin = new Thickness(0, 0, 5, 0),
-                                VerticalAlignment = VerticalAlignment.Center,
-                                HorizontalAlignment = HorizontalAlignment.Center
-                            },
-                            new TextBlock
-                            {
-                                Text = "Weekly",
-                                VerticalAlignment = VerticalAlignment.Center,
-                                HorizontalAlignment = HorizontalAlignment.Center
-                            }
+                            Text = "Daily",
+                            VerticalAlignment = VerticalAlignment.Center,
+                            HorizontalAlignment = HorizontalAlignment.Center
                         }
-                    };
-                    break;
-                case "Monthly":
-                    RenewTodoBtn.Content = new StackPanel
+                    }
+                },
+                "Weekly" => new StackPanel
+                {
+                    Orientation = Orientation.Horizontal,
+                    Margin = new Thickness(5),
+                    Children =
                     {
-                        Orientation = Orientation.Horizontal,
-                        Margin = new Thickness(5),
-                        Children =
+                        new PackIcon
                         {
-                            new PackIcon
-                            {
-                                Kind = PackIconKind.Autorenew,
-                                Margin = new Thickness(0, 0, 5, 0),
-                                VerticalAlignment = VerticalAlignment.Center,
-                                HorizontalAlignment = HorizontalAlignment.Center
-                            },
-                            new TextBlock
-                            {
-                                Text = "Monthly",
-                                VerticalAlignment = VerticalAlignment.Center,
-                                HorizontalAlignment = HorizontalAlignment.Center
-                            }
-                        }
-                    };
-                    break;
-                case "Yearly":
-                    RenewTodoBtn.Content = new StackPanel
-                    {
-                        Orientation = Orientation.Horizontal,
-                        Margin = new Thickness(5),
-                        Children =
+                            Kind = PackIconKind.Autorenew,
+                            Margin = new Thickness(0, 0, 5, 0),
+                            VerticalAlignment = VerticalAlignment.Center,
+                            HorizontalAlignment = HorizontalAlignment.Center
+                        },
+                        new TextBlock
                         {
-                            new PackIcon
-                            {
-                                Kind = PackIconKind.Autorenew,
-                                Margin = new Thickness(0, 0, 5, 0),
-                                VerticalAlignment = VerticalAlignment.Center,
-                                HorizontalAlignment = HorizontalAlignment.Center
-                            },
-                            new TextBlock
-                            {
-                                Text = "Yearly",
-                                VerticalAlignment = VerticalAlignment.Center,
-                                HorizontalAlignment = HorizontalAlignment.Center
-                            }
+                            Text = "Weekly",
+                            VerticalAlignment = VerticalAlignment.Center,
+                            HorizontalAlignment = HorizontalAlignment.Center
                         }
-                    };
-                    break;
-                case "Dont Renew":
-                    RenewTodoBtn.Content = new PackIcon
+                    }
+                },
+                "Monthly" => new StackPanel
+                {
+                    Orientation = Orientation.Horizontal,
+                    Margin = new Thickness(5),
+                    Children =
                     {
-                        Kind = PackIconKind.Autorenew,
-                        Margin = new Thickness(0, 0, 5, 0),
-                        VerticalAlignment = VerticalAlignment.Center,
-                        HorizontalAlignment = HorizontalAlignment.Center
-                    };
-                    break;
-                default:
-                    throw new InvalidOperationException("Unrecognized menu item");
-            }
+                        new PackIcon
+                        {
+                            Kind = PackIconKind.Autorenew,
+                            Margin = new Thickness(0, 0, 5, 0),
+                            VerticalAlignment = VerticalAlignment.Center,
+                            HorizontalAlignment = HorizontalAlignment.Center
+                        },
+                        new TextBlock
+                        {
+                            Text = "Monthly",
+                            VerticalAlignment = VerticalAlignment.Center,
+                            HorizontalAlignment = HorizontalAlignment.Center
+                        }
+                    }
+                },
+                "Yearly" => new StackPanel
+                {
+                    Orientation = Orientation.Horizontal,
+                    Margin = new Thickness(5),
+                    Children =
+                    {
+                        new PackIcon
+                        {
+                            Kind = PackIconKind.Autorenew,
+                            Margin = new Thickness(0, 0, 5, 0),
+                            VerticalAlignment = VerticalAlignment.Center,
+                            HorizontalAlignment = HorizontalAlignment.Center
+                        },
+                        new TextBlock
+                        {
+                            Text = "Yearly",
+                            VerticalAlignment = VerticalAlignment.Center,
+                            HorizontalAlignment = HorizontalAlignment.Center
+                        }
+                    }
+                },
+                "Dont Renew" => new PackIcon
+                {
+                    Kind = PackIconKind.Autorenew,
+                    Margin = new Thickness(0, 0, 5, 0),
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                },
+                _ => throw new InvalidOperationException("Unrecognized menu item")
+            };
         }));
     }
 
     private void FolderComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (FolderList.SelectedItem is FolderItem folder)
-            FolderComboBox.SelectedItem = folder;
-
         if (FolderComboBox.SelectedItem is not FolderItem)
             FolderList.SelectedItem = FolderList.Items[0];
+    }
+
+
+    private Card CreateCardUi(string Title, string Description = null, DateTime? DueDate = null,
+        DateTime? DueTime = null, string? Repeat = null, bool MarkedAsImportant = false,
+        bool MarkedAsCompleted = false, FolderItem? InFolder = null, string Notes = null, List<LinkItem> Links = null)
+    {
+        // Main Card
+        var mainCard = new Card();
+
+        var mainStackPanel = new StackPanel();
+        mainCard.Content = mainStackPanel;
+
+        // Top Buttons StackPanel
+        var topButtonsStackPanel = new StackPanel
+        {
+            Orientation = Orientation.Horizontal,
+            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalAlignment = HorizontalAlignment.Right
+        };
+        mainStackPanel.Children.Add(topButtonsStackPanel);
+
+        // Done Button Card
+        var doneButtonCard = new Card
+        {
+            HorizontalAlignment = HorizontalAlignment.Right,
+            VerticalAlignment = VerticalAlignment.Center,
+            Margin = new Thickness(5)
+        };
+        topButtonsStackPanel.Children.Add(doneButtonCard);
+
+        var doneButton = new Button
+        {
+            HorizontalAlignment = HorizontalAlignment.Right,
+            VerticalAlignment = VerticalAlignment.Top,
+            Margin = new Thickness(5),
+            Content = new PackIcon { Kind = PackIconKind.Done, Opacity = 0.5, Foreground = Brushes.White },
+            Style = (Style)FindResource("MaterialDesignIconButton")
+        };
+        doneButtonCard.Content = doneButton;
+
+        // Star Button Card
+        var starButtonCard = new Card
+        {
+            HorizontalAlignment = HorizontalAlignment.Right,
+            VerticalAlignment = VerticalAlignment.Center,
+            Margin = new Thickness(5)
+        };
+        topButtonsStackPanel.Children.Add(starButtonCard);
+
+        var starButton = new Button
+        {
+            HorizontalAlignment = HorizontalAlignment.Right,
+            VerticalAlignment = VerticalAlignment.Top,
+            Margin = new Thickness(5),
+            Content = new PackIcon { Kind = PackIconKind.Star, Foreground = Brushes.White },
+            Style = (Style)FindResource("MaterialDesignIconButton")
+        };
+        starButtonCard.Content = starButton;
+
+        // Title TextBox
+        var titleTextBox = new TextBox
+        {
+            Text = Title,
+            FontSize = 20,
+            Margin = new Thickness(15, 5, 5, 5)
+        };
+        mainStackPanel.Children.Add(titleTextBox);
+
+// Description TextBox
+        var descriptionTextBox = new TextBox
+        {
+            ToolTip = "Description",
+            FontSize = 20,
+            Margin = new Thickness(15, 5, 5, 5)
+        };
+        mainStackPanel.Children.Add(descriptionTextBox);
+
+// Date and Time StackPanel
+        var dateTimeStackPanel = new StackPanel { Orientation = Orientation.Horizontal };
+        mainStackPanel.Children.Add(dateTimeStackPanel);
+
+// Due Date Card
+        var dueDateCard = new Card { Margin = new Thickness(5) };
+        dateTimeStackPanel.Children.Add(dueDateCard);
+
+        var dueDateStackPanel = new StackPanel { Orientation = Orientation.Horizontal };
+        dueDateCard.Content = dueDateStackPanel;
+
+        var calendarIcon = new PackIcon
+        {
+            Kind = PackIconKind.Calendar, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(5),
+            Foreground = Brushes.White
+        };
+        dueDateStackPanel.Children.Add(calendarIcon);
+
+        var dueDateTextBlock = new TextBlock
+        {
+            Text = DueDate == null ? "Due Date: None" : $"Due Date: {DueDate.Value.ToShortDateString()}",
+            FontSize = 20, Margin = new Thickness(5),
+            VerticalAlignment = VerticalAlignment.Center
+        };
+        dueDateStackPanel.Children.Add(dueDateTextBlock);
+
+// Due Time Card
+        var dueTimeCard = new Card { Margin = new Thickness(5) };
+        dateTimeStackPanel.Children.Add(dueTimeCard);
+
+        var dueTimeStackPanel = new StackPanel { Orientation = Orientation.Horizontal };
+        dueTimeCard.Content = dueTimeStackPanel;
+
+        var clockIcon = new PackIcon
+        {
+            Kind = PackIconKind.Clock, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(5),
+            Foreground = Brushes.White
+        };
+        dueTimeStackPanel.Children.Add(clockIcon);
+
+        var dueTimeTextBlock = new TextBlock
+        {
+            Text = DueTime == null ? "Due Time: None" : $"Due Time: {DueTime.Value.ToShortTimeString()}",
+            FontSize = 20, Margin = new Thickness(5),
+            VerticalAlignment = VerticalAlignment.Center
+        };
+        dueTimeStackPanel.Children.Add(dueTimeTextBlock);
+
+// Repeat Card
+        var repeatCard = new Card { Margin = new Thickness(5) };
+        dateTimeStackPanel.Children.Add(repeatCard);
+
+        var repeatStackPanel = new StackPanel { Orientation = Orientation.Horizontal };
+        repeatCard.Content = repeatStackPanel;
+
+        var repeatIcon = new PackIcon
+        {
+            Kind = PackIconKind.Repeat, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(5),
+            Foreground = Brushes.White
+        };
+        repeatStackPanel.Children.Add(repeatIcon);
+
+        var repeatTextBlock = new TextBlock
+        {
+            Text = Repeat ?? "None",
+            HorizontalAlignment = HorizontalAlignment.Center, Margin = new Thickness(5),
+            VerticalAlignment = VerticalAlignment.Center
+        };
+        repeatStackPanel.Children.Add(repeatTextBlock);
+
+// Notes TextBox
+        var notesTextBox = new TextBox
+        {
+            ToolTip = "Add Notes",
+            FontSize = 20,
+            Margin = new Thickness(15, 5, 5, 5)
+        };
+        mainStackPanel.Children.Add(notesTextBox);
+
+// Links Card
+        var linksCard = new Card();
+        mainStackPanel.Children.Add(linksCard);
+
+        var linksStackPanel = new StackPanel { Orientation = Orientation.Horizontal };
+        linksCard.Content = linksStackPanel;
+
+        var linkTextBox = new TextBox
+        {
+            Text = "https://www.google.com",
+            HorizontalAlignment = HorizontalAlignment.Stretch,
+            VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(5)
+        };
+        linksStackPanel.Children.Add(linkTextBox);
+
+        var addButton = new Button
+        {
+            Content = new PackIcon { Kind = PackIconKind.Plus },
+            Foreground = Brushes.White,
+            Style = (Style)FindResource("MaterialDesignIconButton")
+        };
+        linksStackPanel.Children.Add(addButton);
+
+// ListView
+        var listView = new ListView();
+        mainStackPanel.Children.Add(listView);
+
+// FolderName Card
+        var folderNameCard = new Card
+        {
+            HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Center,
+            Margin = new Thickness(5)
+        };
+        mainStackPanel.Children.Add(folderNameCard);
+
+        var folderNameStackPanel = new StackPanel
+        {
+            Orientation = Orientation.Horizontal, Margin = new Thickness(5),
+            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalAlignment = HorizontalAlignment.Center,
+            Children =
+            {
+                new PackIcon
+                {
+                    Kind = InFolder?.IconKind ?? PackIconKind.Folder,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Margin = new Thickness(5),
+                    Foreground = Brushes.White
+                },
+                new TextBlock
+                {
+                    Text = InFolder == null ? "None" : InFolder.Name,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Margin = new Thickness(5),
+                    FontSize = 20
+                }
+            }
+        };
+        folderNameCard.Content = folderNameStackPanel;
+
+        return mainCard;
     }
 }
