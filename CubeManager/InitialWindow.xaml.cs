@@ -21,9 +21,9 @@ public partial class InitialWindow : Window
     private void InitialWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
         _logger.Info("InitialWindow loaded");
-        var mainWindow = new CubeMangerWindow();
+        var mainWindow = new SplashScreen();
         mainWindow.Show();
-        _logger.Info("CubeManagerWindow shown");
+        _logger.Info("SplashScreen shown");
         Close();
         _logger.Info("InitialWindow closed");
     }

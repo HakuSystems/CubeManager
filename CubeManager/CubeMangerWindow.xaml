@@ -115,20 +115,6 @@
               HorizontalAlignment="Stretch"
               MouseDown="DragGrid_OnMouseDown"
               Background="{StaticResource MaterialDesignDarkSeparatorBackground}">
-
-            <materiaDesign:Card Background="Gold"
-                                Padding="5"
-                                VerticalAlignment="Center"
-                                Width="auto"
-                                HorizontalAlignment="Left">
-                <TextBlock Name="QuoteTxtBlock"
-                           VerticalAlignment="Bottom"
-                           FontFamily="Roboto"
-                           FontWeight="Medium"
-                           Foreground="{StaticResource MaterialDesignDarkBackground}"
-                           Style="{StaticResource MaterialDesignHeadline6TextBlock}" />
-
-            </materiaDesign:Card>
             <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal"
                         HorizontalAlignment="Right"
 

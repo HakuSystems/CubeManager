@@ -260,6 +260,5 @@ public partial class CubeMangerWindow : Window
     private void CubeMangerWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
         VersionTxtBlock.Text = $"V{Assembly.GetExecutingAssembly().GetName().Version} Beta";
-        QuoteTxtBlock.Text = new FetchQuote().RetrieveQuote();
     }
 }

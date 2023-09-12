@@ -8,13 +8,22 @@ public class FetchQuote
 {
     public string RetrieveQuote()
     {
-        if (!IsNewDay()) return ConfigManager.Instance.Config.Quote.Quote;
+        if (!IsNewDay() && PingQuoteApiOk()) return ConfigManager.Instance.Config.Quote.Quote;
         var client = new HttpClient();
         var response = client.GetAsync("https://zenquotes.io/api/random").Result;
         var content = response.Content.ReadAsStringAsync().Result;
         var quote = JsonConvert.DeserializeObject<List<QuoteData>>(content).First();
         DayHelper.SaveQuote(quote.q);
+        client.Dispose();
         return quote.q;
+    }
+
+    private static bool PingQuoteApiOk()
+    {
+        var client = new HttpClient();
+        var response = client.GetAsync("https://zenquotes.io/api/random").Result;
+        client.Dispose();
+        return response.IsSuccessStatusCode;
     }
 
     private bool IsNewDay()

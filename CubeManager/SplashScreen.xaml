@@ -1,0 +1,50 @@
+<Window x:Class="CubeManager.SplashScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:materiaDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Topmost="True"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Background="Transparent"
+        ShowInTaskbar="False"
+        AllowsTransparency="True"
+        Loaded="SplashScreen_OnLoaded"
+        Height="auto" Width="auto">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <materiaDesign:Card Background="{StaticResource MaterialDesignDarkBackground}"
+                            materiaDesign:ShadowAssist.Darken="True"
+                            materiaDesign:ShadowAssist.ShadowDepth="Depth3"
+                            Padding="10">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Image Source="Resources/Logo.png" Height="100" Width="100" />
+                <TextBlock Text="CUBEMANAGER"
+                           FontSize="30"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+            </StackPanel>
+        </materiaDesign:Card>
+        <materiaDesign:Card Grid.Row="1" Background="{StaticResource MaterialDesignDarkSeparatorBackground}">
+            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Orientation="Vertical">
+                <TextBlock Name="QuoteText" HorizontalAlignment="Center"
+                           VerticalAlignment="Bottom" Margin="5" Foreground="White"
+                           Style="{DynamicResource MaterialDesignHeadline5TextBlock}" />
+                <ProgressBar Margin="20" HorizontalContentAlignment="Center" Name="ProgressBar" />
+            </StackPanel>
+        </materiaDesign:Card>
+    </Grid>
+</Window>
