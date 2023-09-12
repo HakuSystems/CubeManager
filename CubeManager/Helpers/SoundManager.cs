@@ -11,18 +11,31 @@ public class SoundManager
 
     public void PlayAudio(string audioFilePath)
     {
+        try
+        {
+            DisposeWave();
+
+            if (ConfigManager.Instance.Config.Settings.EnableSound == false) return;
+
+            var tempFilePath = GetSoundFilePath(audioFilePath);
+
+            waveOutDevice = new WaveOut();
+            audioFileReader = new AudioFileReader(tempFilePath);
+
+            audioFileReader.Volume = 0.3f;
+            waveOutDevice.Init(audioFileReader);
+            waveOutDevice.Play();
+        }
+        catch (Exception e)
+        {
+            ResetAudio();
+        }
+    }
+
+    private void ResetAudio()
+    {
         DisposeWave();
-
-        if (ConfigManager.Instance.Config.Settings.EnableSound == false) return;
-
-        var tempFilePath = GetSoundFilePath(audioFilePath);
-
-        waveOutDevice = new WaveOut();
-        audioFileReader = new AudioFileReader(tempFilePath);
-
-        audioFileReader.Volume = 0.3f;
-        waveOutDevice.Init(audioFileReader);
-        waveOutDevice.Play();
+        MessageBox.Show("Failed to play sound", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
     }
 
     private string GetSoundFilePath(string audioFilePath)
