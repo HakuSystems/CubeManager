@@ -1,10 +1,11 @@
 using System.Windows;
 using CubeManager.Helpers;
 using CubeManager.Notifications;
+using Wpf.Ui.Controls;
 
 namespace CubeManager;
 
-public partial class InitialWindow : Window
+public partial class InitialWindow : UiWindow
 {
     private readonly Logger _logger;
 

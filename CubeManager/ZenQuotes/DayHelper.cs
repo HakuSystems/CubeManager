@@ -8,6 +8,10 @@ public class DayHelper
     private static readonly FetchQuote FetchQuote = new();
     private static readonly Logger Logger = new();
 
+    /// <summary>
+    /// Saves the quote to the config
+    /// </summary>
+    /// <param name="quote"></param>
     public static void SaveQuote(string quote)
     {
         var config = ConfigManager.Instance.Config;
