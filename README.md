@@ -23,7 +23,7 @@ Set, track, and achieve your life goals.
 
 ## Motivation 🚀
 
-![Motivational Speech on App Startup](https://cdn.discordapp.com/attachments/1139479964022997102/1151727435688194048/oRjYbcIm9i.png)
+![Motivational Speech on App Startup](https://cdn.discordapp.com/attachments/1139479964022997102/1158511344488812555/wDyXHiKwPF.png?ex=651c8344&is=651b31c4&hm=d3ff7354c060908e29568c20cbaa28cbcfa530235d391313a1dbda7bba7f79f7&)
 
 Stay inspired and motivated with our curated motivational speeches. Push through challenges and achieve greatness!
 
