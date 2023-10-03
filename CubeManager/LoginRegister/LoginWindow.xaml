@@ -1,0 +1,79 @@
+<ui:UiWindow x:Class="CubeManager.LoginRegister.LoginWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.WPF;assembly=SkiaSharp.Views.WPF"
+             mc:Ignorable="d"
+             FontFamily="FontAwesome"
+             WindowStyle="None"
+             Loaded="LoginWindow_OnLoaded"
+             MouseMove="LoginWindow_OnMouseMove"
+             MouseDown="LoginWindow_OnMouseDown"
+             ResizeMode="CanResizeWithGrip"
+             AllowsTransparency="True"
+             WindowStartupLocation="CenterScreen"
+             Title="CubeManager"
+             Height="auto" Width="auto">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <skia:SKElement x:Name="CanvasView" Grid.ColumnSpan="2" PaintSurface="CanvasView_OnPaintSurface" />
+        <skia:SKElement Grid.Column="0" Grid.ColumnSpan="2" x:Name="CanvasMouseView"
+                        PaintSurface="CanvasMouseView_OnPaintSurface" />
+        <Border>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Grid.ColumnSpan="1">
+                    <ui:Card
+                        IsHitTestVisible="False"
+                        Padding="10"
+                        Margin="5"
+                        BorderBrush="Transparent"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        HorizontalAlignment="Left">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="CubeManager" FontSize="50"
+                                       FontStyle="Normal" FontWeight="Bold"
+                                       Foreground="White" HorizontalAlignment="Center"
+                                       VerticalAlignment="Top" />
+
+                        </StackPanel>
+                    </ui:Card>
+                    <ui:Card
+                        IsHitTestVisible="False"
+                        Padding="10"
+                        Margin="5"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="Your All-In-One Productivity Solution" FontSize="20"
+                                       Name="QuoteTextBlock"
+                                       TextWrapping="Wrap"
+                                       Margin="15,0,0,0"
+                                       FontStyle="Normal" FontWeight="Bold"
+                                       Foreground="{StaticResource CubeTextNotFocus}" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center" />
+
+                        </StackPanel>
+                    </ui:Card>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+
+        <Frame Grid.Column="1" Name="PageContent" NavigationUIVisibility="Hidden" />
+
+
+    </Grid>
+</ui:UiWindow>

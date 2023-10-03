@@ -1,0 +1,48 @@
+<ui:UiPage x:Class="CubeManager.LoginRegister.RegisterContent"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+           mc:Ignorable="d"
+           Height="auto" Width="auto">
+    <ui:UiPage.Resources>
+        <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="50" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+        <!-- ... other styles ... -->
+    </ui:UiPage.Resources>
+
+    <Grid>
+        <ui:TitleBar HorizontalAlignment="Right" />
+        <materialDesign:TransitioningContent>
+            <materialDesign:TransitioningContent.OpeningEffects>
+                <materialDesign:TransitionEffect Kind="SlideInFromRight" />
+            </materialDesign:TransitioningContent.OpeningEffects>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
+                <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="New Here?" Margin="0 0 0 20" />
+                <Label Content="Username:" Margin="0,0,0,5" />
+                <ui:TextBox Name="UsernameBox" Icon="Person24" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                            Margin="0 5" />
+                <Label Content="Email:" Margin="0,0,0,5" />
+                <ui:TextBox Name="EmailBox" Icon="Mail24" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                            Margin="0 5" />
+                <Label Content="Password:" Margin="0,10,0,5" />
+                <ui:PasswordBox Name="PasswordBox" Icon="LockClosed24" HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center" Margin="0 5" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Margin="0 20 0 0">
+                    <ui:Button Name="RegisterBtn" Click="RegisterBtn_OnClick" Content="Register" Icon="PersonAdd24"
+                               Margin="0 0 10 0" />
+                    <ui:Button Name="LoginBtn" Click="LoginBtn_OnClick" Content="Back" Icon="Backspace24"
+                               Margin="10 0 0 0" />
+                </StackPanel>
+            </StackPanel>
+        </materialDesign:TransitioningContent>
+    </Grid>
+</ui:UiPage>

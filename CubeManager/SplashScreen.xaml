@@ -15,82 +15,19 @@
              AllowsTransparency="True"
              Loaded="SplashScreen_OnLoaded"
              Height="auto" Width="auto">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-
-
-            <StackPanel Orientation="Horizontal"
-                        Margin="0,0,0,10">
-                <Border Width="400"
-                        Height="200">
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
-                            <GradientStop Color="#192530" Offset="0.0" />
-                            <GradientStop Color="#181818" Offset="1" />
-                        </LinearGradientBrush>
-                    </Border.Background>
-
-                    <Border.Clip>
-                        <RectangleGeometry RadiusX="10"
-                                           RadiusY="10"
-                                           Rect="0,0,400,200" />
-                    </Border.Clip>
-                    <Grid>
-                        <StackPanel>
-                            <TextBlock Text="CubeManager"
-                                       FontSize="30"
-                                       HorizontalAlignment="Left"
-                                       VerticalAlignment="Center"
-                                       Margin="20,10,10,0"
-                                       Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                                       FontWeight="Bold"
-                                       Foreground="{DynamicResource MaterialDesignDarkForeground}" />
-                            <TextBlock Name="QuoteText" HorizontalAlignment="Center"
-                                       TextWrapping="Wrap"
-                                       Text="Motivational Quote"
-                                       Margin="0,10,20,0"
-                                       VerticalAlignment="Bottom" Foreground="{StaticResource CubeTextNotFocus}"
-                                       Style="{DynamicResource MaterialDesignHeadline5TextBlock}" />
-                        </StackPanel>
-                        <Image Width="250"
-                               Height="250"
-                               Source="Resources/Logo.png"
-                               HorizontalAlignment="Right"
-                               VerticalAlignment="Bottom" Margin="0,0,-128,-74" RenderTransformOrigin="0.5,0.5">
-                            <Image.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform />
-                                    <SkewTransform />
-                                    <RotateTransform Angle="-17.394" />
-                                    <TranslateTransform />
-                                </TransformGroup>
-                            </Image.RenderTransform>
-                        </Image>
-                    </Grid>
-                </Border>
-
-                <Border Width="200"
-                        Height="200"
-                        CornerRadius="10"
-                        Margin="45,0,0,0">
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
-                            <GradientStop Color="#292929" Offset="0.0" />
-                            <GradientStop Color="{StaticResource MaterialDesignShadow}" Offset="1" />
-                        </LinearGradientBrush>
-                    </Border.Background>
-                    <ui:LoadingScreen HorizontalAlignment="Center" Background="Transparent"
-                                      Foreground="{StaticResource CubeTextNotFocus}"
-                                      Margin="10" Name="ProgressBar"
-                                      VerticalAlignment="Center" />
+    <Border Width="200"
+            Height="200"
+            CornerRadius="10">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                <GradientStop Color="#292929" Offset="0.0" />
+                <GradientStop Color="{StaticResource MaterialDesignShadow}" Offset="1" />
+            </LinearGradientBrush>
+        </Border.Background>
+        <ui:LoadingScreen HorizontalAlignment="Center" Background="Transparent"
+                          Foreground="{StaticResource CubeTextNotFocus}"
+                          Margin="10" Name="ProgressBar"
+                          VerticalAlignment="Center" />
                     
-                </Border>
-            </StackPanel>
-        </StackPanel>
-    </Grid>
+    </Border>
 </Window>

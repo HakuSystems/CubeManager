@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Threading;
+using CubeManager.LoginRegister;
 using CubeManager.ZenQuotes;
 
 namespace CubeManager;
@@ -13,13 +14,7 @@ public partial class SplashScreen : Window
 
     private void SplashScreen_OnLoaded(object sender, RoutedEventArgs e)
     {
-        DisplayQuote();
         StartProgressTimer();
-    }
-
-    private void DisplayQuote()
-    {
-        QuoteText.Text = new FetchQuote().RetrieveQuote();
     }
 
     private void StartProgressTimer()
@@ -36,7 +31,7 @@ public partial class SplashScreen : Window
         if (progress >= 1.0)
         {
             timer.Stop();
-            var mainWindow = new CubeMangerWindow();
+            var mainWindow = new LoginWindow();
             mainWindow.Show();
             Close();
         }
