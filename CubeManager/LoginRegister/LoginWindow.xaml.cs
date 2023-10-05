@@ -1,11 +1,10 @@
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
+using System.Windows.Threading;
 using CubeManager.ZenQuotes;
 using SkiaSharp;
 using SkiaSharp.Views.Desktop;
 using Wpf.Ui.Controls;
-using MessageBox = System.Windows.MessageBox;
 
 namespace CubeManager.LoginRegister;
 
@@ -13,16 +12,24 @@ public partial class LoginWindow : UiWindow
 {
     private float _rotationAngle;
     private SKPoint _mousePosition;
+    private SKPoint _lastMousePosition;
+    private readonly DispatcherTimer _timer;
+    private SKShader _sweepShader;
 
     public LoginWindow()
     {
         InitializeComponent();
-        CompositionTarget.Rendering += OnRendering;
+        _timer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromMilliseconds(16) // 60 FPS
+        };
+        _timer.Tick += (s, e) => OnRendering();
+        _timer.Start();
     }
 
-    private void OnRendering(object sender, EventArgs e)
+    private void OnRendering()
     {
-        _rotationAngle += 0.1f; //speed
+        _rotationAngle += 0.1f;
         if (_rotationAngle > 360)
             _rotationAngle -= 360;
         CanvasView.InvalidateVisual();
@@ -52,13 +59,13 @@ public partial class LoginWindow : UiWindow
         var colors = new[] { SKColor.Parse("#292929"), SKColor.Parse("#181818") };
         var colorPos = new[] { 0.0f, 1.0f };
 
-        using (var paint = new SKPaint())
-        {
-            var shader = SKShader.CreateSweepGradient(center, colors, colorPos);
-            var shaderRotationMatrix = SKMatrix.CreateRotationDegrees(_rotationAngle, center.X, center.Y);
-            shader = shader.WithLocalMatrix(shaderRotationMatrix);
+        if (_sweepShader == null) _sweepShader = SKShader.CreateSweepGradient(center, colors, colorPos);
 
-            paint.Shader = shader;
+        var shaderRotationMatrix = SKMatrix.CreateRotationDegrees(_rotationAngle, center.X, center.Y);
+        var rotatedShader = _sweepShader.WithLocalMatrix(shaderRotationMatrix);
+
+        using (var paint = new SKPaint { Shader = rotatedShader })
+        {
             canvas.DrawRect(new SKRect(0, 0, info.Width, info.Height), paint);
         }
     }
@@ -71,7 +78,6 @@ public partial class LoginWindow : UiWindow
 
     private void CanvasMouseView_OnPaintSurface(object? sender, SKPaintSurfaceEventArgs e)
     {
-        var info = e.Info;
         var surface = e.Surface;
         var canvas = surface.Canvas;
 
@@ -92,6 +98,11 @@ public partial class LoginWindow : UiWindow
     {
         var position = e.GetPosition(CanvasMouseView);
         _mousePosition = new SKPoint((float)position.X, (float)position.Y);
-        CanvasMouseView.InvalidateVisual();
+
+        if (SKPoint.Distance(_mousePosition, _lastMousePosition) > 5)
+        {
+            CanvasMouseView.InvalidateVisual();
+            _lastMousePosition = _mousePosition;
+        }
     }
 }
