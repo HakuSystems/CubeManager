@@ -1,41 +1,38 @@
----
+# CubeManager
 
-# CubeManager 📦
+CubeManager is a comprehensive management tool designed to streamline tasks, reminders, and daily activities. With an intuitive interface and a range of features, CubeManager aims to enhance productivity and simplify task management.
 
-CubeManager is an all-in-one productivity app for managing tasks, events, and objectives.
+## Features
 
-## Features 🌟
+- **User Authentication**: Secure login and registration system.
+- **Home Dashboard**: Get an overview of your tasks and reminders at a glance.
+- **To-Do Management**: Easily add, edit, and manage your to-do items.
+- **Notifications**: Receive timely notifications for your tasks and reminders.
+- **ZenQuotes Integration**: Start your day with an inspirational quote fetched from ZenQuotes.
+- **Configurable Settings**: Customize the application settings to suit your preferences.
 
-### All the pictures or videos are in-development content. 
+## Installation
 
-### Comprehensive To-Do List
-Stay on top of your tasks with notifications.
-![Todo Section](https://cdn.discordapp.com/attachments/1139479964022997102/1151728698484068412/CubeManager_sAWGVq21Aj.png)
+THIS WILL BE CHANGED
+1. Clone the repository:
+git clone https://github.com/HakuSystems/CubeManager.git
 
-### Subscriptions Management
-Keep track of all your subscriptions in one place.
-![Subscriptions Section](https://i.imgur.com/GkInv7s.png)
+2. Navigate to the project directory and open the solution in your preferred IDE.
 
-### Life Goals Tracking
-Set, track, and achieve your life goals.
+3. Build and run the application.
 
-### & More
+## Usage
 
-## Motivation 🚀
+1. **Initial Window**: On launching the application, you'll be greeted with the initial window. From here, you can navigate to the login or registration page.
+2. **Login/Register**: If you're a new user, register for an account. Existing users can log in with their credentials.
+3. **Home Dashboard**: After logging in, you'll be directed to the home dashboard where you can view your tasks and get an inspirational quote.
+4. **To-Do**: Navigate to the To-Do section to manage your tasks. Add new tasks, mark them as completed, or edit existing ones.
+5. **Settings**: Customize the application settings from the settings section.
 
-![Motivational Speech on App Startup](https://cdn.discordapp.com/attachments/1139479964022997102/1158511344488812555/wDyXHiKwPF.png?ex=651c8344&is=651b31c4&hm=d3ff7354c060908e29568c20cbaa28cbcfa530235d391313a1dbda7bba7f79f7&)
+## License
 
-Stay inspired and motivated with our curated motivational speeches. Push through challenges and achieve greatness!
+This project is licensed under the MIT License. See the [LICENSE.md](LICENSE.md) file for details.
 
-## In-App Sounds and Leveling System 🎵
+## Support
 
-Check out our [video](https://f.biyori.moe/_pH2XK.mp4) showcasing the in-app sounds and leveling system.
-
-## Community 🌐
-
-Join our Discord server to connect with other users, ask questions, and get the latest updates on CubeManager:
-
-[![Discord](https://img.shields.io/discord/1103857638481084488?label=Join%20our%20Discord&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/7t4MQFKjUM)
-
-
----
+For any queries or support, please raise an issue on the GitHub repository or contact via [Discord](https://discord.gg/7t4MQFKjUM).
