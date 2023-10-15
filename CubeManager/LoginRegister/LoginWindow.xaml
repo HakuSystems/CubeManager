@@ -25,6 +25,7 @@
         <skia:SKElement x:Name="CanvasView" Grid.ColumnSpan="2" PaintSurface="CanvasView_OnPaintSurface" />
         <skia:SKElement Grid.Column="0" Grid.ColumnSpan="2" x:Name="CanvasMouseView"
                         PaintSurface="CanvasMouseView_OnPaintSurface" />
+                <Frame Grid.Column="0" Grid.ColumnSpan="2" x:Name="MainContentFrame" IsTabStop="True" NavigationUIVisibility="Hidden" />
         <Border>
             <Grid>
                 <Grid.ColumnDefinitions>

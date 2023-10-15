@@ -5,7 +5,6 @@ using CubeManager.ZenQuotes;
 using SkiaSharp;
 using SkiaSharp.Views.Desktop;
 using Wpf.Ui.Controls;
-using MessageBox = System.Windows.MessageBox;
 
 namespace CubeManager.LoginRegister;
 
