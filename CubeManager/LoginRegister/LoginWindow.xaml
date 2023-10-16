@@ -17,7 +17,7 @@
              Title="CubeManager"
              Height="auto" Width="auto">
 
-    <Grid>
+    <Grid x:Name="MainLoginGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />

@@ -19,7 +19,8 @@
                 <TextBlock Text="Settings"
                            Margin="80,15,15,15"
                            FontWeight="Bold" Style="{StaticResource MaterialDesignTextBlock}"/>
-                <TextBlock Text="Please wait while we load the settings."
+                <TextBlock Text="Loading..."
+                           x:Name="LoadingText"
                            Margin="80,15,15,15"
                            Foreground="{StaticResource CubeTextNotFocus}"
                            FontWeight="Bold" Style="{StaticResource MaterialDesignTextBlock}"/>

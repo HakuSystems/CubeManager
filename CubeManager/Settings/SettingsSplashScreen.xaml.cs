@@ -1,15 +1,19 @@
 using System.Windows;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using CubeManager.LoginRegister;
 using MaterialDesignThemes.Wpf;
 using Wpf.Ui.Controls;
+using VerticalAlignment = System.Windows.VerticalAlignment;
 
 namespace CubeManager.Settings;
 
 public partial class SettingsSplashScreen : UiPage
 {
+    bool _opened = false;
     public SettingsSplashScreen()
     {
         InitializeComponent();
@@ -53,8 +57,16 @@ public partial class SettingsSplashScreen : UiPage
         {
             From = 0,
             To = 360,
-            Duration = new Duration(TimeSpan.FromSeconds(1)),
-            RepeatBehavior = RepeatBehavior.Forever
+            Duration = new Duration(TimeSpan.FromSeconds(3))
+        };
+        rotateAnimation.Completed += (sender, args) =>
+        {
+if (_opened) return;
+            var settingsWindow = new SettingsWindow();
+            settingsWindow.Show();
+            _opened = true;
+            var loginWindow = (LoginWindow)Window.GetWindow(this);
+            loginWindow.Close();
         };
 
         var scaleTransform =
