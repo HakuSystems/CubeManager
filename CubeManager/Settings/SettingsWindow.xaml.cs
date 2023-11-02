@@ -26,9 +26,15 @@ public partial class SettingsWindow : UiWindow
     {
         //MainContentFrame
         if ((bool)SoundSwitch.IsChecked! || (bool)DopamineSwitch.IsChecked!)
+        {
             ReadyButtonTransition.Visibility = Visibility.Visible;
+            SoundSettingsExpander.Visibility = Visibility.Visible;
+        }
         else
+        {
             ReadyButtonTransition.Visibility = Visibility.Hidden;
+            SoundSettingsExpander.Visibility = Visibility.Collapsed;
+        }
     }
 
     private void LoginWindow_OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -167,9 +173,15 @@ public partial class SettingsWindow : UiWindow
         var icon = SoundIcon;
 
         if ((bool)SoundSwitch.IsChecked! || (bool)DopamineSwitch.IsChecked!)
+        {
             ReadyButtonTransition.Visibility = Visibility.Visible;
+            SoundSettingsExpander.Visibility = Visibility.Visible;
+        }
         else
-            ReadyButtonTransition.Visibility = Visibility.Hidden;
+        {
+            ReadyButtonTransition.Visibility = Visibility.Collapsed;
+            SoundSettingsExpander.Visibility = Visibility.Collapsed;
+        }
 
         ApplyColorAnimation(description, "#ffffff", "#5a696f");
         ApplyColorAnimation(title, "#ffffff", "#5a696f");
@@ -187,9 +199,15 @@ public partial class SettingsWindow : UiWindow
         var icon = SoundIcon;
 
         if ((bool)SoundSwitch.IsChecked! || (bool)DopamineSwitch.IsChecked!)
+        {
             ReadyButtonTransition.Visibility = Visibility.Visible;
+            SoundSettingsExpander.Visibility = Visibility.Visible;
+        }
         else
-            ReadyButtonTransition.Visibility = Visibility.Hidden;
+        {
+            ReadyButtonTransition.Visibility = Visibility.Collapsed;
+            SoundSettingsExpander.Visibility = Visibility.Collapsed;
+        }
 
         ApplyColorAnimation(description, "#5a696f", "#ffffff");
         ApplyColorAnimation(title, "#5a696f", "#ffffff");

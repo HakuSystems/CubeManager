@@ -35,6 +35,7 @@
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
 
                 <ui:Card x:Name="DopamineCard"
+                         Visibility="Visible"
                          MouseEnter="DopamineCard_OnMouseEnter"
                          MouseLeave="DopamineCard_OnMouseLeave"
                          Background="{StaticResource CubeBackground}" Margin="10,0,10,10" Height="380" Width="350"
@@ -77,7 +78,7 @@
                 <ui:Card x:Name="SoundCard"
                          MouseEnter="SoundCard_OnMouseEnter"
                          MouseLeave="SoundCard_OnMouseLeave"
-                         Background="{StaticResource CubeBackground}" Margin="10,0,10,10" Height="380" Width="350"
+                         Background="{StaticResource CubeBackground}" Margin="10,0,0,10" Height="380" Width="350"
                          VerticalAlignment="Stretch">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <materialDesign:PackIcon Kind="VolumeSource" Height="50" Width="50"
@@ -113,15 +114,197 @@
                         </ui:Card>
                     </StackPanel>
                 </ui:Card>
+                <materialDesign:TransitioningContent Visibility="Visible" x:Name="SoundSettingsExpander">
+                    <materialDesign:TransitioningContent.OpeningEffects>
+                        <materialDesign:TransitionEffect Kind="SlideInFromLeft" />
+                        <materialDesign:TransitionEffect Kind="FadeIn" />
+                    </materialDesign:TransitioningContent.OpeningEffects>
 
+                    <ui:Card
+                        Background="{StaticResource CubeBackground}" Margin="0,0,10,10" Height="380"
+                        Width="400"
+                        BorderThickness="0,5,5,5"
+                        VerticalAlignment="Stretch">
+
+
+                        <ScrollViewer HorizontalScrollBarVisibility="Hidden">
+                            <StackPanel Orientation="Vertical">
+                                <Label Content="Change Sound for" Margin="5" FontWeight="SemiBold" />
+                                <StackPanel HorizontalAlignment="Stretch" Margin="5">
+                                    <ui:Card>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Hover Sound"
+                                                       Margin="5"
+                                                       VerticalAlignment="Center"
+                                                       FontWeight="Bold" />
+                                            <ui:Button Margin="5" ToolTip="Change Sound">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="Edit" Foreground="White" />
+                                                </Button.Content>
+                                            </ui:Button>
+                                            <ui:Button Margin="5" ToolTip="Play Sound">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="VolumeHigh" Foreground="White" />
+                                                </Button.Content>
+                                            </ui:Button>
+                                            <ui:Button Margin="5" ToolTip="Reset Sound">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="Reload" Foreground="White" />
+                                                </Button.Content>
+                                            </ui:Button>
+
+                                        </StackPanel>
+                                    </ui:Card>
+                                    <ui:Badge Content="SoundFile.wav" Appearance="Danger" />
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Stretch" Margin="5">
+                                    <ui:Card>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Click Sound"
+                                                       Margin="5"
+                                                       VerticalAlignment="Center"
+                                                       FontWeight="Bold" />
+                                            <ui:Button Margin="5" ToolTip="Change Sound">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="Edit" Foreground="White" />
+                                                </Button.Content>
+                                            </ui:Button>
+                                            <ui:Button Margin="5" ToolTip="Play Sound">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="VolumeHigh" Foreground="White" />
+                                                </Button.Content>
+                                            </ui:Button>
+                                            <ui:Button Margin="5" ToolTip="Reset Sound">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="Reload" Foreground="White" />
+                                                </Button.Content>
+                                            </ui:Button>
+                                        </StackPanel>
+                                    </ui:Card>
+                                    <ui:Badge Content="SoundFile.wav" Appearance="Danger" />
+                                </StackPanel>
+                                <StackPanel HorizontalAlignment="Stretch" Margin="5">
+                                    <ui:Card>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Level Sound"
+                                                       Margin="5"
+                                                       VerticalAlignment="Center"
+                                                       FontWeight="Bold" />
+                                            <ui:Button Margin="5" ToolTip="Change Sound">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="Edit" Foreground="White" />
+                                                </Button.Content>
+                                            </ui:Button>
+                                            <ui:Button Margin="5" ToolTip="Play Sound">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="VolumeHigh" Foreground="White" />
+                                                </Button.Content>
+                                            </ui:Button>
+                                            <ui:Button Margin="5" ToolTip="Reset Sound">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="Reload" Foreground="White" />
+                                                </Button.Content>
+                                            </ui:Button>
+                                        </StackPanel>
+                                    </ui:Card>
+                                    <ui:Badge Content="SoundFile.wav" Appearance="Danger" />
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Stretch" Margin="5">
+                                    <ui:Card>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Task Complete Sound"
+                                                       Margin="5"
+                                                       VerticalAlignment="Center"
+                                                       FontWeight="Bold" />
+                                            <ui:Button Margin="5" ToolTip="Change Sound">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="Edit" Foreground="White" />
+                                                </Button.Content>
+                                            </ui:Button>
+                                            <ui:Button Margin="5" ToolTip="Play Sound">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="VolumeHigh" Foreground="White" />
+                                                </Button.Content>
+                                            </ui:Button>
+                                            <ui:Button Margin="5" ToolTip="Reset Sound">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="Reload" Foreground="White" />
+                                                </Button.Content>
+                                            </ui:Button>
+                                        </StackPanel>
+                                    </ui:Card>
+                                    <ui:Badge Content="SoundFile.wav" Appearance="Danger" />
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Stretch" Margin="5">
+                                    <ui:Card>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Checkbox off Sound"
+                                                       Margin="5"
+                                                       VerticalAlignment="Center"
+                                                       FontWeight="Bold" />
+                                            <ui:Button Margin="5" ToolTip="Change Sound">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="Edit" Foreground="White" />
+                                                </Button.Content>
+                                            </ui:Button>
+                                            <ui:Button Margin="5" ToolTip="Play Sound">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="VolumeHigh" Foreground="White" />
+                                                </Button.Content>
+                                            </ui:Button>
+                                            <ui:Button Margin="5" ToolTip="Reset Sound">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="Reload" Foreground="White" />
+                                                </Button.Content>
+                                            </ui:Button>
+                                        </StackPanel>
+                                    </ui:Card>
+                                    <ui:Badge Content="SoundFile.wav" Appearance="Danger" />
+                                </StackPanel>
+
+                                <StackPanel HorizontalAlignment="Stretch" Margin="5">
+                                    <ui:Card>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Checkbox on Sound"
+                                                       Margin="5"
+                                                       VerticalAlignment="Center"
+                                                       FontWeight="Bold" />
+                                            <ui:Button Margin="5" ToolTip="Change Sound">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="Edit" Foreground="White" />
+                                                </Button.Content>
+                                            </ui:Button>
+                                            <ui:Button Margin="5" ToolTip="Play Sound">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="VolumeHigh" Foreground="White" />
+                                                </Button.Content>
+                                            </ui:Button>
+                                            <ui:Button Margin="5" ToolTip="Reset Sound">
+                                                <Button.Content>
+                                                    <materialDesign:PackIcon Kind="Reload" Foreground="White" />
+                                                </Button.Content>
+                                            </ui:Button>
+                                        </StackPanel>
+                                    </ui:Card>
+                                    <ui:Badge Content="SoundFile.wav" Appearance="Danger" />
+                                </StackPanel>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </ui:Card>
+
+
+                </materialDesign:TransitioningContent>
             </StackPanel>
         </materialDesign:TransitioningContent>
-        
+
         <materialDesign:TransitioningContent Grid.Row="1" Visibility="Collapsed" x:Name="ReadyButtonTransition">
             <materialDesign:TransitioningContent.OpeningEffects>
                 <materialDesign:TransitionEffect Kind="ExpandIn" />
             </materialDesign:TransitioningContent.OpeningEffects>
-            <ui:CardAction Content="Ready" HorizontalAlignment="Center" VerticalAlignment="Center"></ui:CardAction>
+            <ui:CardAction Content="Ready" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </materialDesign:TransitioningContent>
     </Grid>
 </ui:UiWindow>
