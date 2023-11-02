@@ -13,7 +13,7 @@ public class FetchQuote
     /// </summary>
     public string RetrieveQuote()
     {
-        var maxChars = 179;
+        var maxChars = 98;
         if (!IsNewDay() && PingQuoteApiOk()) return ConfigManager.Instance.Config.Quote.Quote;
         var client = new HttpClient();
         var response = client.GetAsync("https://zenquotes.io/api/random").Result;

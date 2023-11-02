@@ -60,7 +60,7 @@
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="Your All-In-One Productivity Solution" FontSize="20"
                                        Name="QuoteTextBlock"
-                                       TextWrapping="Wrap"
+                                       TextWrapping="WrapWithOverflow"
                                        Margin="15,0,0,0"
                                        FontStyle="Normal" FontWeight="Bold"
                                        Foreground="{StaticResource CubeTextNotFocus}" HorizontalAlignment="Center"

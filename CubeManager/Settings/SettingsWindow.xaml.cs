@@ -10,21 +10,25 @@ namespace CubeManager.Settings;
 
 public partial class SettingsWindow : UiWindow
 {
+    private static SettingsWindow instance;
+
     public SettingsWindow()
     {
         InitializeComponent();
     }
 
+    /// <summary>
+    ///     in order to open the window only once we create a singleton
+    /// </summary>
+    public static SettingsWindow Instance => instance ??= new SettingsWindow();
+
     private void LoginWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
         //MainContentFrame
-        if((bool)SoundSwitch.IsChecked! || (bool)DopamineSwitch.IsChecked!)
+        if ((bool)SoundSwitch.IsChecked! || (bool)DopamineSwitch.IsChecked!)
             ReadyButtonTransition.Visibility = Visibility.Visible;
         else
-        {
             ReadyButtonTransition.Visibility = Visibility.Hidden;
-        }
-
     }
 
     private void LoginWindow_OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -40,19 +44,17 @@ public partial class SettingsWindow : UiWindow
         var card = DopamineCard;
         var switcher = DopamineSwitch;
         var icon = DopamineIcon;
-        
-        if((bool)SoundSwitch.IsChecked! || (bool)DopamineSwitch.IsChecked!)
+
+        if ((bool)SoundSwitch.IsChecked! || (bool)DopamineSwitch.IsChecked!)
             ReadyButtonTransition.Visibility = Visibility.Visible;
         else
-        {
             ReadyButtonTransition.Visibility = Visibility.Hidden;
-        }
 
-        ApplyColorAnimation(description, "#5a696f", "#ffffff", 1.0);
-        ApplyColorAnimation(title, "#5a696f", "#ffffff", 1.0);
-        ApplyColorAnimation(card, "#181818", "#292929", 1.0);
-        ApplyColorAnimation(switcher, "#5a696f", "#ffffff", 1.0);
-        ApplyColorAnimation(icon, "#000000", "#ffffff", 1.0);
+        ApplyColorAnimation(description, "#5a696f", "#ffffff");
+        ApplyColorAnimation(title, "#5a696f", "#ffffff");
+        ApplyColorAnimation(card, "#181818", "#292929");
+        ApplyColorAnimation(switcher, "#5a696f", "#ffffff");
+        ApplyColorAnimation(icon, "#000000", "#ffffff");
     }
 
     private void DopamineSwitch_OnUnchecked(object sender, RoutedEventArgs e)
@@ -62,22 +64,21 @@ public partial class SettingsWindow : UiWindow
         var card = DopamineCard;
         var switcher = DopamineSwitch;
         var icon = DopamineIcon;
-        
-        if((bool)SoundSwitch.IsChecked! || (bool)DopamineSwitch.IsChecked!)
+
+        if ((bool)SoundSwitch.IsChecked! || (bool)DopamineSwitch.IsChecked!)
             ReadyButtonTransition.Visibility = Visibility.Visible;
         else
-        {
             ReadyButtonTransition.Visibility = Visibility.Hidden;
-        }
-        
-        ApplyColorAnimation(description, "#ffffff", "#5a696f", 1.0);
-        ApplyColorAnimation(title, "#ffffff", "#5a696f", 1.0);
-        ApplyColorAnimation(card, "#292929", "#181818", 1.0);
-        ApplyColorAnimation(switcher, "#ffffff", "#5a696f", 1.0);
-        ApplyColorAnimation(icon, "#ffffff", "#000000", 1.0);
+
+        ApplyColorAnimation(description, "#ffffff", "#5a696f");
+        ApplyColorAnimation(title, "#ffffff", "#5a696f");
+        ApplyColorAnimation(card, "#292929", "#181818");
+        ApplyColorAnimation(switcher, "#ffffff", "#5a696f");
+        ApplyColorAnimation(icon, "#ffffff", "#000000");
     }
 
-    private void ApplyColorAnimation(FrameworkElement element, string fromColor, string toColor, double durationInSeconds)
+    private void ApplyColorAnimation(FrameworkElement element, string fromColor, string toColor,
+        double durationInSeconds = 0.2)
     {
         var colorAnimation = new ColorAnimation();
         colorAnimation.From = (Color)ColorConverter.ConvertFromString(fromColor);
@@ -110,12 +111,12 @@ public partial class SettingsWindow : UiWindow
         var title = DopamineTitleText;
         var icon = DopamineIcon;
         var switcher = DopamineSwitch;
-        
-        if((bool)switcher.IsChecked!)
+
+        if ((bool)switcher.IsChecked!)
             return;
 
-        ApplyColorAnimation(title, "#5a696f", "#ffffff", 0.2);
-        ApplyColorAnimation(icon, "#000000", "#ffffff", 0.2);
+        ApplyColorAnimation(title, "#5a696f", "#ffffff");
+        ApplyColorAnimation(icon, "#000000", "#ffffff");
     }
 
     private void DopamineCard_OnMouseLeave(object sender, MouseEventArgs e)
@@ -123,12 +124,12 @@ public partial class SettingsWindow : UiWindow
         var title = DopamineTitleText;
         var icon = DopamineIcon;
         var switcher = DopamineSwitch;
-        
-        if((bool)switcher.IsChecked!)
+
+        if ((bool)switcher.IsChecked!)
             return;
-        
-        ApplyColorAnimation(title, "#ffffff", "#5a696f", 0.2);
-        ApplyColorAnimation(icon, "#ffffff", "#000000", 0.2);
+
+        ApplyColorAnimation(title, "#ffffff", "#5a696f");
+        ApplyColorAnimation(icon, "#ffffff", "#000000");
     }
 
     private void SoundCard_OnMouseEnter(object sender, MouseEventArgs e)
@@ -136,12 +137,12 @@ public partial class SettingsWindow : UiWindow
         var title = SoundTitleText;
         var icon = SoundIcon;
         var switcher = SoundSwitch;
-        
-        if((bool)switcher.IsChecked!)
+
+        if ((bool)switcher.IsChecked!)
             return;
 
-        ApplyColorAnimation(title, "#5a696f", "#ffffff", 0.2);
-        ApplyColorAnimation(icon, "#000000", "#ffffff", 0.2);
+        ApplyColorAnimation(title, "#5a696f", "#ffffff");
+        ApplyColorAnimation(icon, "#000000", "#ffffff");
     }
 
     private void SoundCard_OnMouseLeave(object sender, MouseEventArgs e)
@@ -149,12 +150,12 @@ public partial class SettingsWindow : UiWindow
         var title = SoundTitleText;
         var icon = SoundIcon;
         var switcher = SoundSwitch;
-        
-        if((bool)switcher.IsChecked!)
+
+        if ((bool)switcher.IsChecked!)
             return;
-        
-        ApplyColorAnimation(title, "#ffffff", "#5a696f", 0.2);
-        ApplyColorAnimation(icon, "#ffffff", "#000000", 0.2);
+
+        ApplyColorAnimation(title, "#ffffff", "#5a696f");
+        ApplyColorAnimation(icon, "#ffffff", "#000000");
     }
 
     private void SoundSwitch_OnUnchecked(object sender, RoutedEventArgs e)
@@ -164,19 +165,17 @@ public partial class SettingsWindow : UiWindow
         var card = SoundCard;
         var switcher = SoundSwitch;
         var icon = SoundIcon;
-        
-        if((bool)SoundSwitch.IsChecked! || (bool)DopamineSwitch.IsChecked!)
+
+        if ((bool)SoundSwitch.IsChecked! || (bool)DopamineSwitch.IsChecked!)
             ReadyButtonTransition.Visibility = Visibility.Visible;
         else
-        {
             ReadyButtonTransition.Visibility = Visibility.Hidden;
-        }
-        
-        ApplyColorAnimation(description, "#ffffff", "#5a696f", 1.0);
-        ApplyColorAnimation(title, "#ffffff", "#5a696f", 1.0);
-        ApplyColorAnimation(card, "#292929", "#181818", 1.0);
-        ApplyColorAnimation(switcher, "#ffffff", "#5a696f", 1.0);
-        ApplyColorAnimation(icon, "#ffffff", "#000000", 1.0);
+
+        ApplyColorAnimation(description, "#ffffff", "#5a696f");
+        ApplyColorAnimation(title, "#ffffff", "#5a696f");
+        ApplyColorAnimation(card, "#292929", "#181818");
+        ApplyColorAnimation(switcher, "#ffffff", "#5a696f");
+        ApplyColorAnimation(icon, "#ffffff", "#000000");
     }
 
     private void SoundSwitch_OnChecked(object sender, RoutedEventArgs e)
@@ -186,18 +185,16 @@ public partial class SettingsWindow : UiWindow
         var card = SoundCard;
         var switcher = SoundSwitch;
         var icon = SoundIcon;
-        
-        if((bool)SoundSwitch.IsChecked! || (bool)DopamineSwitch.IsChecked!)
+
+        if ((bool)SoundSwitch.IsChecked! || (bool)DopamineSwitch.IsChecked!)
             ReadyButtonTransition.Visibility = Visibility.Visible;
         else
-        {
             ReadyButtonTransition.Visibility = Visibility.Hidden;
-        }
 
-        ApplyColorAnimation(description, "#5a696f", "#ffffff", 1.0);
-        ApplyColorAnimation(title, "#5a696f", "#ffffff", 1.0);
-        ApplyColorAnimation(card, "#181818", "#292929", 1.0);
-        ApplyColorAnimation(switcher, "#5a696f", "#ffffff", 1.0);
-        ApplyColorAnimation(icon, "#000000", "#ffffff", 1.0);
+        ApplyColorAnimation(description, "#5a696f", "#ffffff");
+        ApplyColorAnimation(title, "#5a696f", "#ffffff");
+        ApplyColorAnimation(card, "#181818", "#292929");
+        ApplyColorAnimation(switcher, "#5a696f", "#ffffff");
+        ApplyColorAnimation(icon, "#000000", "#ffffff");
     }
 }
