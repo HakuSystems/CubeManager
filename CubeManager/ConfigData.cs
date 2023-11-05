@@ -1,11 +1,11 @@
 using CubeManager.Models.ScoreBoard;
-using CubeManager.Models.Settings;
 using CubeManager.Models.Subscriptions;
 using CubeManager.Models.Version;
+using CubeManager.Settings;
 using CubeManager.Todos;
 using CubeManager.ZenQuotes;
 
-namespace CubeManager.Models;
+namespace CubeManager;
 
 public class ConfigData
 {

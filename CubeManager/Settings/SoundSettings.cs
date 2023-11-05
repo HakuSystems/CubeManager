@@ -1,7 +1,8 @@
-namespace CubeManager.Models;
+namespace CubeManager.Settings;
 
 public class SoundSettings
 {
+    public float Volume { get; set; } = 1f;
     public string ButtonHover { get; set; } = "pack://application:,,,/Resources/hover.wav";
     public string ButtonClick { get; set; } = "pack://application:,,,/Resources/click.wav";
     public string CheckboxOff { get; set; } = "pack://application:,,,/Resources/checkboxOff.wav";

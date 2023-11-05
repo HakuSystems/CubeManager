@@ -22,7 +22,7 @@ public class SoundManager
             waveOutDevice = new WaveOut();
             audioFileReader = new AudioFileReader(tempFilePath);
 
-            audioFileReader.Volume = 0.3f;
+            audioFileReader.Volume = ConfigManager.Instance.Config.SoundSettings.Volume / 100f;
             waveOutDevice.Init(audioFileReader);
             waveOutDevice.Play();
         }

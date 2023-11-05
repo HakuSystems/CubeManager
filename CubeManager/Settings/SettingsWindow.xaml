@@ -36,6 +36,7 @@
 
                 <ui:Card x:Name="DopamineCard"
                          Visibility="Visible"
+                         MouseDown="DopamineCard_OnMouseDown"
                          MouseEnter="DopamineCard_OnMouseEnter"
                          MouseLeave="DopamineCard_OnMouseLeave"
                          Background="{StaticResource CubeBackground}" Margin="10,0,10,10" Height="380" Width="350"
@@ -62,7 +63,9 @@
                         <ui:Card HorizontalAlignment="Center" Background="{StaticResource CubeBackground}"
                                  VerticalAlignment="Center">
                             <StackPanel Orientation="Horizontal">
-                                <ui:ToggleSwitch x:Name="DopamineSwitch" Unchecked="DopamineSwitch_OnUnchecked"
+                                <ui:ToggleSwitch x:Name="DopamineSwitch"
+                                                 IsChecked="{Binding Path=EnableDopamineEffects}"
+                                                 Unchecked="DopamineSwitch_OnUnchecked"
                                                  Checked="DopamineSwitch_OnChecked" Content="Enable" Margin="0,0,10,0" />
                                 <ui:Button Appearance="Transparent">
                                     <Button.Content>
@@ -76,11 +79,21 @@
 
 
                 <ui:Card x:Name="SoundCard"
+                         MouseDown="SoundCard_OnMouseDown"
                          MouseEnter="SoundCard_OnMouseEnter"
                          MouseLeave="SoundCard_OnMouseLeave"
                          Background="{StaticResource CubeBackground}" Margin="10,0,0,10" Height="380" Width="350"
                          VerticalAlignment="Stretch">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <materialDesign:TransitioningContent x:Name="VolumeAnimation" Visibility="Collapsed">
+                            <materialDesign:TransitioningContent.OpeningEffects>
+                                <materialDesign:TransitionEffect Kind="ExpandIn" />
+                                <materialDesign:TransitionEffect Kind="FadeIn" />
+                            </materialDesign:TransitioningContent.OpeningEffects>
+                            <TextBlock Text="%" x:Name="ChangeVolAnimationText" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       FontSize="50"
+                                       Foreground="White" Margin="5" />
+                        </materialDesign:TransitioningContent>
                         <materialDesign:PackIcon Kind="VolumeSource" Height="50" Width="50"
                                                  HorizontalAlignment="Center"
                                                  Foreground="Black"
@@ -103,7 +116,8 @@
                         <ui:Card HorizontalAlignment="Center" Background="{StaticResource CubeBackground}"
                                  VerticalAlignment="Center">
                             <StackPanel Orientation="Horizontal">
-                                <ui:ToggleSwitch x:Name="SoundSwitch" Unchecked="SoundSwitch_OnUnchecked"
+                                <ui:ToggleSwitch x:Name="SoundSwitch" IsChecked="{Binding Path=EnableSound}"
+                                                 Unchecked="SoundSwitch_OnUnchecked"
                                                  Checked="SoundSwitch_OnChecked" Content="Enable" Margin="0,0,10,0" />
                                 <ui:Button Appearance="Transparent">
                                     <Button.Content>
@@ -111,10 +125,26 @@
                                     </Button.Content>
                                 </ui:Button>
                             </StackPanel>
+
                         </ui:Card>
+
+                        <StackPanel HorizontalAlignment="Center" Orientation="Vertical" Margin="5">
+                            <Slider x:Name="VolumeSliderDesign" Minimum="1" Maximum="100"
+                                    Visibility="Collapsed"
+                                    Foreground="{StaticResource CubeTextNotFocus}"
+                                    Value="{Binding Path=SliderVolume}"
+                                    ValueChanged="VolumeSliderDesign_OnValueChanged" Width="100" />
+                            <materialDesign:TransitioningContent x:Name="VolumeAnimationNormal" Visibility="Collapsed">
+                                <materialDesign:TransitioningContent.OpeningEffects>
+                                    <materialDesign:TransitionEffect Kind="FadeIn" />
+                                    <materialDesign:TransitionEffect Kind="ExpandIn" />
+                                </materialDesign:TransitioningContent.OpeningEffects>
+                                <TextBlock Text="Change Volume" Foreground="White" Margin="5" />
+                            </materialDesign:TransitioningContent>
+                        </StackPanel>
                     </StackPanel>
                 </ui:Card>
-                <materialDesign:TransitioningContent Visibility="Visible" x:Name="SoundSettingsExpander">
+                <materialDesign:TransitioningContent Visibility="Collapsed" FlowDirection="LeftToRight" x:Name="SoundSettingsExpander">
                     <materialDesign:TransitioningContent.OpeningEffects>
                         <materialDesign:TransitionEffect Kind="SlideInFromLeft" />
                         <materialDesign:TransitionEffect Kind="FadeIn" />
@@ -137,17 +167,17 @@
                                                        Margin="5"
                                                        VerticalAlignment="Center"
                                                        FontWeight="Bold" />
-                                            <ui:Button Margin="5" ToolTip="Change Sound">
+                                            <ui:Button Margin="5" x:Name="ChangeHoverSoundBtn" ToolTip="Change Sound">
                                                 <Button.Content>
                                                     <materialDesign:PackIcon Kind="Edit" Foreground="White" />
                                                 </Button.Content>
                                             </ui:Button>
-                                            <ui:Button Margin="5" ToolTip="Play Sound">
+                                            <ui:Button Margin="5" Click="PlayHoverSoundBtn_OnClick" x:Name="PlayHoverSoundBtn" ToolTip="Play Sound">
                                                 <Button.Content>
-                                                    <materialDesign:PackIcon Kind="VolumeHigh" Foreground="White" />
+                                                    <materialDesign:PackIcon Kind="Play" Foreground="White" />
                                                 </Button.Content>
                                             </ui:Button>
-                                            <ui:Button Margin="5" ToolTip="Reset Sound">
+                                            <ui:Button Margin="5" Click="ResetHoverSoundBtn_OnClick" x:Name="ResetHoverSoundBtn" ToolTip="Reset Sound">
                                                 <Button.Content>
                                                     <materialDesign:PackIcon Kind="Reload" Foreground="White" />
                                                 </Button.Content>
@@ -155,7 +185,7 @@
 
                                         </StackPanel>
                                     </ui:Card>
-                                    <ui:Badge Content="SoundFile.wav" Appearance="Danger" />
+                                    <ui:Badge Appearance="Dark" />
                                 </StackPanel>
 
                                 <StackPanel HorizontalAlignment="Stretch" Margin="5">
@@ -165,24 +195,24 @@
                                                        Margin="5"
                                                        VerticalAlignment="Center"
                                                        FontWeight="Bold" />
-                                            <ui:Button Margin="5" ToolTip="Change Sound">
+                                            <ui:Button Margin="5" x:Name="ChangeClickSoundBtn" ToolTip="Change Sound">
                                                 <Button.Content>
                                                     <materialDesign:PackIcon Kind="Edit" Foreground="White" />
                                                 </Button.Content>
                                             </ui:Button>
-                                            <ui:Button Margin="5" ToolTip="Play Sound">
+                                            <ui:Button Margin="5" Click="PlayClickSoundBtn_OnClick" x:Name="PlayClickSoundBtn" ToolTip="Play Sound">
                                                 <Button.Content>
-                                                    <materialDesign:PackIcon Kind="VolumeHigh" Foreground="White" />
+                                                    <materialDesign:PackIcon Kind="Play" Foreground="White" />
                                                 </Button.Content>
                                             </ui:Button>
-                                            <ui:Button Margin="5" ToolTip="Reset Sound">
+                                            <ui:Button Margin="5" Click="ResetClickSoundBtn_OnClick" x:Name="ResetClickSoundBtn" ToolTip="Reset Sound">
                                                 <Button.Content>
                                                     <materialDesign:PackIcon Kind="Reload" Foreground="White" />
                                                 </Button.Content>
                                             </ui:Button>
                                         </StackPanel>
                                     </ui:Card>
-                                    <ui:Badge Content="SoundFile.wav" Appearance="Danger" />
+                                    <ui:Badge  Appearance="Dark" />
                                 </StackPanel>
                                 <StackPanel HorizontalAlignment="Stretch" Margin="5">
                                     <ui:Card>
@@ -191,24 +221,24 @@
                                                        Margin="5"
                                                        VerticalAlignment="Center"
                                                        FontWeight="Bold" />
-                                            <ui:Button Margin="5" ToolTip="Change Sound">
+                                            <ui:Button Margin="5"  x:Name="ChangeLevelSoundBtn" ToolTip="Change Sound">
                                                 <Button.Content>
                                                     <materialDesign:PackIcon Kind="Edit" Foreground="White" />
                                                 </Button.Content>
                                             </ui:Button>
-                                            <ui:Button Margin="5" ToolTip="Play Sound">
+                                            <ui:Button Margin="5" Click="PlayLevelSoundBtn_OnClick" x:Name="PlayLevelSoundBtn" ToolTip="Play Sound">
                                                 <Button.Content>
-                                                    <materialDesign:PackIcon Kind="VolumeHigh" Foreground="White" />
+                                                    <materialDesign:PackIcon Kind="Play" Foreground="White" />
                                                 </Button.Content>
                                             </ui:Button>
-                                            <ui:Button Margin="5" ToolTip="Reset Sound">
+                                            <ui:Button Margin="5" Click="ResetLevelSoundBtn_OnClick" x:Name="ResetLevelSoundBtn" ToolTip="Reset Sound">
                                                 <Button.Content>
                                                     <materialDesign:PackIcon Kind="Reload" Foreground="White" />
                                                 </Button.Content>
                                             </ui:Button>
                                         </StackPanel>
                                     </ui:Card>
-                                    <ui:Badge Content="SoundFile.wav" Appearance="Danger" />
+                                    <ui:Badge Appearance="Dark" />
                                 </StackPanel>
 
                                 <StackPanel HorizontalAlignment="Stretch" Margin="5">
@@ -218,24 +248,24 @@
                                                        Margin="5"
                                                        VerticalAlignment="Center"
                                                        FontWeight="Bold" />
-                                            <ui:Button Margin="5" ToolTip="Change Sound">
+                                            <ui:Button Margin="5" x:Name="ChangeTaskCompleteBtn" ToolTip="Change Sound">
                                                 <Button.Content>
                                                     <materialDesign:PackIcon Kind="Edit" Foreground="White" />
                                                 </Button.Content>
                                             </ui:Button>
-                                            <ui:Button Margin="5" ToolTip="Play Sound">
+                                            <ui:Button Margin="5" Click="PlayTaskCompleteBtn_OnClick" x:Name="PlayTaskCompleteBtn" ToolTip="Play Sound">
                                                 <Button.Content>
-                                                    <materialDesign:PackIcon Kind="VolumeHigh" Foreground="White" />
+                                                    <materialDesign:PackIcon Kind="Play" Foreground="White" />
                                                 </Button.Content>
                                             </ui:Button>
-                                            <ui:Button Margin="5" ToolTip="Reset Sound">
+                                            <ui:Button Margin="5" Click="ResetTaskCompleteBtn_OnClick" x:Name="ResetTaskCompleteBtn" ToolTip="Reset Sound">
                                                 <Button.Content>
                                                     <materialDesign:PackIcon Kind="Reload" Foreground="White" />
                                                 </Button.Content>
                                             </ui:Button>
                                         </StackPanel>
                                     </ui:Card>
-                                    <ui:Badge Content="SoundFile.wav" Appearance="Danger" />
+                                    <ui:Badge Appearance="Dark" />
                                 </StackPanel>
 
                                 <StackPanel HorizontalAlignment="Stretch" Margin="5">
@@ -245,24 +275,24 @@
                                                        Margin="5"
                                                        VerticalAlignment="Center"
                                                        FontWeight="Bold" />
-                                            <ui:Button Margin="5" ToolTip="Change Sound">
+                                            <ui:Button Margin="5" x:Name="ChangeCheckboxOffSoundBtn" ToolTip="Change Sound">
                                                 <Button.Content>
                                                     <materialDesign:PackIcon Kind="Edit" Foreground="White" />
                                                 </Button.Content>
                                             </ui:Button>
-                                            <ui:Button Margin="5" ToolTip="Play Sound">
+                                            <ui:Button Margin="5" Click="PlayCheckboxOffSoundBtn_OnClick" x:Name="PlayCheckboxOffSoundBtn" ToolTip="Play Sound">
                                                 <Button.Content>
-                                                    <materialDesign:PackIcon Kind="VolumeHigh" Foreground="White" />
+                                                    <materialDesign:PackIcon Kind="Play" Foreground="White" />
                                                 </Button.Content>
                                             </ui:Button>
-                                            <ui:Button Margin="5" ToolTip="Reset Sound">
+                                            <ui:Button Margin="5" Click="ResetCheckboxOffSoundBtn_OnClick" x:Name="ResetCheckboxOffSoundBtn" ToolTip="Reset Sound">
                                                 <Button.Content>
                                                     <materialDesign:PackIcon Kind="Reload" Foreground="White" />
                                                 </Button.Content>
                                             </ui:Button>
                                         </StackPanel>
                                     </ui:Card>
-                                    <ui:Badge Content="SoundFile.wav" Appearance="Danger" />
+                                    <ui:Badge Appearance="Dark" />
                                 </StackPanel>
 
                                 <StackPanel HorizontalAlignment="Stretch" Margin="5">
@@ -272,24 +302,24 @@
                                                        Margin="5"
                                                        VerticalAlignment="Center"
                                                        FontWeight="Bold" />
-                                            <ui:Button Margin="5" ToolTip="Change Sound">
+                                            <ui:Button Margin="5" x:Name="ChangeCheckboxOnSoundBtn" ToolTip="Change Sound">
                                                 <Button.Content>
                                                     <materialDesign:PackIcon Kind="Edit" Foreground="White" />
                                                 </Button.Content>
                                             </ui:Button>
-                                            <ui:Button Margin="5" ToolTip="Play Sound">
+                                            <ui:Button Margin="5" Click="PlayCheckboxOnSoundBtn_OnClick" x:Name="PlayCheckboxOnSoundBtn" ToolTip="Play Sound">
                                                 <Button.Content>
-                                                    <materialDesign:PackIcon Kind="VolumeHigh" Foreground="White" />
+                                                    <materialDesign:PackIcon Kind="Play" Foreground="White" />
                                                 </Button.Content>
                                             </ui:Button>
-                                            <ui:Button Margin="5" ToolTip="Reset Sound">
+                                            <ui:Button Margin="5" Click="ResetCheckboxOnSoundBtn_OnClick" x:Name="ResetCheckboxOnSoundBtn" ToolTip="Reset Sound">
                                                 <Button.Content>
                                                     <materialDesign:PackIcon Kind="Reload" Foreground="White" />
                                                 </Button.Content>
                                             </ui:Button>
                                         </StackPanel>
                                     </ui:Card>
-                                    <ui:Badge Content="SoundFile.wav" Appearance="Danger" />
+                                    <ui:Badge Appearance="Dark" />
                                 </StackPanel>
                             </StackPanel>
                         </ScrollViewer>

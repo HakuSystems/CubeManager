@@ -1,4 +1,4 @@
-namespace CubeManager.Models.Settings;
+namespace CubeManager.Settings;
 
 public class SettingsData
 {

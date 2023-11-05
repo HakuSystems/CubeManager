@@ -5,6 +5,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using CubeManager.Helpers;
 using CubeManager.Models;
+using CubeManager.Settings;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 
