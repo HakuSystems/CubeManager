@@ -6,6 +6,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using CubeManager.Helpers;
 using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
 using Wpf.Ui.Controls;
 
 namespace CubeManager.Settings;
@@ -22,6 +23,7 @@ public partial class SettingsWindow : UiWindow
         _logger = new Logger();
         DataContext = this;
     }
+
 
     public string CurrentHoverSound
     {
@@ -84,10 +86,13 @@ public partial class SettingsWindow : UiWindow
 
     private void LoginWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
-        if (EnableDopamineEffects)
-            DopamineSwitch.IsChecked = true;
-        if (EnableSound)
-            SoundSwitch.IsChecked = true;
+        if (EnableDopamineEffects) DopamineSwitch.IsChecked = true;
+
+        if (EnableSound) SoundSwitch.IsChecked = true;
+
+        ReadyButtonTransition.Visibility = EnableDopamineEffects || EnableSound
+            ? Visibility.Visible
+            : Visibility.Collapsed;
     }
 
     private void LoginWindow_OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -107,7 +112,9 @@ public partial class SettingsWindow : UiWindow
 
         _logger.Info("Dopamine effects have been enabled.");
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.CheckboxOn);
-
+        ReadyButtonTransition.Visibility = EnableDopamineEffects || EnableSound
+            ? Visibility.Visible
+            : Visibility.Collapsed;
 
         ApplyColorAnimation(description, "#5a696f", "#ffffff");
         ApplyColorAnimation(title, "#5a696f", "#ffffff");
@@ -127,6 +134,9 @@ public partial class SettingsWindow : UiWindow
 
         _logger.Info("Dopamine effects have been disabled.");
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.CheckboxOff);
+        ReadyButtonTransition.Visibility = EnableDopamineEffects || EnableSound
+            ? Visibility.Visible
+            : Visibility.Collapsed;
 
         ApplyColorAnimation(description, "#ffffff", "#5a696f");
         ApplyColorAnimation(title, "#ffffff", "#5a696f");
@@ -166,7 +176,6 @@ public partial class SettingsWindow : UiWindow
 
     private void DopamineCard_OnMouseEnter(object sender, MouseEventArgs e)
     {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
         var title = DopamineTitleText;
         var icon = DopamineIcon;
         var switcher = DopamineSwitch;
@@ -193,7 +202,6 @@ public partial class SettingsWindow : UiWindow
 
     private void SoundCard_OnMouseEnter(object sender, MouseEventArgs e)
     {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
         var title = SoundTitleText;
         var icon = SoundIcon;
         var switcher = SoundSwitch;
@@ -229,6 +237,9 @@ public partial class SettingsWindow : UiWindow
 
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.CheckboxOff);
         _logger.Info("Sound has been disabled.");
+        ReadyButtonTransition.Visibility = EnableDopamineEffects || EnableSound
+            ? Visibility.Visible
+            : Visibility.Collapsed;
 
         ApplyColorAnimation(description, "#ffffff", "#5a696f");
         ApplyColorAnimation(title, "#ffffff", "#5a696f");
@@ -251,6 +262,9 @@ public partial class SettingsWindow : UiWindow
 
         _logger.Info("Sound has been enabled.");
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.CheckboxOn);
+        ReadyButtonTransition.Visibility = EnableDopamineEffects || EnableSound
+            ? Visibility.Visible
+            : Visibility.Collapsed;
 
         ApplyColorAnimation(description, "#5a696f", "#ffffff");
         ApplyColorAnimation(title, "#5a696f", "#ffffff");
@@ -267,12 +281,18 @@ public partial class SettingsWindow : UiWindow
     {
         EnableDopamineEffects = !EnableDopamineEffects;
         DopamineSwitch.IsChecked = EnableDopamineEffects;
+        ReadyButtonTransition.Visibility = EnableDopamineEffects || EnableSound
+            ? Visibility.Visible
+            : Visibility.Collapsed;
     }
 
     private void SoundCard_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
         EnableSound = !EnableSound;
         SoundSwitch.IsChecked = EnableSound;
+        ReadyButtonTransition.Visibility = EnableDopamineEffects || EnableSound
+            ? Visibility.Visible
+            : Visibility.Collapsed;
     }
 
     private void VolumeSliderDesign_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -283,7 +303,8 @@ public partial class SettingsWindow : UiWindow
         VolumeAnimation.Visibility = Visibility.Visible;
         ChangeVolAnimationText.Text = $"{(int)e.NewValue}%";
 
-        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+
+        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
         timer.Start();
         timer.Tick += (sender, args) =>
         {
@@ -298,31 +319,79 @@ public partial class SettingsWindow : UiWindow
     private void ResetHoverSoundBtn_OnClick(object sender, RoutedEventArgs e)
     {
         CurrentHoverSound = "pack://application:,,,/Resources/hover.wav";
+        HoverBadge.Content = "Sound Reset!";
+        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
+        timer.Start();
+        timer.Tick += (sender, args) =>
+        {
+            HoverBadge.Content = null;
+            timer.Stop();
+        };
     }
 
     private void ResetClickSoundBtn_OnClick(object sender, RoutedEventArgs e)
     {
         CurrentClickSound = "pack://application:,,,/Resources/click.wav";
+        ClickBadge.Content = "Sound Reset!";
+        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
+        timer.Start();
+        timer.Tick += (sender, args) =>
+        {
+            ClickBadge.Content = null;
+            timer.Stop();
+        };
     }
 
     private void ResetLevelSoundBtn_OnClick(object sender, RoutedEventArgs e)
     {
         CurrentLevelSound = "pack://application:,,,/Resources/creditsGet.wav";
+        LevelBadge.Content = "Sound Reset!";
+        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
+        timer.Start();
+        timer.Tick += (sender, args) =>
+        {
+            LevelBadge.Content = null;
+            timer.Stop();
+        };
     }
 
     private void ResetTaskCompleteBtn_OnClick(object sender, RoutedEventArgs e)
     {
         CurrentTaskCompleteSound = "pack://application:,,,/Resources/success.wav";
+        TaskCompleteBadge.Content = "Sound Reset!";
+        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
+        timer.Start();
+        timer.Tick += (sender, args) =>
+        {
+            TaskCompleteBadge.Content = null;
+            timer.Stop();
+        };
     }
 
     private void ResetCheckboxOffSoundBtn_OnClick(object sender, RoutedEventArgs e)
     {
         CurrentCheckboxOffSound = "pack://application:,,,/Resources/checkboxOff.wav";
+        CheckboxOffBadge.Content = "Sound Reset!";
+        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
+        timer.Start();
+        timer.Tick += (sender, args) =>
+        {
+            CheckboxOffBadge.Content = null;
+            timer.Stop();
+        };
     }
 
     private void ResetCheckboxOnSoundBtn_OnClick(object sender, RoutedEventArgs e)
     {
         CurrentCheckboxOnSound = "pack://application:,,,/Resources/CheckboxOn.wav";
+        CheckboxOnBadge.Content = "Sound Reset!";
+        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
+        timer.Start();
+        timer.Tick += (sender, args) =>
+        {
+            CheckboxOnBadge.Content = null;
+            timer.Stop();
+        };
     }
 
     private void PlayCheckboxOnSoundBtn_OnClick(object sender, RoutedEventArgs e)
@@ -353,5 +422,141 @@ public partial class SettingsWindow : UiWindow
     private void PlayHoverSoundBtn_OnClick(object sender, RoutedEventArgs e)
     {
         _soundManager.PlayAudio(CurrentHoverSound);
+    }
+
+    private void DopamineEffectsQuestionmarkBtn_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        _soundManager.PlayAudio(CurrentHoverSound);
+    }
+
+    private void SettingsQuestionmarkBtn_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        _soundManager.PlayAudio(CurrentHoverSound);
+    }
+
+    private void ChangeHoverSoundBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        _soundManager.PlayAudio(CurrentClickSound);
+        ChangeSound(CurrentHoverSound, "Hover");
+        HoverBadge.Content = "Sound Changed!";
+        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
+        timer.Start();
+        timer.Tick += (sender, args) =>
+        {
+            HoverBadge.Content = null;
+            timer.Stop();
+        };
+    }
+
+    private void ChangeSound(string currentSoundName, string soundName)
+    {
+        var dialog = new OpenFileDialog
+        {
+            Filter = "WAV Files (*.wav)|*.wav",
+            Title = $"Select {soundName} Sound"
+        };
+        if (dialog.ShowDialog() != true)
+            return;
+        var path = dialog.FileName;
+        if (path == currentSoundName)
+            return;
+        switch (soundName)
+        {
+            case "Hover":
+                CurrentHoverSound = path;
+                break;
+            case "Click":
+                CurrentClickSound = path;
+                break;
+            case "Level":
+                CurrentLevelSound = path;
+                break;
+            case "TaskComplete":
+                CurrentTaskCompleteSound = path;
+                break;
+            case "CheckboxOn":
+                CurrentCheckboxOnSound = path;
+                break;
+            case "CheckboxOff":
+                CurrentCheckboxOffSound = path;
+                break;
+        }
+    }
+
+    private void ChangeClickSoundBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        _soundManager.PlayAudio(CurrentClickSound);
+        ChangeSound(CurrentClickSound, "Click");
+        ClickBadge.Content = "Sound Changed!";
+        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
+        timer.Start();
+        timer.Tick += (sender, args) =>
+        {
+            ClickBadge.Content = null;
+            timer.Stop();
+        };
+    }
+
+    private void ChangeLevelSoundBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        _soundManager.PlayAudio(CurrentLevelSound);
+        ChangeSound(CurrentLevelSound, "Level");
+        LevelBadge.Content = "Sound Changed!";
+        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
+        timer.Start();
+        timer.Tick += (sender, args) =>
+        {
+            LevelBadge.Content = null;
+            timer.Stop();
+        };
+    }
+
+    private void ChangeTaskCompleteBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        _soundManager.PlayAudio(CurrentTaskCompleteSound);
+        ChangeSound(CurrentTaskCompleteSound, "TaskComplete");
+        TaskCompleteBadge.Content = "Sound Changed!";
+        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
+        timer.Start();
+        timer.Tick += (sender, args) =>
+        {
+            TaskCompleteBadge.Content = null;
+            timer.Stop();
+        };
+    }
+
+    private void ChangeCheckboxOffSoundBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        _soundManager.PlayAudio(CurrentCheckboxOffSound);
+        ChangeSound(CurrentCheckboxOffSound, "CheckboxOff");
+        CheckboxOffBadge.Content = "Sound Changed!";
+        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
+        timer.Start();
+        timer.Tick += (sender, args) =>
+        {
+            CheckboxOffBadge.Content = null;
+            timer.Stop();
+        };
+    }
+
+    private void ChangeCheckboxOnSoundBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        _soundManager.PlayAudio(CurrentCheckboxOnSound);
+        ChangeSound(CurrentCheckboxOnSound, "CheckboxOn");
+        CheckboxOnBadge.Content = "Sound Changed!";
+        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
+        timer.Start();
+        timer.Tick += (sender, args) =>
+        {
+            CheckboxOnBadge.Content = null;
+            timer.Stop();
+        };
+    }
+
+    private void ReadyBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        _soundManager.PlayAudio(CurrentClickSound);
+        Close();
+        //todo change window
     }
 }

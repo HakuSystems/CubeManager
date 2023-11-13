@@ -14,18 +14,26 @@
              ResizeMode="CanResizeWithGrip"
              AllowsTransparency="True"
              WindowStartupLocation="CenterScreen"
+             Foreground="{StaticResource MaterialDesignDarkForeground}"
              Title="CubeManager"
              Height="auto" Width="auto">
+
 
     <Grid x:Name="MainLoginGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+
+        <!-- Main Elements -->
         <skia:SKElement x:Name="CanvasView" Grid.ColumnSpan="2" PaintSurface="CanvasView_OnPaintSurface" />
         <skia:SKElement Grid.Column="0" Grid.ColumnSpan="2" x:Name="CanvasMouseView"
                         PaintSurface="CanvasMouseView_OnPaintSurface" />
-                <Frame Grid.Column="0" Grid.ColumnSpan="2" x:Name="MainContentFrame" IsTabStop="True" NavigationUIVisibility="Hidden" />
+        <Frame Grid.Column="0" Grid.ColumnSpan="2" x:Name="MainContentFrame" IsTabStop="True"
+               NavigationUIVisibility="Hidden" />
+        <Frame Grid.Column="1" Name="PageContent" NavigationUIVisibility="Hidden" />
+
+        <!-- UI Cards -->
         <Border>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -34,47 +42,32 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center"
                             Grid.ColumnSpan="1">
-                    <ui:Card
-                        IsHitTestVisible="False"
-                        Padding="10"
-                        Margin="5"
-                        BorderBrush="Transparent"
-                        VerticalAlignment="Center"
-                        Background="Transparent"
-                        HorizontalAlignment="Left">
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Text="CubeManager" FontSize="50"
-                                       FontStyle="Normal" FontWeight="Bold"
-                                       Foreground="White" HorizontalAlignment="Center"
-                                       VerticalAlignment="Top" />
 
+                    <!-- CubeManager Branding Card -->
+                    <ui:Card Padding="10" Margin="5" BorderBrush="Transparent" VerticalAlignment="Center"
+                             Background="Transparent" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="CubeManager" FontSize="50" FontStyle="Normal" FontWeight="Bold"
+                                       Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Top" />
                         </StackPanel>
                     </ui:Card>
-                    <ui:Card
-                        IsHitTestVisible="False"
-                        Padding="10"
-                        Margin="5"
-                        Background="Transparent"
-                        BorderBrush="Transparent"
-                        VerticalAlignment="Center" HorizontalAlignment="Left">
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Text="Your All-In-One Productivity Solution" FontSize="20"
-                                       Name="QuoteTextBlock"
-                                       TextWrapping="WrapWithOverflow"
-                                       Margin="15,0,0,0"
-                                       FontStyle="Normal" FontWeight="Bold"
-                                       Foreground="{StaticResource CubeTextNotFocus}" HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" />
 
+                    <!-- Quote Card -->
+                    <ui:Card Padding="10" Margin="5" Background="Transparent" BorderBrush="Transparent"
+                             VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="Your All-In-One Productivity Solution" FontSize="20" Name="QuoteTextBlock"
+                                       TextWrapping="WrapWithOverflow" Margin="15,0,0,0" FontStyle="Italic"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.8" />
                         </StackPanel>
                     </ui:Card>
                 </StackPanel>
             </Grid>
         </Border>
-
-
-        <Frame Grid.Column="1" Name="PageContent" NavigationUIVisibility="Hidden" />
-
 
     </Grid>
 </ui:UiWindow>
