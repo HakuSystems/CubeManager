@@ -6,11 +6,11 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d"
-             Height="500"
+             Height="380"
              Background="Transparent"
              BorderThickness="0"
              BorderBrush="Transparent"
-             Width="400"
+             Width="924"
              ShowInTaskbar="False"
              WindowStartupLocation="CenterScreen"
              ResizeMode="NoResize"
@@ -21,74 +21,56 @@
         <materialDesign:TransitioningContent.OpeningEffects>
             <materialDesign:TransitionEffect Kind="FadeIn" />
         </materialDesign:TransitioningContent.OpeningEffects>
-        <StackPanel Orientation="Horizontal"
-                        >
-                <Border Width="400"
-                        Height="auto">
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
-                            <GradientStop Color="{StaticResource MaterialDesignShadow}" Offset="0.0" />
-                            <GradientStop Color="Green" Offset="1" />
-                        </LinearGradientBrush>
-                    </Border.Background>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <ui:TitleBar HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="2"
+                         ShowHelp="False" ShowMaximize="False" ShowMinimize="False" />
+            <ui:Card
 
-                    <Border.Clip>
-                        <RectangleGeometry RadiusX="10"
-                                           RadiusY="10"
-                                           Rect="0,0,400,500" />
-                    </Border.Clip>
-                    <Grid>
-                        <StackPanel>
-                            <ui:Card Padding="10" Margin="5" BorderBrush="Transparent" VerticalAlignment="Center"
-                                     Background="Transparent" HorizontalAlignment="Left">
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock Text="Dopamine Effects" x:Name="TitleText"
-                                               TextWrapping="WrapWithOverflow" FontSize="50" FontStyle="Normal" FontWeight="Bold"
-                                               Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Top" />
-                                </StackPanel>
-                            </ui:Card>
-
-                            <!-- Quote Card -->
-                            <ui:Card Padding="10" Margin="5" Background="Transparent" BorderBrush="Transparent"
-                                     VerticalAlignment="Center" HorizontalAlignment="Left">
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock Text="Dopamine effects are visual effects that are shown when you complete a task or level. They are meant to make you feel good about yourself and motivate you to keep going." FontSize="20" x:Name="MessageText"
-                                               TextWrapping="WrapWithOverflow" Margin="15,0,0,0" FontStyle="Italic"
-                                               FontWeight="Bold"
-                                               Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                               HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.8" />
-                                </StackPanel>
-                            </ui:Card>
-                            <ui:Card Padding="10" Margin="5" Background="Transparent" BorderBrush="Transparent"
-                                     VerticalAlignment="Center" HorizontalAlignment="Left">
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Command="Play" Content="COCK" Margin="5"/>
-                                    <Button Command="Play" Content="COCK" Margin="5"/>
-                                    <Button Command="Play" Content="COCK" Margin="5"/>
-                                </StackPanel>
-                            </ui:Card>
-                        </StackPanel>
-                        <materialDesign:PackIcon Width="250"
-                               Height="250"
-                               Kind="Information"
-                               Foreground="White"
-                               Opacity="0.2"
-                               HorizontalAlignment="Right"
-                               VerticalAlignment="Bottom" Margin="0,0,-125,-74" RenderTransformOrigin="0.5,0.5">
-                            <materialDesign:PackIcon.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform />
-                                    <SkewTransform />
-                                    <RotateTransform Angle="-17.394" />
-                                    <TranslateTransform />
-                                </TransformGroup>
-                            </materialDesign:PackIcon.RenderTransform>
-                        </materialDesign:PackIcon>
-                    </Grid>
-                </Border>
-            </StackPanel>
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Grid.Row="0"
+                BorderBrush="Transparent" VerticalAlignment="Top"
+                Background="Transparent" HorizontalAlignment="Left">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Dopamine Effects" x:Name="TitleText"
+                               TextWrapping="WrapWithOverflow" FontSize="50" FontStyle="Normal" FontWeight="Bold"
+                               Foreground="{StaticResource MaterialDesignDarkForeground}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Top" />
+                </StackPanel>
+            </ui:Card>
+            <ui:Card Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Padding="10" Margin="5" Background="Transparent"
+                     BorderBrush="Transparent"
+                     VerticalAlignment="Center" HorizontalAlignment="Left">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock
+                        Text="Dopamine effects are visual effects that are shown when you complete a task or level. They are meant to make you feel good about yourself and motivate you to keep going."
+                        FontSize="20" x:Name="MessageText"
+                        TextWrapping="WrapWithOverflow" Margin="15,0,0,0" FontStyle="Italic"
+                        FontWeight="Bold"
+                        Foreground="{StaticResource MaterialDesignDarkForeground}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.8" />
+                </StackPanel>
+            </ui:Card>
+            <ui:Card Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Padding="10" Margin="5" Background="Transparent"
+                        BorderBrush="Transparent"
+                     VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal">
+                    <ui:Button x:Name="OkButton" Content="Ok" Margin="10" Click="OkButton_OnClick" MouseEnter="OkButton_OnMouseEnter" />
+                    <ui:Button x:Name="ReportButton" Content="Report a Problem" Margin="10" Click="ReportButton_OnClick" MouseEnter="ReportButton_OnMouseEnter" />
+                </StackPanel>
+            </ui:Card>
+        </Grid>
     </materialDesign:TransitioningContent>
 
 </ui:UiWindow>

@@ -124,6 +124,7 @@
                                                  Unchecked="SoundSwitch_OnUnchecked"
                                                  Checked="SoundSwitch_OnChecked" Content="Enable" Margin="0,0,10,0" />
                                 <ui:Button x:Name="SettingsQuestionmarkBtn"
+                                           Click="SettingsQuestionmarkBtn_OnClick"
                                            MouseEnter="SettingsQuestionmarkBtn_OnMouseEnter" Appearance="Transparent">
                                     <Button.Content>
                                         <materialDesign:PackIcon Kind="QuestionMark" Foreground="White" />

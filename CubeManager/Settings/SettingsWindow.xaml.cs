@@ -569,4 +569,14 @@ public partial class SettingsWindow : UiWindow
             "Dopamine effects are visual effects that are shown when you complete a task or level. They are meant to make you feel good about yourself and motivate you to keep going.";
         customMessageBox.ShowDialog();
     }
+
+    private void SettingsQuestionmarkBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        _soundManager.PlayAudio(CurrentClickSound);
+        var customMessageBox = new CustomMessageBox.CubeMessageBox();
+        customMessageBox.TitleText.Text = "Sound";
+        customMessageBox.MessageText.Text =
+            "Sound allows you to hear sounds when you click on buttons, complete tasks, etc.";
+        customMessageBox.ShowDialog();
+    }
 }
