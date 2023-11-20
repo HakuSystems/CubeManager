@@ -68,6 +68,7 @@
                                                  Unchecked="DopamineSwitch_OnUnchecked"
                                                  Checked="DopamineSwitch_OnChecked" Content="Enable" Margin="0,0,10,0" />
                                 <ui:Button x:Name="DopamineEffectsQuestionmarkBtn"
+                                           Click="DopamineEffectsQuestionmarkBtn_OnClick"
                                            MouseEnter="DopamineEffectsQuestionmarkBtn_OnMouseEnter"
                                            Appearance="Transparent">
                                     <Button.Content>

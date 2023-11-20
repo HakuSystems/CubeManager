@@ -18,6 +18,6 @@ public class DayHelper
         config.Quote.Quote = quote;
         config.Quote.LastApiCall = DateTime.Now;
         ConfigManager.Instance.UpdateConfig(config => config.Quote = config.Quote);
-        Logger.PrioInfo("Quote saved");
+        Logger.Info("Quote saved");
     }
 }

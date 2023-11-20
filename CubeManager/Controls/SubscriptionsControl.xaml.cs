@@ -24,7 +24,7 @@ public partial class SubscriptionsControl : UserControl
 
     private void SubscriptionsControl_OnLoaded(object sender, RoutedEventArgs e)
     {
-        _logger.Debug("SubscriptionsControl loaded");
+        _logger.Info("SubscriptionsControl loaded");
         UpdateUi();
     }
 
@@ -35,7 +35,7 @@ public partial class SubscriptionsControl : UserControl
         EditableCard.Background = CreateGradientBrush(ColorPickerOnDialog.Color);
         if (Subscriptions.Count == 0)
         {
-            _logger.Debug("No subscriptions found, switching to edit mode");
+            _logger.Info("No subscriptions found, switching to edit mode");
 
             SwitchToEditMode();
             return;
@@ -45,7 +45,7 @@ public partial class SubscriptionsControl : UserControl
         Subscriptions.Sort((subscription1, subscription2) =>
             subscription1.NextPaymentDate.CompareTo(subscription2.NextPaymentDate));
 
-        _logger.Debug("Subscriptions sorted");
+        _logger.Info("Subscriptions sorted");
 
         //show sorted subscriptions with CreateCard
         foreach (var subscription in Subscriptions)
@@ -70,7 +70,7 @@ public partial class SubscriptionsControl : UserControl
         CurrencyExpander.Header = "Currency: EUR";
         CurrencyExpander.IsExpanded = false;
 
-        _logger.Debug("Currency changed to EUR");
+        _logger.Info("Currency changed to EUR");
     }
 
     private void UsdButton_OnClick(object sender, RoutedEventArgs e)
@@ -78,12 +78,12 @@ public partial class SubscriptionsControl : UserControl
         CurrencyExpander.Header = "Currency: USD";
         CurrencyExpander.IsExpanded = false;
 
-        _logger.Debug("Currency changed to USD");
+        _logger.Info("Currency changed to USD");
     }
 
     private Card CreateCard(Subscription subscription)
     {
-        _logger.Debug($"Creating card for subscription {subscription.Title}");
+        _logger.Info($"Creating card for subscription {subscription.Title}");
 
         SubscriptionScroller.Visibility = Visibility.Visible;
         EditModeScroller.Visibility = Visibility.Collapsed;
@@ -176,7 +176,7 @@ public partial class SubscriptionsControl : UserControl
 
         var timeLeft = CalcDateTimeLeft(subscription.FirstPaymentDate, subscription.Period, subscription.PeriodType);
 
-        _logger.Debug($"Time left for subscription {subscription.Title} is {timeLeft}");
+        _logger.Info($"Time left for subscription {subscription.Title} is {timeLeft}");
 
         var subscriptionLeftShortTime = new TextBlock
         {
@@ -291,7 +291,7 @@ public partial class SubscriptionsControl : UserControl
 
     private string CalcDateTimeLeft(DateTime firstPaymentDate, int period, string periodType)
     {
-        _logger.Debug($"Calculating time left for subscription {firstPaymentDate} {period} {periodType}");
+        _logger.Info($"Calculating time left for subscription {firstPaymentDate} {period} {periodType}");
 
         var nextPaymentDate = GetPeriodDate(firstPaymentDate, period, periodType);
         var daysLeft = (GetPeriodDate(firstPaymentDate, period, periodType) - DateTime.Now).Days + 1;
@@ -327,7 +327,7 @@ public partial class SubscriptionsControl : UserControl
 
         _toPayDate = nextPaymentDate;
 
-        _logger.Debug($"Time left for subscription {firstPaymentDate} {period} {periodType} is {timeLeft}");
+        _logger.Info($"Time left for subscription {firstPaymentDate} {period} {periodType} is {timeLeft}");
 
         return timeLeft;
     }
@@ -364,7 +364,7 @@ public partial class SubscriptionsControl : UserControl
         SubscriptionScroller.Visibility = Visibility.Collapsed;
         EditModeScroller.Visibility = Visibility.Visible;
         CurrencyExpander.Visibility = Visibility.Visible;
-        _logger.Debug("Add subscription button clicked");
+        _logger.Info("Add subscription button clicked");
     }
 
     private void SelectDateBtn_OnClick(object sender, RoutedEventArgs e)
@@ -377,7 +377,7 @@ public partial class SubscriptionsControl : UserControl
             return;
         }
 
-        _logger.PrioInfo($"Selected date is {selectedDate}");
+        _logger.Info($"Selected date is {selectedDate}");
         DialogHostOperation.IsOpen = false;
     }
 
@@ -388,7 +388,7 @@ public partial class SubscriptionsControl : UserControl
         else
             ((TextBlock)((StackPanel)button.Content).Children[1]).Text = singular;
 
-        _logger.Debug($"Button text for {button.Name} updated");
+        _logger.Info($"Button text for {button.Name} updated");
     }
 
     private void UpdateBillingHeaderAndButtonText(string singular, string plural)
@@ -398,7 +398,7 @@ public partial class SubscriptionsControl : UserControl
         UpdateButtonText(MonthBillingBtn, singular, plural);
         UpdateButtonText(YearBillingBtn, singular, plural);
         //UpdateBillingHeader(BillingExpander,singular, plural);
-        _logger.Debug($"Billing header and button text updated");
+        _logger.Info($"Billing header and button text updated");
     }
 
     private void DayBillingBtn_OnClick(object sender, RoutedEventArgs e)
@@ -430,13 +430,13 @@ public partial class SubscriptionsControl : UserControl
         if (!int.TryParse(BillingPeriodTextBox.Text, out var billingPeriod) || billingPeriod < 1)
             BillingPeriodTextBox.Text = "1";
 
-        _logger.Debug($"Billing period text changed to {BillingPeriodTextBox.Text}");
+        _logger.Info($"Billing period text changed to {BillingPeriodTextBox.Text}");
 
         var header = BillingExpander.Header.ToString();
         var singular = header.EndsWith("s") ? header.Substring(0, header.Length - 1) : header;
         var plural = singular + "s";
 
-        _logger.Debug($"Singular is {singular} and plural is {plural}");
+        _logger.Info($"Singular is {singular} and plural is {plural}");
 
         UpdateBillingHeaderAndButtonText(singular, plural);
     }
@@ -446,7 +446,7 @@ public partial class SubscriptionsControl : UserControl
         if (!ValidateInputs())
             return;
 
-        _logger.Debug("Inputs validated");
+        _logger.Info("Inputs validated");
 
 
         #region Checking for Compilations
@@ -508,7 +508,7 @@ public partial class SubscriptionsControl : UserControl
 
         CalcDateTimeLeft(firstPaymentDate, Convert.ToInt32(BillingPeriodTextBox.Text), billingPeriodType);
 
-        _logger.PrioInfo($"Subscription created with title {title} and description {description}");
+        _logger.Info($"Subscription created with title {title} and description {description}");
 
         return new Subscription
         {
@@ -542,7 +542,7 @@ public partial class SubscriptionsControl : UserControl
         EditModeScroller.Visibility = Visibility.Collapsed;
         CurrencyExpander.Visibility = Visibility.Collapsed;
 
-        _logger.Debug("Switched to subscription view");
+        _logger.Info("Switched to subscription view");
     }
 
     private void SubscriptionPriceTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -564,7 +564,7 @@ public partial class SubscriptionsControl : UserControl
         if (PaymentDateCalendarOnDialog.Visibility == Visibility.Collapsed)
             PaymentDateCalendarOnDialog.Visibility = Visibility.Visible;
 
-        _logger.Debug("Opening calendar");
+        _logger.Info("Opening calendar");
 
         DialogHostOperation.IsOpen = true;
     }
@@ -577,7 +577,7 @@ public partial class SubscriptionsControl : UserControl
         if (SelectColorBtnOnDialog.Visibility == Visibility.Collapsed)
             SelectColorBtnOnDialog.Visibility = Visibility.Visible;
 
-        _logger.Debug("Opening color picker");
+        _logger.Info("Opening color picker");
 
         DialogHostOperation.IsOpen = true;
     }
@@ -600,6 +600,6 @@ public partial class SubscriptionsControl : UserControl
         ColorPickerOnDialog.Visibility = Visibility.Collapsed;
         SelectColorBtnOnDialog.Visibility = Visibility.Collapsed;
 
-        _logger.Debug("Dialog closed");
+        _logger.Info("Dialog closed");
     }
 }

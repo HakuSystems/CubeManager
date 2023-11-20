@@ -1,0 +1,94 @@
+<ui:UiWindow x:Class="CubeManager.CustomMessageBox.CubeMessageBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             mc:Ignorable="d"
+             Height="500"
+             Background="Transparent"
+             BorderThickness="0"
+             BorderBrush="Transparent"
+             Width="400"
+             ShowInTaskbar="False"
+             WindowStartupLocation="CenterScreen"
+             ResizeMode="NoResize"
+             WindowStyle="None"
+             AllowsTransparency="True">
+
+    <materialDesign:TransitioningContent>
+        <materialDesign:TransitioningContent.OpeningEffects>
+            <materialDesign:TransitionEffect Kind="FadeIn" />
+        </materialDesign:TransitioningContent.OpeningEffects>
+        <StackPanel Orientation="Horizontal"
+                        >
+                <Border Width="400"
+                        Height="auto">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                            <GradientStop Color="{StaticResource MaterialDesignShadow}" Offset="0.0" />
+                            <GradientStop Color="Green" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+
+                    <Border.Clip>
+                        <RectangleGeometry RadiusX="10"
+                                           RadiusY="10"
+                                           Rect="0,0,400,500" />
+                    </Border.Clip>
+                    <Grid>
+                        <StackPanel>
+                            <ui:Card Padding="10" Margin="5" BorderBrush="Transparent" VerticalAlignment="Center"
+                                     Background="Transparent" HorizontalAlignment="Left">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="Dopamine Effects" x:Name="TitleText"
+                                               TextWrapping="WrapWithOverflow" FontSize="50" FontStyle="Normal" FontWeight="Bold"
+                                               Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Top" />
+                                </StackPanel>
+                            </ui:Card>
+
+                            <!-- Quote Card -->
+                            <ui:Card Padding="10" Margin="5" Background="Transparent" BorderBrush="Transparent"
+                                     VerticalAlignment="Center" HorizontalAlignment="Left">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="Dopamine effects are visual effects that are shown when you complete a task or level. They are meant to make you feel good about yourself and motivate you to keep going." FontSize="20" x:Name="MessageText"
+                                               TextWrapping="WrapWithOverflow" Margin="15,0,0,0" FontStyle="Italic"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.8" />
+                                </StackPanel>
+                            </ui:Card>
+                            <ui:Card Padding="10" Margin="5" Background="Transparent" BorderBrush="Transparent"
+                                     VerticalAlignment="Center" HorizontalAlignment="Left">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Command="Play" Content="COCK" Margin="5"/>
+                                    <Button Command="Play" Content="COCK" Margin="5"/>
+                                    <Button Command="Play" Content="COCK" Margin="5"/>
+                                </StackPanel>
+                            </ui:Card>
+                        </StackPanel>
+                        <materialDesign:PackIcon Width="250"
+                               Height="250"
+                               Kind="Information"
+                               Foreground="White"
+                               Opacity="0.2"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Bottom" Margin="0,0,-125,-74" RenderTransformOrigin="0.5,0.5">
+                            <materialDesign:PackIcon.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform />
+                                    <SkewTransform />
+                                    <RotateTransform Angle="-17.394" />
+                                    <TranslateTransform />
+                                </TransformGroup>
+                            </materialDesign:PackIcon.RenderTransform>
+                        </materialDesign:PackIcon>
+                    </Grid>
+                </Border>
+            </StackPanel>
+    </materialDesign:TransitioningContent>
+
+</ui:UiWindow>

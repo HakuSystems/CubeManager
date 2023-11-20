@@ -559,4 +559,14 @@ public partial class SettingsWindow : UiWindow
         Close();
         //todo change window
     }
+
+    private void DopamineEffectsQuestionmarkBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        _soundManager.PlayAudio(CurrentClickSound);
+        var customMessageBox = new CustomMessageBox.CubeMessageBox();
+        customMessageBox.TitleText.Text = "Dopamine Effects";
+        customMessageBox.MessageText.Text =
+            "Dopamine effects are visual effects that are shown when you complete a task or level. They are meant to make you feel good about yourself and motivate you to keep going.";
+        customMessageBox.ShowDialog();
+    }
 }

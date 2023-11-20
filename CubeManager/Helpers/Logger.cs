@@ -51,11 +51,6 @@ public class Logger
         Log.Logger.Error(message);
     }
 
-    public void Debug(string message)
-    {
-        Log.Logger.Debug(message);
-    }
-
     public void Critical(string message)
     {
         Log.Logger.Fatal(message);

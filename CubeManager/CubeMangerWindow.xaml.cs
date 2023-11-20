@@ -21,7 +21,7 @@ public partial class CubeMangerWindow : Window
     {
         _logger = new Logger();
         InitializeComponent();
-        _logger.PrioInfo("CubeManagerWindow initialized");
+        _logger.Info("CubeManagerWindow initialized");
     }
 
     private double CurrentProgressValue
@@ -62,7 +62,7 @@ public partial class CubeMangerWindow : Window
             MessageBoxButton.YesNo, MessageBoxImage.Question);
         if (dialog == MessageBoxResult.No) return;
         Close();
-        _logger.PrioInfo("Closed CubeManagerWindow");
+        _logger.Info("Closed CubeManagerWindow");
     }
 
 
@@ -136,7 +136,7 @@ public partial class CubeMangerWindow : Window
 
     private void SettingsBtn_OnClick(object sender, RoutedEventArgs e)
     {
-        ControlsFrame.Navigate(new SettingsControl());
+        //ControlsFrame.Navigate(new SettingsControl());
         _logger.Info("Navigated to SettingsControl");
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
     }
@@ -148,7 +148,7 @@ public partial class CubeMangerWindow : Window
         {
             CreateNoWindow = true
         });
-        _logger.PrioInfo("Opened Discord link");
+        _logger.Info("Opened Discord link");
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
     }
 

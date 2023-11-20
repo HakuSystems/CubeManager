@@ -40,7 +40,7 @@ public partial class TodosControl : UserControl
 
         TodoNewCalendar.SelectedDate = DateTime.Now;
         TodoNewTimePicker.SelectedTime = DateTime.Now;
-        _logger.PrioInfo("TodosControl loaded successfully");
+        _logger.Info("TodosControl loaded successfully");
         TryClearSnackbarQueue();
     }
 
@@ -116,14 +116,14 @@ public partial class TodosControl : UserControl
 
     private void AddNewTodo()
     {
-        _logger.PrioInfo("Adding new todo started");
+        _logger.Info("Adding new todo started");
         var todo = CreateTodoFromInputFields();
         if (!ValidationCheck(todo)) return;
 
         AddTodoCard(todo);
         ResetInputFields();
         ToggleTodoButtonVisibility();
-        _logger.PrioInfo("New todo added successfully.");
+        _logger.Info("New todo added successfully.");
     }
 
     private TodoItem CreateTodoFromInputFields()
@@ -229,13 +229,13 @@ public partial class TodosControl : UserControl
     {
         Todos.Add(todo);
         UpdateConfig();
-        _logger.PrioInfo($"Todo saved with id: {todo.Id}");
+        _logger.Info($"Todo saved with id: {todo.Id}");
     }
 
     private void UpdateConfig()
     {
         ConfigManager.Instance.UpdateConfig(config => config.Todo.Todos = Todos);
-        _logger.PrioInfo("Todo config updated");
+        _logger.Info("Todo config updated");
     }
 
     private Card CreateCard(TodoItem todo)
