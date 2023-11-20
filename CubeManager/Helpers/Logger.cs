@@ -11,7 +11,6 @@ public class Logger
 
     public Logger()
     {
-        AllocConsole();
         DeleteOldLogs();
         Log.Logger = new LoggerConfiguration()
             .WriteTo.Console()
@@ -23,10 +22,6 @@ public class Logger
                 rollingInterval: RollingInterval.Day)
             .CreateLogger();
     }
-
-
-    [DllImport("Kernel32")]
-    private static extern void AllocConsole();
 
     private static void DeleteOldLogs()
     {
