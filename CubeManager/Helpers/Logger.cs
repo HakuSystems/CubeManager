@@ -1,34 +1,15 @@
 using System.IO;
-using System.Runtime.InteropServices;
 using Serilog;
 
 namespace CubeManager.Helpers;
-
+//todo on Error and Critical handle it properly
 public class Logger
 {
-    private static readonly string LogDirectory = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CubeManager", "Logs");
-
     public Logger()
     {
-        DeleteOldLogs();
         Log.Logger = new LoggerConfiguration()
             .WriteTo.Console()
-            .WriteTo.File(Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                    "CubeManager",
-                    "Logs",
-                    "log-.log"),
-                rollingInterval: RollingInterval.Day)
             .CreateLogger();
-    }
-
-    private static void DeleteOldLogs()
-    {
-        var files = Directory.GetFiles(LogDirectory, "log*.log")
-            .OrderByDescending(File.GetCreationTime).Skip(2).ToList();
-
-        files.ForEach(File.Delete);
     }
 
     public void Info(string message)

@@ -2,6 +2,7 @@
 using System.Data;
 using System.Windows;
 using System.Windows.Threading;
+using CubeManager.CustomMessageBox;
 
 namespace CubeManager;
 
@@ -17,11 +18,11 @@ public partial class App : Application
 
     private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
-        if (MessageBox.Show($"An unhandled exception occurred: {e.Exception.Message}", "Error", MessageBoxButton.OK,
-                MessageBoxImage.Error) != MessageBoxResult.None)
-        {
-            Clipboard.SetText(e.Exception.ToString()); 
-        }
+        var customMessageBoxWindow = new CubeMessageBox();
+        customMessageBoxWindow.TitleText.Text = "Error";
+        customMessageBoxWindow.MessageText.Text = $"An unhandled exception occurred: {e.Exception.Message}";
+        customMessageBoxWindow.ShowDialog();
+        
         
         e.Handled = true;
     }

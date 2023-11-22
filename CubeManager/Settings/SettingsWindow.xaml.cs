@@ -108,6 +108,7 @@ public partial class SettingsWindow : UiWindow
         var card = DopamineCard;
         var switcher = DopamineSwitch;
         var icon = DopamineIcon;
+        DopamineSwitch.Content = "Enabled";
 
 
         _logger.Info("Dopamine effects have been enabled.");
@@ -130,6 +131,7 @@ public partial class SettingsWindow : UiWindow
         var card = DopamineCard;
         var switcher = DopamineSwitch;
         var icon = DopamineIcon;
+        DopamineSwitch.Content = "Disabled";
 
 
         _logger.Info("Dopamine effects have been disabled.");
@@ -233,6 +235,7 @@ public partial class SettingsWindow : UiWindow
         var card = SoundCard;
         var switcher = SoundSwitch;
         var icon = SoundIcon;
+        SoundSwitch.Content = "Disabled";
 
 
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.CheckboxOff);
@@ -259,6 +262,7 @@ public partial class SettingsWindow : UiWindow
         var card = SoundCard;
         var switcher = SoundSwitch;
         var icon = SoundIcon;
+        SoundSwitch.Content = "Enabled";
 
         _logger.Info("Sound has been enabled.");
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.CheckboxOn);
@@ -556,8 +560,9 @@ public partial class SettingsWindow : UiWindow
     private void ReadyBtn_OnClick(object sender, RoutedEventArgs e)
     {
         _soundManager.PlayAudio(CurrentClickSound);
+        var cubemanagerWindow = new CubeMangerWindow();
+        cubemanagerWindow.Show();
         Close();
-        //todo change window
     }
 
     private void DopamineEffectsQuestionmarkBtn_OnClick(object sender, RoutedEventArgs e)
@@ -578,5 +583,10 @@ public partial class SettingsWindow : UiWindow
         customMessageBox.MessageText.Text =
             "Sound allows you to hear sounds when you click on buttons, complete tasks, etc.";
         customMessageBox.ShowDialog();
+    }
+
+    private void ReadyBtn_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        _soundManager.PlayAudio(CurrentHoverSound);
     }
 }

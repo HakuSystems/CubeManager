@@ -359,7 +359,7 @@
             <materialDesign:TransitioningContent.OpeningEffects>
                 <materialDesign:TransitionEffect Kind="ExpandIn" />
             </materialDesign:TransitioningContent.OpeningEffects>
-            <ui:CardAction x:Name="ReadyBtn" Click="ReadyBtn_OnClick" Content="Ready" HorizontalAlignment="Center"
+            <ui:CardAction x:Name="ReadyBtn" Click="ReadyBtn_OnClick" MouseEnter="ReadyBtn_OnMouseEnter" Content="Ready" HorizontalAlignment="Center"
                            VerticalAlignment="Center" />
         </materialDesign:TransitioningContent>
     </Grid>
