@@ -373,7 +373,7 @@ public partial class SubscriptionsControl : UserControl
         if (!selectedDate.HasValue)
         {
             ErrorHandlingSnackbar.MessageQueue?.Enqueue("Please Choose a date");
-            _logger.Critical("No date selected");
+            _logger.Critical("Warning","No date selected");
             return;
         }
 

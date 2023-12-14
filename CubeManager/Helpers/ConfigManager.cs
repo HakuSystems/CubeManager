@@ -57,7 +57,7 @@ public class ConfigManager
         }
         catch (IOException ex)
         {
-            _logger.Error($"Could not load config: {ex.Message}");
+            _logger.Error("Error",$"Could not load config: {ex.Message}");
         }
     }
 
@@ -72,7 +72,7 @@ public class ConfigManager
         }
         catch (IOException ex)
         {
-            _logger.Error($"Could not save config: {ex.Message}");
+            _logger.Error("Error",$"Could not save config: {ex.Message}");
         }
     }
 

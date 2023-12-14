@@ -48,9 +48,9 @@ public class NotificationHandler
                     : "Encountered null date");
                 // Extract Date, Hour and Minute for the comparison
                 var dateCheck = new DateTime(date.Date.Year, date.Date.Month, date.Date.Day,
-                    date.Date.Hour, date.Date.Minute, 0);
+                    date.Date.Hour, date.Date.Minute, 0, DateTimeKind.Local);
                 var now = DateTime.Now;
-                var nowCheck = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
+                var nowCheck = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0, DateTimeKind.Local);
 
                 if (dateCheck == nowCheck)
                 {
@@ -61,7 +61,7 @@ public class NotificationHandler
         }
         catch (Exception ex)
         {
-            _logger.Error($"Error in ProcessDueDates: {ex}");
+            _logger.Error("Error", $"Could not process due dates: {ex.Message}");
         }
     }
 
@@ -78,7 +78,7 @@ public class NotificationHandler
         }
         catch (Exception e)
         {
-            _logger.Error(e.Message);
+            _logger.Error("Error", $"Could not send notification: {e.Message}");
             throw;
         }
     }
