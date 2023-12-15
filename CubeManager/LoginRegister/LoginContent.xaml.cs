@@ -3,6 +3,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using CubeManager.Helpers;
 using CubeManager.Notifications;
+using CubeManager.Settings;
 using Wpf.Ui.Controls;
 
 namespace CubeManager.LoginRegister;
@@ -19,10 +20,11 @@ public partial class LoginContent : UiPage
     private void LoginBtn_OnClick(object sender, RoutedEventArgs e)
     {
         SoundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
+        var settingsWindow = SettingsWindow.Instance;
+        settingsWindow.Show();
+        
         var loginWindow = (LoginWindow)Window.GetWindow(this);
-        loginWindow.MainContentFrame.Source =
-            new Uri("pack://application:,,,/CubeManager;component/Settings/SettingsSplashScreen.xaml",
-                UriKind.RelativeOrAbsolute);
+        loginWindow.Close();
     }
 
     private void RegisterBtn_OnClick(object sender, RoutedEventArgs e)
