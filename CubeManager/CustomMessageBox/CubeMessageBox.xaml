@@ -33,6 +33,8 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <ui:TitleBar HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="2"
+                         MouseEnter="UIElement_OnMouseEnter"
+                         CloseClicked="TitleBar_OnCloseClicked"
                          ShowHelp="False" ShowMaximize="False" ShowMinimize="False" />
             <ui:Card
 

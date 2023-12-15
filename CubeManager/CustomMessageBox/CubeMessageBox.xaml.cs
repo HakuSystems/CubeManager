@@ -35,4 +35,14 @@ public partial class CubeMessageBox : UiWindow
     {
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
     }
+
+    private void UIElement_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
+    }
+
+    private void TitleBar_OnCloseClicked(object sender, RoutedEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
+    }
 }
