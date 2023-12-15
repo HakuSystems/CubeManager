@@ -4,6 +4,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using CubeManager.FirstRun;
 using CubeManager.Helpers;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
@@ -560,8 +561,17 @@ public partial class SettingsWindow : UiWindow
     private void ReadyBtn_OnClick(object sender, RoutedEventArgs e)
     {
         _soundManager.PlayAudio(CurrentClickSound);
-        var cubemanagerWindow = new CubeMangerWindow();
-        cubemanagerWindow.Show();
+        if (ConfigManager.Instance.Config.IsFirstRun)
+        {
+            var welcomeWindow = new WelcomeWindow();
+            welcomeWindow.Show();
+        }
+        else
+        {
+            var cubemanagerWindow = new CubeMangerWindow();
+            cubemanagerWindow.Show();
+        }
+        
         Close();
     }
 

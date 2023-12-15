@@ -10,6 +10,7 @@ namespace CubeManager;
 public class ConfigData
 {
     public VersionData Version { get; set; } = new();
+    public bool IsFirstRun { get; set; } = true;
     public ScoreBoardData ScoreBoard { get; set; } = new();
     public SettingsData Settings { get; set; } = new();
     public SoundSettings SoundSettings { get; set; } = new();
