@@ -4,6 +4,9 @@ using System.Data;
 using System.Windows;
 using System.Windows.Threading;
 using CubeManager.CustomMessageBox;
+using CubeManager.Helpers;
+using CubeManager.LoginRegister;
+using CubeManager.Notifications;
 
 namespace CubeManager;
 
@@ -12,10 +15,21 @@ namespace CubeManager;
 /// </summary>
 public partial class App : Application
 {
+    private Logger _logger;
     public App()
     {
         AppDomain.CurrentDomain.UnhandledException += OnCurrentDomainUnhandledException;
         Dispatcher.UnhandledException += OnDispatcherUnhandledException;
+        Startup += OnStartup;
+    }
+    private NotificationHandler NotificationHandler { get; set; }
+    private void OnStartup(object sender, StartupEventArgs e)
+    {
+        _logger = new Logger();
+        NotificationHandler = new NotificationHandler();
+        _logger.Info("InitialWindow initialized");
+        var mainWindow = new LoginWindow();
+        mainWindow.Show();
     }
 
     private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -31,10 +45,6 @@ public partial class App : Application
 
     private void LogException(Exception ex)
     {
-        // Use this to log the exception details to the desired location
-        // such as a file, database, or cloud logging service.
-
-        // Present a more user-friendly message to the user.
         var customMessageBoxWindow = new CubeMessageBox
         {
             TitleText = {Text = "Error"},
