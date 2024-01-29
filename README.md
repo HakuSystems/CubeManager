@@ -35,4 +35,4 @@ This project is licensed under the MIT License. See the [LICENSE.md](LICENSE.md)
 
 ## Support
 
-For any queries or support, please raise an issue on the GitHub repository or contact via [Discord](https://discord.gg/7t4MQFKjUM).
+For any queries or support, please raise an issue on the GitHub repository or contact via [Discord](https://discord.gg/RrEY7Zr9).
