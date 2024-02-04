@@ -1,9 +1,10 @@
-<Window x:Class="CubeManager.FirstRun.WelcomeWindow"
+<ui:UiWindow x:Class="CubeManager.FirstRun.WelcomeWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:CubeManager.FirstRun"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:skia="clr-namespace:SkiaSharp.Views.WPF;assembly=SkiaSharp.Views.WPF"
         mc:Ignorable="d"
         Height="auto"
         Width="auto"
@@ -15,16 +16,268 @@
         Title="CubeManager"
         WindowStartupLocation="CenterScreen"
         WindowState="Normal"
+        MouseDown="WelcomeWindow_OnMouseDown"
         ResizeMode="CanResizeWithGrip"
-
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="DemiBold"
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
-        Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}">
+        Background="{DynamicResource MaterialDesignDarkBackground}"
+        FontFamily="{DynamicResource  MaterialDesignFont}">
+
+    <Window.Resources>
+        <!-- Styles for the tiers -->
+        <Style x:Key="TierStyle" TargetType="Border">
+            <Setter Property="BorderBrush" Value="#FFC0C0C0" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+
+        <!-- Styles for the tier titles -->
+        <Style x:Key="TierTitleStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Margin" Value="3" />
+        </Style>
+
+        <!-- Styles for the tier benefits -->
+
+        <!-- Styles for the tier prices -->
+        <Style x:Key="TierPriceStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="10" />
+        </Style>
+
+        <!-- Styles for the choose buttons -->
+    </Window.Resources>
+
+
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ui:TitleBar HorizontalAlignment="Right"
+                     VerticalAlignment="Top" />
+
+        <TextBlock Text="Choose Your Plan" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" />
+        <TextBlock Text="Select the plan that best suits your needs." HorizontalAlignment="Center" Grid.Row="0"
+                   Margin="0,50,0,0" />
+
+        <StackPanel Grid.Row="1" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <StackPanel Margin="5" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Border MinWidth="325"  BorderBrush="Transparent" Style="{StaticResource TierStyle}" Background="#FF2261">
+                    <StackPanel>
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <Border HorizontalAlignment="Left" Style="{DynamicResource TierStyle}"
+                                    CornerRadius="10,0,0,10"
+                                    VerticalAlignment="Top" Margin="0"
+                                    BorderBrush="Transparent" Background="White">
+                                <StackPanel Orientation="Horizontal">
+
+                                    <TextBlock Text="PREMIUM" VerticalAlignment="Center"
+                                               FontSize="25"
+                                               Foreground="#FF2261"
+                                               Style="{StaticResource TierTitleStyle}" />
+                                </StackPanel>
+                            </Border>
+                            <Border Style="{DynamicResource TierStyle}"
+                                    VerticalAlignment="Center" Margin="-5,0,0,0"
+                                    CornerRadius="0,10,10,0"
+                                    BorderBrush="Transparent" Background="{DynamicResource CubeBackground}">
+                                <StackPanel Orientation="Horizontal">
+
+                                    <TextBlock Text="Donation" VerticalAlignment="Center"
+                                               FontSize="25"
+                                               Style="{StaticResource TierTitleStyle}" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="15"
+                                    VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="True"
+                                          IsEnabled="False"
+                                          Background="White" Foreground="#FF2261" Style="{DynamicResource MaterialDesignActionDarkCheckBox}"
+                                          Margin="5" />
+                                <TextBlock Text="Super super benefit!" VerticalAlignment="Center" Foreground="White"
+                                           Margin="5" HorizontalAlignment="Left" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="True"
+                                          IsEnabled="False"
+                                          Background="White" Foreground="#FF2261" Style="{DynamicResource MaterialDesignActionDarkCheckBox}"
+                                          Margin="5" />
+                                <TextBlock Text="Another awsome benefit!" VerticalAlignment="Center" Foreground="White"
+                                           Margin="5" HorizontalAlignment="Left" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="True"
+                                          
+                                          IsEnabled="False" Background="White" Foreground="#FF2261" Style="{DynamicResource MaterialDesignActionDarkCheckBox}"
+                                          Margin="5" />
+                                <TextBlock Text="The best benefit ever!" VerticalAlignment="Center" Foreground="White"
+                                           Margin="5" HorizontalAlignment="Left" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="True" 
+                                          IsEnabled="False" Background="White" Foreground="#FF2261" Style="{DynamicResource MaterialDesignActionDarkCheckBox}"
+                                          Margin="5" />
+                                <TextBlock Text="This one is okay." VerticalAlignment="Center" Foreground="White"
+                                           Margin="5" HorizontalAlignment="Left" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="True" 
+                                          IsEnabled="False" Background="White" Foreground="#FF2261" Style="{DynamicResource MaterialDesignActionDarkCheckBox}"
+                                          Margin="5" />
+                                <TextBlock Text="WOAHHH!" VerticalAlignment="Center" Foreground="White" Margin="5"
+                                           HorizontalAlignment="Left" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="True" 
+                                          IsEnabled="False" Background="White" Foreground="#FF2261" Style="{DynamicResource MaterialDesignActionDarkCheckBox}"
+                                          Margin="5" />
+                                <TextBlock Text="Joa kein plan halt" VerticalAlignment="Center" Foreground="White"
+                                           Margin="5" HorizontalAlignment="Left" />
+                            </StackPanel>
+                        </StackPanel>
+
+
+                        <TextBlock Text="$9.99" Style="{StaticResource TierPriceStyle}" />
+                        <TextBlock Text="one time payment" HorizontalAlignment="Center" />
+                        <Border>
+                            
+                        </Border>
+                        <Border>
+                            <StackPanel>
+                                <Border Background="{DynamicResource CubeBackground}"
+                                        CornerRadius="10,10,10,10"
+                                        BorderBrush="Transparent"
+                                        BorderThickness="1"
+                                        Padding="10"
+                                         >
+                                    <StackPanel>
+                                        <TextBlock Text="Enter a valid License" />
+                                        <ui:TextBox Margin="5"/>
+                                    </StackPanel>
+                                </Border>
+                                <Button
+                                    x:Name="ChooseButton"
+                                    MouseEnter="ChooseButton_OnMouseEnter"
+                                    Click="ChooseButton_OnClick"
+                                    Background="White"
+                                    Foreground="#FF2261"
+                                    Content="Redeem"
+                                    Style="{DynamicResource MaterialDesignRaisedButton}"
+                                    Margin="10"
+                                />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Second Tier -->
+                <Border MinWidth="325" BorderBrush="Transparent" Style="{StaticResource TierStyle}" Background="#3508FF">
+                    <StackPanel>
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <Border HorizontalAlignment="Left" Style="{DynamicResource TierStyle}"
+                                    CornerRadius="10,0,0,10"
+                                    VerticalAlignment="Top" Margin="0"
+                                    BorderBrush="Transparent" Background="White">
+                                <StackPanel Orientation="Horizontal">
+
+                                    <TextBlock Text="FREE" VerticalAlignment="Center"
+                                               FontSize="25"
+                                               Foreground="#3508FF"
+                                               Style="{StaticResource TierTitleStyle}" />
+                                </StackPanel>
+                            </Border>
+                            <Border Style="{DynamicResource TierStyle}"
+                                    VerticalAlignment="Center" Margin="-5,0,0,0"
+                                    CornerRadius="0,10,10,0"
+                                    BorderBrush="Transparent" Background="{DynamicResource CubeBackground}">
+                                <StackPanel Orientation="Horizontal">
+
+                                    <TextBlock Text="Basic" VerticalAlignment="Center"
+                                               FontSize="25"
+                                               Style="{StaticResource TierTitleStyle}" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="15" HorizontalAlignment="Left"
+                                    VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="True" 
+                                          IsEnabled="False" Background="White" Foreground="#3508FF" Style="{DynamicResource MaterialDesignActionDarkCheckBox}"
+                                          Margin="5" />
+                                <TextBlock Text="Super super benefit!" VerticalAlignment="Center" Foreground="White"
+                                           Margin="5" HorizontalAlignment="Left" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="True" 
+                                          IsEnabled="False" Background="White" Foreground="#3508FF" Style="{DynamicResource MaterialDesignActionDarkCheckBox}"
+                                          Margin="5" />
+                                <TextBlock Text="Another awsome benefit!" VerticalAlignment="Center" Foreground="White"
+                                           Margin="5" HorizontalAlignment="Left" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="True" 
+                                          IsEnabled="False" Background="White" Foreground="#3508FF" Style="{DynamicResource MaterialDesignActionDarkCheckBox}"
+                                          Margin="5" />
+                                <TextBlock Text="The best benefit ever!" VerticalAlignment="Center" Foreground="White"
+                                           Margin="5" HorizontalAlignment="Left" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="False" 
+                                          IsEnabled="False" Background="White" Style="{DynamicResource MaterialDesignActionDarkCheckBox}"
+                                          Margin="5" />
+                                <TextBlock Text="This one is okay." VerticalAlignment="Center" Foreground="White"
+                                           Margin="5" HorizontalAlignment="Left" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="False"
+                                          IsEnabled="False" Background="White" Style="{DynamicResource MaterialDesignActionDarkCheckBox}"
+                                          Margin="5" />
+                                <TextBlock Text="WOAHHH!" VerticalAlignment="Center" Foreground="White" Margin="5"
+                                           HorizontalAlignment="Left" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="False" 
+                                          IsEnabled="False" Background="White" Style="{DynamicResource MaterialDesignActionDarkCheckBox}"
+                                          Margin="5" />
+                                <TextBlock Text="Joa kein plan halt" VerticalAlignment="Center" Foreground="White"
+                                           Margin="5" HorizontalAlignment="Left" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <TextBlock Text="FREE" Style="{StaticResource TierPriceStyle}" />
+                        <Button
+                            x:Name="ContinueButton"
+                            BorderThickness="0"
+                            MouseEnter="ContinueButton_OnMouseEnter"
+                            Click="ContinueButton_OnClick"
+                            Background="White"
+                            Foreground="#3508FF"
+                            Content="Continue Free"
+                            Style="{DynamicResource MaterialDesignRaisedButton}"
+                            Margin="10"
+                        />
+                        </StackPanel>
+                    
+                </Border>
+            </StackPanel>
+
+        </StackPanel>
+
+        <TextBlock Grid.Row="2" Text="This tool was made with ✨ by Lyze." HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom" Margin="0,20,0,0" />
     </Grid>
-</Window>
+</ui:UiWindow>

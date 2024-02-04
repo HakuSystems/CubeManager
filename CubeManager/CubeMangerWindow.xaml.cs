@@ -22,6 +22,12 @@ public partial class CubeMangerWindow : Window
         _logger = new Logger();
         InitializeComponent();
         _logger.Info("CubeManagerWindow initialized");
+        IsFirstRunValue = false;
+    }
+    private bool IsFirstRunValue
+    {
+        get => ConfigManager.Instance.Config.IsFirstRun;
+        set { ConfigManager.Instance.UpdateConfig(config => config.IsFirstRun = value); }
     }
 
     private double CurrentProgressValue

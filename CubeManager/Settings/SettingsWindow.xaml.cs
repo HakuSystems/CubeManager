@@ -4,6 +4,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using CubeManager.CubeManagerFinal;
 using CubeManager.FirstRun;
 using CubeManager.Helpers;
 using MaterialDesignThemes.Wpf;
@@ -568,7 +569,7 @@ public partial class SettingsWindow : UiWindow
         }
         else
         {
-            var cubemanagerWindow = new CubeMangerWindow();
+            var cubemanagerWindow = new CubeManagerDashboard();
             cubemanagerWindow.Show();
         }
         
