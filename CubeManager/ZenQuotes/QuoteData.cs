@@ -7,4 +7,5 @@ public class QuoteData
     public string h { get; set; }
     public DateTime LastApiCall { get; set; }
     public string Quote { get; set; }
+    public string Author { get; set; }
 }

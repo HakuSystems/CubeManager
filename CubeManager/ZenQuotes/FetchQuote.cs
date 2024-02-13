@@ -19,6 +19,8 @@ public class FetchQuote
         var response = client.GetAsync("https://zenquotes.io/api/random").Result;
         var content = response.Content.ReadAsStringAsync().Result;
         var quote = JsonConvert.DeserializeObject<List<QuoteData>>(content).First();
+        var author = quote.a;
+        SaveAuthor(author);
         if (quote.q.Length > maxChars)
         {
             return RetrieveQuote();
@@ -26,6 +28,16 @@ public class FetchQuote
         DayHelper.SaveQuote(quote.q);
         client.Dispose();
         return quote.q;
+    }
+
+    private void SaveAuthor(string author)
+    {
+        ConfigManager.Instance.UpdateConfig(config => config.Quote.Author = author);
+    }
+
+    public string RetrieveQuoteAuthor()
+    {
+        return ConfigManager.Instance.Config.Quote.Author;
     }
 
     /// <summary>

@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -9,7 +8,10 @@ using CubeManager.Controls;
 using CubeManager.Helpers;
 using CubeManager.Settings;
 using CubeManager.Todos;
+using CubeManager.ZenQuotes;
 using MaterialDesignThemes.Wpf;
+using SkiaSharp;
+using SkiaSharp.Views.Desktop;
 using Wpf.Ui.Controls;
 
 namespace CubeManager.CubeManagerFinal;
@@ -19,6 +21,9 @@ public partial class CubeManagerDashboard : UiWindow
     private readonly Logger _logger;
 
     private readonly SoundManager _soundManager = new();
+
+    private SKPoint _mousePosition;
+
 
     public CubeManagerDashboard()
     {
@@ -160,12 +165,12 @@ public partial class CubeManagerDashboard : UiWindow
     {
         _logger.Info("Navigated to SettingsControl");
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
-        
+
         var settingsWindow = new SettingsWindow();
         settingsWindow.InitializeComponent();
         settingsWindow.ShowDialog();
 
-        var thisWindow = (CubeManagerDashboard)Window.GetWindow(this);
+        var thisWindow = (CubeManagerDashboard)GetWindow(this);
         thisWindow.Close();
     }
 
@@ -188,7 +193,7 @@ public partial class CubeManagerDashboard : UiWindow
     private void RoutineCard_OnMouseEnter(object sender, MouseEventArgs e)
     {
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
-        
+
         ApplyColorAnimation(RoutineCard, "#181818", "#292929");
         ApplyColorAnimation(RoutineTasksIcon, "#000000", "#ffffff");
         ApplyColorAnimation(RoutineTasksText, "#5a696f", "#ffffff");
@@ -295,18 +300,18 @@ public partial class CubeManagerDashboard : UiWindow
     private void PlayTimeCard_OnMouseEnter(object sender, MouseEventArgs e)
     {
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
-         ApplyColorAnimation(PlayTimeCard, "#181818", "#292929");
-         ApplyColorAnimation(PlayTimeIcon, "#000000", "#ffffff");
-         ApplyColorAnimation(PlayTimeText, "#5a696f", "#ffffff");
-         PlayTimeText.Visibility = Visibility.Visible;
+        ApplyColorAnimation(PlayTimeCard, "#181818", "#292929");
+        ApplyColorAnimation(PlayTimeIcon, "#000000", "#ffffff");
+        ApplyColorAnimation(PlayTimeText, "#5a696f", "#ffffff");
+        PlayTimeText.Visibility = Visibility.Visible;
     }
 
     private void RoutineCard_OnMouseLeave(object sender, MouseEventArgs e)
     {
-         ApplyColorAnimation(RoutineCard, "#292929", "#181818");
-         ApplyColorAnimation(RoutineTasksIcon, "#ffffff", "#000000");
-         ApplyColorAnimation(RoutineTasksText, "#ffffff", "#5a696f");
-         RoutineTasksText.Visibility = Visibility.Collapsed;
+        ApplyColorAnimation(RoutineCard, "#292929", "#181818");
+        ApplyColorAnimation(RoutineTasksIcon, "#ffffff", "#000000");
+        ApplyColorAnimation(RoutineTasksText, "#ffffff", "#5a696f");
+        RoutineTasksText.Visibility = Visibility.Collapsed;
     }
 
     private void TodoCard_OnMouseLeave(object sender, MouseEventArgs e)
@@ -369,5 +374,30 @@ public partial class CubeManagerDashboard : UiWindow
     {
         DoLevelUp();
         //todo: actually implement this
+    }
+
+    private void CubeManagerDashboard_OnLoaded(object sender, RoutedEventArgs e)
+    {
+        ZenquouteText.Text = new FetchQuote().RetrieveQuote();
+        ZenquouteTextAuthor.Text = $"- {new FetchQuote().RetrieveQuoteAuthor()}";
+    }
+
+    private void CanvasMouseView_OnPaintSurface(object? sender, SKPaintSurfaceEventArgs e)
+    {
+        var surface = e.Surface;
+        var canvas = surface.Canvas;
+
+        canvas.Clear(SKColors.Transparent);
+
+        using (var paint = new SKPaint())
+        {
+            paint.Color = RandomColorGenerator.GenerateColorWithAlpha(125).ToSKColor();
+            paint.MaskFilter = SKMaskFilter.CreateBlur(SKBlurStyle.Normal, 80);
+            paint.BlendMode = SKBlendMode.Plus;
+
+            var glowRect = new SKRect(_mousePosition.X - 60, _mousePosition.Y - 50, _mousePosition.X + 50,
+                _mousePosition.Y + 50);
+            canvas.DrawRect(glowRect, paint);
+        }
     }
 }

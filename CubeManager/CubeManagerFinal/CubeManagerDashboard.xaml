@@ -6,9 +6,11 @@
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.WPF;assembly=SkiaSharp.Views.WPF"
              mc:Ignorable="d"
              Height="auto"
              Width="auto"
+             Loaded="CubeManagerDashboard_OnLoaded"
              MinWidth="900"
              MinHeight="500"
              Foreground="{DynamicResource MaterialDesignDarkForeground}"
@@ -36,15 +38,19 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <ui:TitleBar HorizontalAlignment="Stretch" Title="Dashboard" Grid.ColumnSpan="2" />
+        <ui:TitleBar HorizontalAlignment="Stretch" Title="CubeManager"
+                     Background="{DynamicResource MaterialDesignDarkSeparatorBackground}"
+                     Grid.ColumnSpan="2" />
 
         <Grid MaxWidth="350" Grid.Row="1" Grid.Column="0"
               Background="{DynamicResource MaterialDesignDarkSeparatorBackground}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="300" />
+                <RowDefinition Height="300"/>
             </Grid.RowDefinitions>
+            <skia:SKElement
+                PaintSurface="CanvasMouseView_OnPaintSurface" />
             <ui:Card
                 BorderThickness="0"
                 Background="Transparent"
@@ -136,6 +142,40 @@
                             Height="150"
                             VerticalAlignment="Stretch" />
 
+                        <ui:Card VerticalAlignment="Center">
+                            <StackPanel>
+                                <materialDesign:PackIcon Kind="FormatQuoteOpen"
+                                                         Height="20"
+                                                         Width="20"
+                                                         HorizontalAlignment="Left"
+                                                         VerticalAlignment="Bottom"
+                                                         Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+
+                                <TextBlock
+                                    x:Name="ZenquouteText"
+                                    Margin="5"
+                                    Text="Quote of the day"
+                                    TextWrapping="Wrap"
+                                    MaxWidth="300"
+                                    Opacity="0.5"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom" />
+                                <materialDesign:PackIcon Kind="FormatQuoteClose"
+                                                         Height="20"
+                                                         Width="20"
+                                                         HorizontalAlignment="Right"
+                                                         VerticalAlignment="Bottom"
+                                                         Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+                                <TextBlock
+                                    x:Name="ZenquouteTextAuthor"
+                                    Margin="5"
+                                    Text="Quote of the day Author"
+                                    TextWrapping="Wrap"
+                                    MaxWidth="300"
+                                    Opacity="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom" /></StackPanel>
+                            </ui:Card>
                         <ui:Button x:Name="SettingsButton"
                                    Margin="5"
                                    BorderThickness="0"
@@ -427,7 +467,9 @@
                                FontSize="15" Margin="10,0,0,0" />
                 </StackPanel>
             </ui:Card>
-            <Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="8" Grid.RowSpan="5" x:Name="NavigationFrame" />
+            <Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="8"
+                   VerticalAlignment="Stretch"
+                   x:Name="NavigationFrame" />
         </Grid>
     </Grid>
 </ui:UiWindow>
