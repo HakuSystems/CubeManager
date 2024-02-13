@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
              Height="auto"
              Width="auto"
@@ -15,7 +15,6 @@
              WindowStyle="None"
              AllowsTransparency="True"
              Title="CubeManager"
-             Loaded="CubeManagerDashboard_OnLoaded"
              WindowStartupLocation="CenterScreen"
              WindowState="Normal"
              ResizeMode="CanResizeWithGrip"
@@ -39,15 +38,17 @@
         </Grid.RowDefinitions>
         <ui:TitleBar HorizontalAlignment="Stretch" Title="Dashboard" Grid.ColumnSpan="2" />
 
-        <Grid Grid.Row="1" Grid.Column="0">
+        <Grid MaxWidth="350" Grid.Row="1" Grid.Column="0"
+              Background="{DynamicResource MaterialDesignDarkSeparatorBackground}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="30" />
+                <RowDefinition Height="300" />
             </Grid.RowDefinitions>
             <ui:Card
                 BorderThickness="0"
-                Background="{DynamicResource MaterialDesignDarkSeparatorBackground}" Grid.Row="0">
+                Background="Transparent"
+                Grid.Row="0">
                 <Grid Margin="5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto" />
@@ -58,281 +59,118 @@
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
                     <ui:Card
-                        BorderThickness="0,0,3,5" Background="{DynamicResource CubeBackground}">
-                        <materialDesign:PackIcon Kind="Account" Height="50" Width="50" />
+                        BorderThickness="0"
+                        Background="{DynamicResource CubeBackground}">
+                        <materialDesign:PackIcon Kind="Account" Height="auto" Width="auto" />
                     </ui:Card>
                     <StackPanel Grid.Row="0"
                                 Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center"
                                 HorizontalAlignment="Left">
                         <TextBlock Text="Welcome, username"
                                    Margin="5"
-                                   FontSize="25"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch"
+                                   Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
                                    FontWeight="Bold" />
 
                         <StackPanel Orientation="Horizontal"
-                                    HorizontalAlignment="Right"
-                                    ZIndex="100" Margin="7,5,0,5">
-                            <TextBlock x:Name="LvlTxtBox" Text="LvL: 0"
-                                       Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                       Margin="5" />
-                            <ProgressBar x:Name="LvlProgbar"
-                                         ValueChanged="LvlProgbar_OnValueChanged"
-                                         Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                         Background="{StaticResource MaterialDesignDarkBackground}"
-                                         BorderBrush="{StaticResource MaterialDesignDarkBackground}"
-                                         Width="100" Height="5"
-                                         Margin="5" />
-
-                            <Button Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                    Style="{DynamicResource MaterialDesignFlatButton}"
-                                    materialDesign:ShadowAssist.ShadowEdges="Bottom"
-                                    materialDesign:ShadowAssist.Darken="True"
-                                    materialDesign:ShadowAssist.ShadowAnimationDuration="0:0:0.5"
-                                    Background="{StaticResource MaterialDesignDarkBackground}"
-                                    BorderBrush="Transparent"
-                                    x:Name="ScoreBoardButton">
+                                    HorizontalAlignment="Stretch">
+                            <Button
+                                Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                materialDesign:ShadowAssist.ShadowEdges="Bottom"
+                                materialDesign:ShadowAssist.Darken="True"
+                                materialDesign:ShadowAssist.ShadowAnimationDuration="0:0:0.10"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                Click="ScoreBoardButton_OnClick"
+                                x:Name="ScoreBoardButton">
                                 <Button.Content>
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                        <TextBlock x:Name="LvlTxtBox" Text="LvL: 0"
+                                                   Style="{DynamicResource MaterialDesignTextBlock}"
+                                                   Foreground="{StaticResource MaterialDesignDarkForeground}" />
+                                        <ProgressBar x:Name="LvlProgbar"
+                                                     ValueChanged="LvlProgbar_OnValueChanged"
+                                                     Style="{DynamicResource MaterialDesignLinearProgressBar}"
+                                                     Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                     Background="{StaticResource MaterialDesignDarkBackground}"
+                                                     BorderBrush="{StaticResource MaterialDesignDarkBackground}"
+                                                     HorizontalAlignment="Stretch"
+                                                     MinWidth="120" Width="auto" Height="5"
+                                                     Margin="5" />
+
                                         <materialDesign:PackIcon Kind="Sparkles"
                                                                  x:Name="Sparkles"
-                                                                 Height="15"
-                                                                 Width="15"
+                                                                 Height="auto"
+                                                                 Width="auto"
                                                                  Margin="5"
                                                                  Foreground="{DynamicResource MaterialDesignDarkForeground}" />
-                                        <TextBlock Text="ScoreBoard" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
                         </StackPanel>
                     </StackPanel>
-                    <ui:Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="SettingsButton"
-                               Margin="5"
-                               BorderThickness="0"
-                               Padding="5"
-                               Click="SettingsBtn_OnClick"
-                               MouseEnter="SettingsBtn_OnMouseEnter"
-                               Visibility="Visible"
-                               Background="{StaticResource CubeBackground}"
-                               HorizontalAlignment="Stretch">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
-                                    VerticalAlignment="Center">
-                            <materialDesign:PackIcon Kind="Settings" Height="20" Width="20"
-                                                     HorizontalAlignment="Center"
-                                                     Foreground="White"
-                                                     x:Name="SettingsIcon"
-                                                     Margin="0,10,0,10"
-                                                     VerticalAlignment="Top" />
-                            <TextBlock Text="Settings" TextAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       x:Name="SettingsText"
-                                       Foreground="White"
-                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                       FontSize="15" Margin="10,0,0,0" />
-                        </StackPanel>
-                    </ui:Button>
+                    <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                        <TextBlock Style="{DynamicResource MaterialDesignTextBlock}"
+                                   Opacity="0.5"
+                                   Text="Next up" />
+                        <TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
+                                   Text="No tasks found"
+                                   FontWeight="Bold" />
+                        <TextBlock Style="{DynamicResource MaterialDesignTextBlock}"
+                                   Opacity="0.5"
+                                   Text="Tomorrow" />
+                        <TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
+                                   Text="No tasks found"
+                                   FontWeight="Bold" />
+
+                        <ui:TextBox
+                            Margin="0,10,0,10"
+                            BorderThickness="0"
+                            PlaceholderText="Quick Notes"
+                            TextWrapping="Wrap"
+                            PlaceholderEnabled="True"
+                            HorizontalAlignment="Stretch"
+                            Height="150"
+                            VerticalAlignment="Stretch" />
+
+                        <ui:Button x:Name="SettingsButton"
+                                   Margin="5"
+                                   BorderThickness="0"
+                                   Padding="5"
+                                   Click="SettingsBtn_OnClick"
+                                   MouseEnter="SettingsBtn_OnMouseEnter"
+                                   Visibility="Visible"
+                                   VerticalAlignment="Bottom"
+                                   Background="{StaticResource CubeBackground}"
+                                   HorizontalAlignment="Stretch">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center">
+                                <materialDesign:PackIcon Kind="Settings" Height="20" Width="20"
+                                                         HorizontalAlignment="Center"
+                                                         Foreground="White"
+                                                         x:Name="SettingsIcon"
+                                                         Margin="0,10,0,10"
+                                                         VerticalAlignment="Top" />
+                                <TextBlock Text="Settings" TextAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           x:Name="SettingsText"
+                                           Foreground="White"
+                                           Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                           FontSize="15" Margin="10,0,0,0" />
+                            </StackPanel>
+                        </ui:Button>
+
+
+                    </StackPanel>
                 </Grid>
             </ui:Card>
-
-            <StackPanel Grid.Row="1">
-                <TextBlock Text="CurrentVersionHere"
-                           x:Name="VersionTxtBlock"
-                           Foreground="White"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Padding="5"
-                           Opacity="0.2"
-                           Margin="0,5,0,0"
-                           FontSize="10" />
-                <ui:Card x:Name="RoutineCard"
-                         BorderThickness="0,0,3,0"
-                         MouseEnter="RoutineCard_OnMouseEnter"
-                         MouseLeave="RoutineCard_OnMouseLeave"
-                         MouseDown="RoutineCard_OnMouseDown"
-                         Visibility="Visible"
-                         Background="{StaticResource CubeBackground}"
-                         VerticalAlignment="Stretch">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <materialDesign:PackIcon Kind="Repeat" Height="20" Width="20" HorizontalAlignment="Center"
-                                                 Foreground="Black"
-                                                 x:Name="RoutineTasksIcon"
-                                                 Margin="0,10,0,10"
-                                                 VerticalAlignment="Top" />
-                        <TextBlock Text="ROUTINE TASKS" TextAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   x:Name="RoutineTasksText"
-                                   Foreground="{StaticResource CubeTextNotFocus}"
-                                   Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                   FontSize="15" Margin="10,0,0,0" />
-                    </StackPanel>
-                </ui:Card>
-
-                <ui:Card x:Name="TodoCard"
-
-                         BorderThickness="0,0,3,0"
-                         MouseDown="TodoCard_OnMouseDown"
-                         MouseEnter="TodoCard_OnMouseEnter"
-                         MouseLeave="TodoCard_OnMouseLeave"
-                         Visibility="Visible"
-                         Background="{StaticResource CubeBackground}"
-                         VerticalAlignment="Stretch">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <materialDesign:PackIcon Kind="ToDo" Height="20" Width="20" HorizontalAlignment="Center"
-                                                 Foreground="Black"
-                                                 x:Name="TodoTasksIcon"
-                                                 Margin="0,10,0,10"
-                                                 VerticalAlignment="Top" />
-                        <TextBlock Text="TODOS" TextAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   x:Name="TodoTasksText"
-                                   Foreground="{StaticResource CubeTextNotFocus}"
-                                   Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                   FontSize="15" Margin="10,0,0,0" />
-                    </StackPanel>
-                </ui:Card>
-                <ui:Card x:Name="SubscriptionsCard"
-
-                         BorderThickness="0,0,3,0"
-                         MouseDown="SubscriptionsCard_OnMouseDown"
-                         MouseEnter="SubscriptionsCard_OnMouseEnter"
-                         MouseLeave="SubscriptionsCard_OnMouseLeave"
-                         Background="{StaticResource CubeBackground}"
-                         VerticalAlignment="Stretch">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <materialDesign:PackIcon Kind="Subscriptions" Height="20" Width="20"
-                                                 HorizontalAlignment="Center"
-                                                 Foreground="Black"
-                                                 x:Name="SubscriptionsIcon"
-                                                 Margin="0,10,0,10"
-                                                 VerticalAlignment="Top" />
-                        <TextBlock Text="SUBSCRIPTIONS (Buggy)" TextAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   x:Name="SubscriptionsText"
-                                   Foreground="{StaticResource CubeTextNotFocus}"
-                                   Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                   FontSize="15" Margin="10,0,0,0" />
-                    </StackPanel>
-                </ui:Card>
-                <ui:Card x:Name="LifeGoalsCard"
-
-                         BorderThickness="0,0,3,0"
-                         MouseDown="LifeGoalsCard_OnMouseDown"
-                         MouseEnter="LifeGoalsCard_OnMouseEnter"
-                         MouseLeave="LifeGoalsCard_OnMouseLeave"
-                         Visibility="Visible"
-                         Background="{StaticResource CubeBackground}"
-                         VerticalAlignment="Stretch">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <materialDesign:PackIcon Kind="Goal" Height="20" Width="20" HorizontalAlignment="Center"
-                                                 Foreground="Black"
-                                                 x:Name="LifeGoalsIcon"
-                                                 Margin="0,10,0,10"
-                                                 VerticalAlignment="Top" />
-                        <TextBlock Text="LIFE GOALS" TextAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   x:Name="LifeGoalsText"
-                                   Foreground="{StaticResource CubeTextNotFocus}"
-                                   Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                   FontSize="15" Margin="10,0,0,0" />
-                    </StackPanel>
-                </ui:Card>
-                <ui:Card x:Name="BirthdaysCard"
-
-                         BorderThickness="0,0,3,0"
-                         MouseDown="BirthdaysCard_OnMouseDown"
-                         MouseEnter="BirthdaysCard_OnMouseEnter"
-                         MouseLeave="BirthdaysCard_OnMouseLeave"
-                         Visibility="Visible"
-                         Background="{StaticResource CubeBackground}"
-                         VerticalAlignment="Stretch">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <materialDesign:PackIcon Kind="BirthdayCake" Height="20" Width="20"
-                                                 HorizontalAlignment="Center"
-                                                 Foreground="Black"
-                                                 x:Name="BirthdaysIcon"
-                                                 Margin="0,10,0,10"
-                                                 VerticalAlignment="Top" />
-                        <TextBlock Text="BIRTHDAYS" TextAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   x:Name="BirthdaysText"
-                                   Foreground="{StaticResource CubeTextNotFocus}"
-                                   Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                   FontSize="15" Margin="10,0,0,0" />
-                    </StackPanel>
-                </ui:Card>
-                <ui:Card x:Name="FamilyCard"
-
-                         BorderThickness="0,0,3,0"
-                         MouseDown="FamilyCard_OnMouseDown"
-                         MouseEnter="FamilyCard_OnMouseEnter"
-                         MouseLeave="FamilyCard_OnMouseLeave"
-                         Visibility="Visible"
-                         Background="{StaticResource CubeBackground}"
-                         VerticalAlignment="Stretch">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <materialDesign:PackIcon Kind="Family" Height="20" Width="20" HorizontalAlignment="Center"
-                                                 Foreground="Black"
-                                                 x:Name="FamilyIcon"
-                                                 Margin="0,10,0,10"
-                                                 VerticalAlignment="Top" />
-                        <TextBlock Text="FAMILY CALENDAR" TextAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   x:Name="FamilyText"
-                                   Foreground="{StaticResource CubeTextNotFocus}"
-                                   Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                   FontSize="15" Margin="10,0,0,0" />
-                    </StackPanel>
-                </ui:Card>
-                <ui:Card x:Name="GamesCard"
-
-                         BorderThickness="0,0,3,0"
-                         MouseDown="GamesCard_OnMouseDown"
-                         MouseEnter="GamesCard_OnMouseEnter"
-                         MouseLeave="GamesCard_OnMouseLeave"
-                         Visibility="Visible"
-                         Background="{StaticResource CubeBackground}"
-                         VerticalAlignment="Stretch">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <materialDesign:PackIcon Kind="NewReleases" Height="20" Width="20" HorizontalAlignment="Center"
-                                                 Foreground="Black"
-                                                 x:Name="GamesIcon"
-                                                 Margin="0,10,0,10"
-                                                 VerticalAlignment="Top" />
-                        <TextBlock Text="GAMES RELEASES" TextAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   x:Name="GamesText"
-                                   Foreground="{StaticResource CubeTextNotFocus}"
-                                   Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                   FontSize="15" Margin="10,0,0,0" />
-                    </StackPanel>
-                </ui:Card>
-                <ui:Card x:Name="PlayTimeCard"
-
-                         BorderThickness="0,0,3,5"
-                         MouseDown="PlayTimeCard_OnMouseDown"
-                         MouseEnter="PlayTimeCard_OnMouseEnter"
-                         MouseLeave="PlayTimeCard_OnMouseLeave"
-                         Visibility="Visible"
-                         Background="{StaticResource CubeBackground}"
-                         VerticalAlignment="Stretch">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <materialDesign:PackIcon Kind="Games" Height="20" Width="20" HorizontalAlignment="Center"
-                                                 Foreground="Black"
-                                                 x:Name="PlayTimeIcon"
-                                                 Margin="0,10,0,10"
-                                                 VerticalAlignment="Top" />
-                        <TextBlock Text="PLAY TIME" TextAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   x:Name="PlayTimeText"
-                                   Foreground="{StaticResource CubeTextNotFocus}"
-                                   Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                   FontSize="15" Margin="10,0,0,0" />
-                    </StackPanel>
-                </ui:Card>
-            </StackPanel>
-            <ui:Button Grid.Row="1" x:Name="DiscordButton"
+            <ui:Button Grid.Row="2" Grid.Column="0" x:Name="DiscordButton"
+                       BorderThickness="0"
                        Padding="5"
+                       Margin="15,15,15,25"
                        Click="DiscordBtn_OnClick"
                        MouseEnter="DiscordBtn_OnMouseEnter"
                        Visibility="Visible"
@@ -356,10 +194,240 @@
                 </StackPanel>
             </ui:Button>
 
-            <TextBlock Grid.Row="2" Text="This tool was made with ✨ by Lyze." HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
+            <TextBlock Grid.Row="2"
+                       Margin="5"
+                       Text="This tool was made with ✨ by Lyze." HorizontalAlignment="Center"
+                       VerticalAlignment="Bottom" />
 
         </Grid>
-        <Frame Grid.Column="1" Grid.Row="1" x:Name="NavigationFrame" />
+        <Grid Grid.Row="1" Grid.Column="1"
+              VerticalAlignment="Top"
+              HorizontalAlignment="Stretch">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <ui:Card Grid.Column="0" x:Name="RoutineCard"
+                     MouseEnter="RoutineCard_OnMouseEnter"
+                     MouseLeave="RoutineCard_OnMouseLeave"
+                     MouseDown="RoutineCard_OnMouseDown"
+                     BorderThickness="0"
+                     HorizontalContentAlignment="Stretch"
+                     HorizontalAlignment="Stretch"
+                     Visibility="Visible"
+                     Background="{StaticResource CubeBackground}"
+                     VerticalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <materialDesign:PackIcon Kind="Repeat" Height="20" Width="20" HorizontalAlignment="Stretch"
+                                             Foreground="Black"
+                                             x:Name="RoutineTasksIcon"
+                                             Margin="0,10,0,10"
+                                             VerticalAlignment="Top" />
+                    <TextBlock Text="ROUTINE TASKS" TextAlignment="Center"
+                               Visibility="Collapsed"
+                               VerticalAlignment="Center"
+                               x:Name="RoutineTasksText"
+                               Foreground="{StaticResource CubeTextNotFocus}"
+                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                               FontSize="15" Margin="10,0,0,0" />
+                </StackPanel>
+            </ui:Card>
+
+            <ui:Card Grid.Row="0" Grid.Column="1" x:Name="TodoCard"
+
+                     MouseDown="TodoCard_OnMouseDown"
+                     MouseEnter="TodoCard_OnMouseEnter"
+                     MouseLeave="TodoCard_OnMouseLeave"
+                     BorderThickness="0"
+                     HorizontalContentAlignment="Stretch"
+                     HorizontalAlignment="Stretch"
+                     Visibility="Visible"
+                     Background="{StaticResource CubeBackground}"
+                     VerticalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <materialDesign:PackIcon Kind="ToDo" Height="20" Width="20" HorizontalAlignment="Stretch"
+                                             Foreground="Black"
+                                             x:Name="TodoTasksIcon"
+                                             Margin="0,10,0,10"
+                                             VerticalAlignment="Top" />
+                    <TextBlock Text="TODOS" TextAlignment="Center"
+                               VerticalAlignment="Center"
+                               Visibility="Collapsed"
+                               x:Name="TodoTasksText"
+                               Foreground="{StaticResource CubeTextNotFocus}"
+                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                               FontSize="15" Margin="10,0,0,0" />
+                </StackPanel>
+            </ui:Card>
+            <ui:Card Grid.Row="0" Grid.Column="2" x:Name="SubscriptionsCard"
+
+                     MouseDown="SubscriptionsCard_OnMouseDown"
+                     MouseEnter="SubscriptionsCard_OnMouseEnter"
+                     MouseLeave="SubscriptionsCard_OnMouseLeave"
+                     BorderThickness="0"
+                     HorizontalContentAlignment="Stretch"
+                     HorizontalAlignment="Stretch"
+                     Background="{StaticResource CubeBackground}"
+                     VerticalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <materialDesign:PackIcon Kind="Subscriptions" Height="20" Width="20"
+                                             HorizontalAlignment="Stretch"
+                                             Foreground="Black"
+                                             x:Name="SubscriptionsIcon"
+                                             Margin="0,10,0,10"
+                                             VerticalAlignment="Top" />
+                    <TextBlock Text="SUBSCRIPTIONS" TextAlignment="Center"
+                               VerticalAlignment="Center"
+                               Visibility="Collapsed"
+                               x:Name="SubscriptionsText"
+                               Foreground="{StaticResource CubeTextNotFocus}"
+                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                               FontSize="15" Margin="10,0,0,0" />
+                </StackPanel>
+            </ui:Card>
+            <ui:Card Grid.Row="0" Grid.Column="3" x:Name="LifeGoalsCard"
+
+                     MouseDown="LifeGoalsCard_OnMouseDown"
+                     MouseEnter="LifeGoalsCard_OnMouseEnter"
+                     MouseLeave="LifeGoalsCard_OnMouseLeave"
+                     BorderThickness="0"
+                     HorizontalContentAlignment="Stretch"
+                     HorizontalAlignment="Stretch"
+                     Visibility="Visible"
+                     Background="{StaticResource CubeBackground}"
+                     VerticalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <materialDesign:PackIcon Kind="Goal" Height="20" Width="20" HorizontalAlignment="Stretch"
+                                             Foreground="Black"
+                                             x:Name="LifeGoalsIcon"
+                                             Margin="0,10,0,10"
+                                             VerticalAlignment="Top" />
+                    <TextBlock Text="LIFE GOALS" TextAlignment="Center"
+                               VerticalAlignment="Center"
+                               x:Name="LifeGoalsText"
+                               Visibility="Collapsed"
+                               Foreground="{StaticResource CubeTextNotFocus}"
+                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                               FontSize="15" Margin="10,0,0,0" />
+                </StackPanel>
+            </ui:Card>
+            <ui:Card Grid.Row="0" Grid.Column="4" x:Name="BirthdaysCard"
+
+                     MouseDown="BirthdaysCard_OnMouseDown"
+                     MouseEnter="BirthdaysCard_OnMouseEnter"
+                     MouseLeave="BirthdaysCard_OnMouseLeave"
+                     BorderThickness="0"
+                     HorizontalContentAlignment="Stretch"
+                     HorizontalAlignment="Stretch"
+                     Visibility="Visible"
+                     Background="{StaticResource CubeBackground}"
+                     VerticalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <materialDesign:PackIcon Kind="BirthdayCake" Height="20" Width="20"
+                                             HorizontalAlignment="Stretch"
+                                             Foreground="Black"
+                                             x:Name="BirthdaysIcon"
+                                             Margin="0,10,0,10"
+                                             VerticalAlignment="Top" />
+                    <TextBlock Text="BIRTHDAYS" TextAlignment="Center"
+                               VerticalAlignment="Center"
+                               x:Name="BirthdaysText"
+                               Visibility="Collapsed"
+                               Foreground="{StaticResource CubeTextNotFocus}"
+                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                               FontSize="15" Margin="10,0,0,0" />
+                </StackPanel>
+            </ui:Card>
+            <ui:Card Grid.Row="0" Grid.Column="5" x:Name="FamilyCard"
+
+                     MouseDown="FamilyCard_OnMouseDown"
+                     MouseEnter="FamilyCard_OnMouseEnter"
+                     MouseLeave="FamilyCard_OnMouseLeave"
+                     BorderThickness="0"
+                     HorizontalContentAlignment="Stretch"
+                     HorizontalAlignment="Stretch"
+                     Visibility="Visible"
+                     Background="{StaticResource CubeBackground}"
+                     VerticalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <materialDesign:PackIcon Kind="Family" Height="20" Width="20" HorizontalAlignment="Stretch"
+                                             Foreground="Black"
+                                             x:Name="FamilyIcon"
+                                             Margin="0,10,0,10"
+                                             VerticalAlignment="Top" />
+                    <TextBlock Text="FAMILY CALENDAR" TextAlignment="Center"
+                               VerticalAlignment="Center"
+                               x:Name="FamilyText"
+                               Visibility="Collapsed"
+                               Foreground="{StaticResource CubeTextNotFocus}"
+                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                               FontSize="15" Margin="10,0,0,0" />
+                </StackPanel>
+            </ui:Card>
+            <ui:Card Grid.Row="0" Grid.Column="6" x:Name="GamesCard"
+
+                     MouseDown="GamesCard_OnMouseDown"
+                     MouseEnter="GamesCard_OnMouseEnter"
+                     MouseLeave="GamesCard_OnMouseLeave"
+                     BorderThickness="0"
+                     HorizontalContentAlignment="Stretch"
+                     HorizontalAlignment="Stretch"
+                     Visibility="Visible"
+                     Background="{StaticResource CubeBackground}"
+                     VerticalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <materialDesign:PackIcon Kind="NewReleases" Height="20" Width="20" HorizontalAlignment="Stretch"
+                                             Foreground="Black"
+                                             x:Name="GamesIcon"
+                                             Margin="0,10,0,10"
+                                             VerticalAlignment="Top" />
+                    <TextBlock Text="GAMES RELEASES" TextAlignment="Center"
+                               VerticalAlignment="Center"
+                               x:Name="GamesText"
+                               Visibility="Collapsed"
+                               Foreground="{StaticResource CubeTextNotFocus}"
+                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                               FontSize="15" Margin="10,0,0,0" />
+                </StackPanel>
+            </ui:Card>
+            <ui:Card Grid.Row="0" Grid.Column="7" x:Name="PlayTimeCard"
+                     MouseDown="PlayTimeCard_OnMouseDown"
+                     MouseEnter="PlayTimeCard_OnMouseEnter"
+                     MouseLeave="PlayTimeCard_OnMouseLeave"
+                     BorderThickness="0"
+                     HorizontalContentAlignment="Stretch"
+                     HorizontalAlignment="Stretch"
+                     Visibility="Visible"
+                     Background="{StaticResource CubeBackground}"
+                     VerticalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <materialDesign:PackIcon Kind="Games" Height="20" Width="20" HorizontalAlignment="Stretch"
+                                             Foreground="Black"
+                                             x:Name="PlayTimeIcon"
+                                             Margin="0,10,0,10"
+                                             VerticalAlignment="Top" />
+                    <TextBlock Text="PLAY TIME" TextAlignment="Center"
+                               VerticalAlignment="Center"
+                               x:Name="PlayTimeText"
+                               Visibility="Collapsed"
+                               Foreground="{StaticResource CubeTextNotFocus}"
+                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                               FontSize="15" Margin="10,0,0,0" />
+                </StackPanel>
+            </ui:Card>
+            <Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="8" Grid.RowSpan="5" x:Name="NavigationFrame" />
+        </Grid>
     </Grid>
 </ui:UiWindow>
