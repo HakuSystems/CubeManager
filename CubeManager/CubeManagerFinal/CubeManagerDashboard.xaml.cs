@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using CubeManager.Controls;
 using CubeManager.Helpers;
+using CubeManager.Settings;
 using CubeManager.Todos;
 using MaterialDesignThemes.Wpf;
 using Wpf.Ui.Controls;
@@ -163,9 +164,15 @@ public partial class CubeManagerDashboard : UiWindow
 
     private void SettingsBtn_OnClick(object sender, RoutedEventArgs e)
     {
-        //ControlsFrame.Navigate(new SettingsControl());
         _logger.Info("Navigated to SettingsControl");
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
+        
+        var settingsWindow = new SettingsWindow();
+        settingsWindow.InitializeComponent();
+        settingsWindow.ShowDialog();
+
+        var thisWindow = (CubeManagerDashboard)Window.GetWindow(this);
+        thisWindow.Close();
     }
 
     private void DiscordBtn_OnClick(object sender, RoutedEventArgs e)

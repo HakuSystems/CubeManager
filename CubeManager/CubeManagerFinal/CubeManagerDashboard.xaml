@@ -45,16 +45,97 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="30" />
             </Grid.RowDefinitions>
+            <ui:Card
+                BorderThickness="0"
+                Background="{DynamicResource MaterialDesignDarkSeparatorBackground}" Grid.Row="0">
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <ui:Card
+                        BorderThickness="0,0,3,5" Background="{DynamicResource CubeBackground}">
+                        <materialDesign:PackIcon Kind="Account" Height="50" Width="50" />
+                    </ui:Card>
+                    <StackPanel Grid.Row="0"
+                                Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center"
+                                HorizontalAlignment="Left">
+                        <TextBlock Text="Welcome, username"
+                                   Margin="5"
+                                   FontSize="25"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold" />
 
-            <StackPanel Grid.Row="0"
-                        Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Left">
-                <TextBlock Text="Welcome"
-                           Margin="5"
-                           FontSize="25"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Center"
-                           FontWeight="Bold" />
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Right"
+                                    ZIndex="100" Margin="7,5,0,5">
+                            <TextBlock x:Name="LvlTxtBox" Text="LvL: 0"
+                                       Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                       Margin="5" />
+                            <ProgressBar x:Name="LvlProgbar"
+                                         ValueChanged="LvlProgbar_OnValueChanged"
+                                         Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                         Background="{StaticResource MaterialDesignDarkBackground}"
+                                         BorderBrush="{StaticResource MaterialDesignDarkBackground}"
+                                         Width="100" Height="5"
+                                         Margin="5" />
 
+                            <Button Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                    Style="{DynamicResource MaterialDesignFlatButton}"
+                                    materialDesign:ShadowAssist.ShadowEdges="Bottom"
+                                    materialDesign:ShadowAssist.Darken="True"
+                                    materialDesign:ShadowAssist.ShadowAnimationDuration="0:0:0.5"
+                                    Background="{StaticResource MaterialDesignDarkBackground}"
+                                    BorderBrush="Transparent"
+                                    x:Name="ScoreBoardButton">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Sparkles"
+                                                                 x:Name="Sparkles"
+                                                                 Height="15"
+                                                                 Width="15"
+                                                                 Margin="5"
+                                                                 Foreground="{DynamicResource MaterialDesignDarkForeground}" />
+                                        <TextBlock Text="ScoreBoard" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                    <ui:Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="SettingsButton"
+                               Margin="5"
+                               BorderThickness="0"
+                               Padding="5"
+                               Click="SettingsBtn_OnClick"
+                               MouseEnter="SettingsBtn_OnMouseEnter"
+                               Visibility="Visible"
+                               Background="{StaticResource CubeBackground}"
+                               HorizontalAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                            <materialDesign:PackIcon Kind="Settings" Height="20" Width="20"
+                                                     HorizontalAlignment="Center"
+                                                     Foreground="White"
+                                                     x:Name="SettingsIcon"
+                                                     Margin="0,10,0,10"
+                                                     VerticalAlignment="Top" />
+                            <TextBlock Text="Settings" TextAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       x:Name="SettingsText"
+                                       Foreground="White"
+                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                       FontSize="15" Margin="10,0,0,0" />
+                        </StackPanel>
+                    </ui:Button>
+                </Grid>
+            </ui:Card>
+
+            <StackPanel Grid.Row="1">
                 <TextBlock Text="CurrentVersionHere"
                            x:Name="VersionTxtBlock"
                            Foreground="White"
@@ -64,10 +145,8 @@
                            Opacity="0.2"
                            Margin="0,5,0,0"
                            FontSize="10" />
-            </StackPanel>
-
-            <StackPanel Grid.Row="1">
                 <ui:Card x:Name="RoutineCard"
+                         BorderThickness="0,0,3,0"
                          MouseEnter="RoutineCard_OnMouseEnter"
                          MouseLeave="RoutineCard_OnMouseLeave"
                          MouseDown="RoutineCard_OnMouseDown"
@@ -90,6 +169,8 @@
                 </ui:Card>
 
                 <ui:Card x:Name="TodoCard"
+
+                         BorderThickness="0,0,3,0"
                          MouseDown="TodoCard_OnMouseDown"
                          MouseEnter="TodoCard_OnMouseEnter"
                          MouseLeave="TodoCard_OnMouseLeave"
@@ -111,6 +192,8 @@
                     </StackPanel>
                 </ui:Card>
                 <ui:Card x:Name="SubscriptionsCard"
+
+                         BorderThickness="0,0,3,0"
                          MouseDown="SubscriptionsCard_OnMouseDown"
                          MouseEnter="SubscriptionsCard_OnMouseEnter"
                          MouseLeave="SubscriptionsCard_OnMouseLeave"
@@ -132,6 +215,8 @@
                     </StackPanel>
                 </ui:Card>
                 <ui:Card x:Name="LifeGoalsCard"
+
+                         BorderThickness="0,0,3,0"
                          MouseDown="LifeGoalsCard_OnMouseDown"
                          MouseEnter="LifeGoalsCard_OnMouseEnter"
                          MouseLeave="LifeGoalsCard_OnMouseLeave"
@@ -153,6 +238,8 @@
                     </StackPanel>
                 </ui:Card>
                 <ui:Card x:Name="BirthdaysCard"
+
+                         BorderThickness="0,0,3,0"
                          MouseDown="BirthdaysCard_OnMouseDown"
                          MouseEnter="BirthdaysCard_OnMouseEnter"
                          MouseLeave="BirthdaysCard_OnMouseLeave"
@@ -175,6 +262,8 @@
                     </StackPanel>
                 </ui:Card>
                 <ui:Card x:Name="FamilyCard"
+
+                         BorderThickness="0,0,3,0"
                          MouseDown="FamilyCard_OnMouseDown"
                          MouseEnter="FamilyCard_OnMouseEnter"
                          MouseLeave="FamilyCard_OnMouseLeave"
@@ -196,6 +285,8 @@
                     </StackPanel>
                 </ui:Card>
                 <ui:Card x:Name="GamesCard"
+
+                         BorderThickness="0,0,3,0"
                          MouseDown="GamesCard_OnMouseDown"
                          MouseEnter="GamesCard_OnMouseEnter"
                          MouseLeave="GamesCard_OnMouseLeave"
@@ -217,6 +308,8 @@
                     </StackPanel>
                 </ui:Card>
                 <ui:Card x:Name="PlayTimeCard"
+
+                         BorderThickness="0,0,3,5"
                          MouseDown="PlayTimeCard_OnMouseDown"
                          MouseEnter="PlayTimeCard_OnMouseEnter"
                          MouseLeave="PlayTimeCard_OnMouseLeave"
@@ -237,97 +330,36 @@
                                    FontSize="15" Margin="10,0,0,0" />
                     </StackPanel>
                 </ui:Card>
-
-
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Right"
-
-                            ZIndex="100" Margin="7,0,0,0">
-                    <Button
-                        Style="{StaticResource MaterialDesignFlatButton}"
-                        Foreground="{DynamicResource MaterialDesignDarkForeground}"
-                        BorderBrush="White"
-                        Height="auto"
-                        Width="auto"
-                        BorderThickness="0"
-                        x:Name="LvlBtnContent">
-                        <Button.Content>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock x:Name="LvlTxtBox" Text="LvL: 0"
-                                           Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                           Margin="5" />
-                                <ProgressBar x:Name="LvlProgbar"
-                                             ValueChanged="LvlProgbar_OnValueChanged"
-                                             Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                             Background="{StaticResource MaterialDesignDarkBackground}"
-                                             BorderBrush="{StaticResource MaterialDesignDarkBackground}"
-                                             Width="100" Height="5"
-                                             Margin="5" />
-
-                                <Button
-                                    Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                    materialDesign:ShadowAssist.ShadowEdges="Bottom"
-                                    materialDesign:ShadowAssist.Darken="True"
-                                    materialDesign:ShadowAssist.ShadowAnimationDuration="0:0:0.5"
-                                    Background="{StaticResource MaterialDesignDarkBackground}"
-                                    BorderBrush="Transparent"
-                                    x:Name="ScoreBoardButton">
-                                    <Button.Content>
-                                        <StackPanel Orientation="Horizontal">
-                                            <materialDesign:PackIcon Kind="Sparkles"
-                                                                     x:Name="Sparkles"
-                                                                     Height="15"
-                                                                     Width="15"
-                                                                     Margin="5"
-                                                                     Foreground="{DynamicResource MaterialDesignDarkForeground}" />
-                                            <TextBlock Text="ScoreBoard" VerticalAlignment="Center" />
-                                        </StackPanel>
-                                    </Button.Content>
-                                </Button>
-
-                            </StackPanel>
-                        </Button.Content>
-                    </Button>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Height="50" HorizontalAlignment="Right"
-                            MouseEnter="SettingsBtn_OnMouseEnter"
-                            Style="{StaticResource MaterialDesignIconButton}"
-                            x:Name="SettingsBtn"
-                            Click="SettingsBtn_OnClick" Foreground="{DynamicResource MaterialDesignDarkForeground}">
-                        <Button.Content>
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="SettingsOutline"
-                                                         Foreground="{DynamicResource MaterialDesignDarkForeground}" />
-
-                            </StackPanel>
-                        </Button.Content>
-                    </Button>
-                    <Button Height="50" HorizontalAlignment="Right"
-                            Style="{StaticResource MaterialDesignIconButton}"
-                            x:Name="DiscordBtn"
-                            Click="DiscordBtn_OnClick"
-                            MouseEnter="DiscordBtn_OnMouseEnter"
-                            Foreground="{DynamicResource MaterialDesignDarkForeground}">
-                        <Button.Content>
-                            <StackPanel Orientation="Horizontal">
-                                <iconPacks:PackIconCoolicons Kind="Discord"
-                                                             Height="25"
-                                                             Width="25"
-                                                             Foreground="{DynamicResource MaterialDesignDarkForeground}" />
-
-                            </StackPanel>
-                        </Button.Content>
-                    </Button>
-                </StackPanel>
-
             </StackPanel>
+            <ui:Button Grid.Row="1" x:Name="DiscordButton"
+                       Padding="5"
+                       Click="DiscordBtn_OnClick"
+                       MouseEnter="DiscordBtn_OnMouseEnter"
+                       Visibility="Visible"
+                       Background="{StaticResource CubeBackground}"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <iconPacks:PackIconCoolicons Kind="Discord" Height="20" Width="20"
+                                                 HorizontalAlignment="Center"
+                                                 Foreground="White"
+                                                 x:Name="DiscordIcon"
+                                                 Margin="0,10,0,10"
+                                                 VerticalAlignment="Top" />
+                    <TextBlock Text="Discord Server" TextAlignment="Center"
+                               VerticalAlignment="Center"
+                               x:Name="DiscordText"
+                               Foreground="White"
+                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                               FontSize="15" Margin="10,0,0,0" />
+                </StackPanel>
+            </ui:Button>
 
             <TextBlock Grid.Row="2" Text="This tool was made with ✨ by Lyze." HorizontalAlignment="Center"
                        VerticalAlignment="Center" />
-            
+
         </Grid>
-            <Frame Grid.Column="1" Grid.Row="1" x:Name="NavigationFrame"/>
+        <Frame Grid.Column="1" Grid.Row="1" x:Name="NavigationFrame" />
     </Grid>
 </ui:UiWindow>
