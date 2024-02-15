@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using CubeManager.CubeManagerFinal;
 using CubeManager.Helpers;
 using CubeManager.Models;
 using CubeManager.Todos;
@@ -211,7 +212,7 @@ public partial class TodosControl : UserControl
 
     private void LevelUp()
     {
-        (Window.GetWindow(this) as CubeMangerWindow)?.DoLevelUp();
+        (Window.GetWindow(this) as CubeManagerDashboard)?.DoLevelUp();
     }
 
     private void RemoveCard(Guid id, Card card)
