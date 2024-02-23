@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             Background="Black"
+             Background="Transparent"
+             Loaded="NewSubscriptionUI_OnLoaded"
              Foreground="White"
              FontFamily="Poppins"
              mc:Ignorable="d"
@@ -31,46 +32,100 @@
             <ui:Card Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Margin="15" Padding="15">
                 <StackPanel>
                     <TextBlock Style="{DynamicResource MaterialDesignTextBlock}"
-                               Text="New Subscription"
+                               Text="New Subscription Process"
                                FontSize="18"
                                Margin="10"
                                FontWeight="Bold"
                                HorizontalAlignment="Center" />
 
-                    <ui:Card>
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Netflix"
-                                                     x:Name="SubscriptionIcon"
-                                                     Width="100"
-                                                     Height="100"
-                                                     Foreground="White"
-                                                     HorizontalAlignment="Center"
-                                                     VerticalAlignment="Center"
-                                                     Margin="0,10,0,10" />
 
-                            <ui:Card>
+                    <ui:Card Padding="5" Margin="5" x:Name="ColorCard">
+
+                        <StackPanel>
+                            <ui:Card Padding="5" Margin="5">
                                 <StackPanel>
-                                    <TextBlock Style="{DynamicResource MaterialDesignTextBlock}"
-                                               FontSize="15"
-                                               Text="Basic Information" />
+                                    <TextBox Style="{DynamicResource MaterialDesignTextBox}"
+                                             Margin="10"
+                                             FontSize="16"
+                                             materialDesign:HintAssist.Hint="Subscription Name"
+                                             x:Name="SubscriptionName"
+                                             TextChanged="SubscriptionName_OnTextChanged" />
+                                    <TextBox Style="{DynamicResource MaterialDesignTextBox}"
+                                             Margin="10"
+                                             FontSize="16"
+                                             materialDesign:HintAssist.Hint="Description"
+                                             Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </ui:Card>
+                            <ui:Card Padding="5" Margin="5">
+                                <StackPanel>
+                                    <TextBlock
+                                        Text="Billing Period"
+                                        Style="{DynamicResource MaterialDesignTextBlock}"
+                                        FontSize="16"
+                                        Margin="10"
+                                        FontWeight="Bold" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Text="Every"
+                                            Style="{DynamicResource MaterialDesignTextBlock}"
+                                            FontSize="16"
+                                            Opacity="0.5"
+                                            Margin="10"
+                                            FontWeight="Bold" />
+                                        <TextBox Style="{DynamicResource MaterialDesignTextBox}"
+                                                 Margin="10"
+                                                 FontSize="16"
+                                                 x:Name="Period"
+                                                 TextChanged="Period_OnTextChanged"
+                                                 materialDesign:HintAssist.HelperTextFontSize="12"
+                                                 materialDesign:HintAssist.Hint="1"
+                                                 HorizontalContentAlignment="Center"
+                                                 Text="1"
+                                                 Width="50" />
 
-                                    <ui:TextBox PlaceholderText="Price"
-                                                x:Name="Price"
-                                                Height="auto"
-                                                Width="auto"
-                                                Margin="0,10,0,0" />
+                                        <ComboBox Style="{DynamicResource MaterialDesignComboBox}"
+                                                  Margin="10"
+                                                  FontSize="16"
+                                                  x:Name="PeriodType"
+                                                  materialDesign:HintAssist.Hint="Month" />
+                                    </StackPanel>
 
-                                    <ui:TextBox PlaceholderText="Title"
-                                                x:Name="Title"
-                                                Height="auto"
-                                                Width="auto"
-                                                Margin="0,10,0,0" />
+                                    <DatePicker Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"
+                                                Margin="10"
+                                                x:Name="FirstPaymentDate"
+                                                SelectedDateChanged="FirstPaymentDate_OnSelectedDateChanged"
+                                                FontSize="16"
+                                                materialDesign:HintAssist.Hint="First Payment Date"
+                                                SelectedDate="{Binding FirstPaymentDate, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </ui:Card>
+                            <TextBlock
+                                IsEnabled="False"
+                                Text="Card Background Color"
+                                Style="{DynamicResource MaterialDesignTextBlock}"
+                                FontSize="16"
+                                Margin="10"
+                                FontWeight="Bold" />
+                            <materialDesign:ColorPicker Style="{DynamicResource MaterialDesignColorPicker}"
+                                                        Margin="10"
+                                                        x:Name="ColorPicker"
+                                                        IsEnabled="False"
+                                                       FontSize="16"
+                                                        materialDesign:HintAssist.Hint="Card Background Color" />
+                            <ui:Card Padding="5" Margin="5">
+                                <StackPanel>
+                                    <TextBox Style="{DynamicResource MaterialDesignTextBox}"
+                                             Margin="10"
+                                             FontSize="16"
+                                             materialDesign:HintAssist.Hint="Payment Method"
+                                             Text="{Binding NewSubscriptionPaymentMethod, UpdateSourceTrigger=PropertyChanged}" />
 
-                                    <ui:TextBox PlaceholderText="Description"
-                                                x:Name="Description"
-                                                Height="auto"
-                                                Width="auto"
-                                                Margin="0,10,0,0" />
+                                    <TextBox Style="{DynamicResource MaterialDesignTextBox}"
+                                             Margin="10"
+                                             FontSize="16"
+                                             materialDesign:HintAssist.Hint="Note"
+                                             Text="{Binding NewSubscriptionPersonalNotes, UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
                             </ui:Card>
                         </StackPanel>

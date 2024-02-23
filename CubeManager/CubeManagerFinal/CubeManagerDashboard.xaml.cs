@@ -62,13 +62,18 @@ public partial class CubeManagerDashboard : UiWindow
 
     public void DoLevelUp()
     {
-        LvlProgbar.Value += 10;
-        if (!LvlProgbar.Value.Equals(100)) return;
-        LvlTxtBox.Text = $"LvL: {++CurrentLevelValue}";
-        LvlProgbar.Value = 0;
-        _logger.Info($"Level updated to: {CurrentLevelValue}");
-        LevelUp();
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.TaskComplete);
+        var random = new Random();
+        LvlProgbar.Value += random.Next(0, 11);
+    
+        if (LvlProgbar.Value >= 100)
+        {
+            LvlTxtBox.Text = $"LvL: {++CurrentLevelValue}";
+            LvlProgbar.Value = 0;
+            _logger.Info($"Level updated to: {CurrentLevelValue}");
+            LevelUp();
+            _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.TaskComplete);
+        }
+    
     }
 
     private void LevelUp()
