@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
+             FontFamily="Poppins"
              Foreground="{DynamicResource MaterialDesignDarkForeground}"
              Background="{DynamicResource MaterialDesignDarkBackground}"
              Loaded="SubscriptionsControl_OnLoaded"
@@ -30,7 +31,6 @@
             Grid.Row="1" Grid.Column="0" ZIndex="100">
             <Button
                 x:Name="AddSubscriptionButton"
-                Click="AddSubscriptionButton_OnClick"
                 HorizontalAlignment="Left"
                 Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
                 Margin="5"
@@ -82,7 +82,6 @@
                 DialogTheme="Dark"
                 MinWidth="500"
                 MinHeight="400"
-                DialogClosed="DialogHostOperation_OnDialogClosed"
                 x:Name="DialogHostOperation">
 
                 <materialDesign:DialogHost.DialogContent>
@@ -95,7 +94,6 @@
                             <Button
                                 x:Name="SelectDateBtnOnDialog"
                                 Visibility="Collapsed"
-                                Click="SelectDateBtn_OnClick"
                                 FontSize="15"
                                 Margin="5"
                                 Foreground="White"
@@ -106,7 +104,7 @@
                                                         x:Name="ColorPickerOnDialog"
                                                         VerticalAlignment="Bottom" />
                             <Button x:Name="SelectColorBtnOnDialog" Visibility="Collapsed" Margin="5"
-                                    Click="SelectColorBtn_OnClick">
+                                   >
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                                                 VerticalAlignment="Stretch">
@@ -150,7 +148,6 @@
                                                  x:Name="SubscriptionNameTextBox" />
                                         <TextBox materialDesign:HintAssist.Hint="Price"
                                                  x:Name="SubscriptionCostTextBox"
-                                                 TextChanged="SubscriptionPriceTextBox_OnTextChanged"
                                                  HorizontalAlignment="Left"
                                                  FontSize="24" FontWeight="Bold" VerticalAlignment="Center" />
                                         <Expander Header="Currency:"
@@ -160,7 +157,6 @@
                                             <StackPanel Orientation="Vertical">
                                                 <Button
                                                     x:Name="EuroButton"
-                                                    Click="EuroButton_OnClick"
                                                     HorizontalContentAlignment="Left"
                                                     Margin="5"
                                                     Style="{StaticResource MaterialDesignFlatButton}">
@@ -181,7 +177,6 @@
                                                 </Button>
                                                 <Button
                                                     x:Name="UsdButton"
-                                                    Click="UsdButton_OnClick"
                                                     HorizontalContentAlignment="Left"
                                                     Margin="5"
                                                     Style="{StaticResource MaterialDesignFlatButton}">
@@ -244,7 +239,6 @@
                                        VerticalAlignment="Center" />
                             <TextBox materialDesign:HintAssist.Hint="1"
                                      x:Name="BillingPeriodTextBox"
-                                     TextChanged="BillingPeriodTextBox_OnTextChanged"
                                      Width="50"
                                      MaxWidth="50"
                                      Margin="5"
@@ -259,7 +253,6 @@
                                 <StackPanel Orientation="Vertical">
                                     <Button
                                         x:Name="DayBillingBtn"
-                                        Click="DayBillingBtn_OnClick"
                                         HorizontalContentAlignment="Left"
                                         Margin="5"
                                         Style="{StaticResource MaterialDesignFlatButton}">
@@ -279,7 +272,6 @@
                                     </Button>
                                     <Button
                                         x:Name="WeekBillingBtn"
-                                        Click="WeekBillingBtn_OnClick"
                                         HorizontalContentAlignment="Left"
                                         Margin="5"
                                         Style="{StaticResource MaterialDesignFlatButton}">
@@ -299,7 +291,6 @@
                                     </Button>
                                     <Button
                                         x:Name="MonthBillingBtn"
-                                        Click="MonthBillingBtn_OnClick"
                                         HorizontalContentAlignment="Left"
                                         Margin="5"
                                         Style="{StaticResource MaterialDesignFlatButton}">
@@ -319,7 +310,6 @@
                                     </Button>
                                     <Button
                                         x:Name="YearBillingBtn"
-                                        Click="YearBillingBtn_OnClick"
                                         HorizontalContentAlignment="Left"
                                         Margin="5"
                                         Style="{StaticResource MaterialDesignFlatButton}">
@@ -341,7 +331,6 @@
                             </Expander>
                             <Button Style="{StaticResource MaterialDesignFlatButton}"
                                     x:Name="ChangeBackgroundBtn"
-                                    Click="ChangeBackgroundBtn_OnClick"
                                     HorizontalAlignment="Right"
                                     VerticalContentAlignment="Center">
                                 <Button.Content>
@@ -361,7 +350,6 @@
                             <StackPanel Orientation="Horizontal">
                                 <Button
                                     x:Name="OpenCalenderBtn"
-                                    Click="OpenCalenderBtn_OnClick"
                                     FontSize="15"
                                     Margin="5"
                                     Style="{StaticResource MaterialDesignFlatButton}"
@@ -372,7 +360,6 @@
                             <Button
                                 HorizontalAlignment="Right"
                                 x:Name="SaveSubscriptionBtn"
-                                Click="SaveSubscriptionBtn_OnClick"
                                 VerticalContentAlignment="Center">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal">

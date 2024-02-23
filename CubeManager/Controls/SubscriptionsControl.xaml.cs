@@ -1,8 +1,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using CubeManager.Controls.Subscriptions.Models;
 using CubeManager.Helpers;
-using CubeManager.Models.Subscriptions;
 using MaterialDesignThemes.Wpf;
 
 namespace CubeManager.Controls;
@@ -20,13 +20,14 @@ public partial class SubscriptionsControl : UserControl
         InitializeComponent();
     }
 
-    private List<Subscription> Subscriptions => ConfigManager.Instance.Config.Subscriptions.Subscriptions;
+   // private List<SubscriptionsData> Subscriptions => ConfigManager.Instance.Config.Subscriptions.Subscriptions;
 
     private void SubscriptionsControl_OnLoaded(object sender, RoutedEventArgs e)
     {
         _logger.Info("SubscriptionsControl loaded");
-        UpdateUi();
+        //UpdateUi();
     }
+        /*
 
     private void UpdateUi()
     {
@@ -43,7 +44,7 @@ public partial class SubscriptionsControl : UserControl
 
         //Subscriptions.Sort by NextPaymentDate
         Subscriptions.Sort((subscription1, subscription2) =>
-            subscription1.NextPaymentDate.CompareTo(subscription2.NextPaymentDate));
+            subscription1.Subscriptions.NextPaymentDate.CompareTo(subscription2.NextPaymentDate));
 
         _logger.Info("Subscriptions sorted");
 
@@ -601,5 +602,5 @@ public partial class SubscriptionsControl : UserControl
         SelectColorBtnOnDialog.Visibility = Visibility.Collapsed;
 
         _logger.Info("Dialog closed");
-    }
+    }*/
 }

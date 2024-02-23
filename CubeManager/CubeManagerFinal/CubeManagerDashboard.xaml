@@ -27,7 +27,7 @@
              TextOptions.TextFormattingMode="Ideal"
              TextOptions.TextRenderingMode="Auto"
              Background="{DynamicResource MaterialDesignPaper}"
-             FontFamily="{DynamicResource MaterialDesignFont}">
+             FontFamily="Poppins">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" />

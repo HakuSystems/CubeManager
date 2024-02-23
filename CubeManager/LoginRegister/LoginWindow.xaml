@@ -6,7 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:skia="clr-namespace:SkiaSharp.Views.WPF;assembly=SkiaSharp.Views.WPF"
              mc:Ignorable="d"
-             FontFamily="FontAwesome"
+             FontFamily="Poppins"
              WindowStyle="None"
              Loaded="LoginWindow_OnLoaded"
              MouseMove="LoginWindow_OnMouseMove"

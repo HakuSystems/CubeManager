@@ -37,10 +37,8 @@
           <XamlRuntime>Wpf</XamlRuntime>
           <SubType>Designer</SubType>
       </Page>
-      <Page Update="Todos\TodoControl.xaml">
+      <Page Update="Controls\Todos\TodoControl.xaml">
         <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
       </Page>
     </ItemGroup>
 

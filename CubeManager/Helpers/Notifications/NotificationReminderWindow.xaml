@@ -13,6 +13,7 @@
         ResizeMode="NoResize"
         Background="{DynamicResource MaterialDesignPaper}"
         WindowStartupLocation="CenterScreen"
+        FontFamily="Poppins"
         Effect="{DynamicResource MaterialDesignShadowDepth5}"
         Height="450" Width="800">
     <materialDesign:TransitioningContent>

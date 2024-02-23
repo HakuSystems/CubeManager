@@ -7,6 +7,7 @@
              mc:Ignorable="d"
              Foreground="White"
              Loaded="TodoControl_OnLoaded"
+             FontFamily="Poppins"
              Background="Transparent"
              d:DesignHeight="auto" d:DesignWidth="auto">
 

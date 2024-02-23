@@ -6,7 +6,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d"
-             FontFamily="FontAwesome"
+             FontFamily="Poppins"
              WindowStyle="None"
              Background="{StaticResource CubeBackground}"
              Loaded="LoginWindow_OnLoaded"

@@ -6,6 +6,7 @@
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
            mc:Ignorable="d"
+           FontFamily="Poppins"
            Background="Black"
            Height="auto" Width="auto">
     <ui:UiPage.Resources>

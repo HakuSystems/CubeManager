@@ -1,5 +1,5 @@
+using CubeManager.Controls.Subscriptions.Models;
 using CubeManager.Models.ScoreBoard;
-using CubeManager.Models.Subscriptions;
 using CubeManager.Models.Version;
 using CubeManager.Settings;
 using CubeManager.Todos;

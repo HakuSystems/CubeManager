@@ -24,7 +24,7 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignDarkBackground}"
-        FontFamily="{DynamicResource  MaterialDesignFont}">
+        FontFamily="Poppins">
 
     <Window.Resources>
         <!-- Styles for the tiers -->

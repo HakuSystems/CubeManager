@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using CubeManager.Controls;
+using CubeManager.Controls.Subscriptions;
 using CubeManager.Helpers;
 using CubeManager.Settings;
 using CubeManager.Todos;
@@ -224,7 +225,7 @@ public partial class CubeManagerDashboard : UiWindow
     private void SubscriptionsCard_OnMouseDown(object sender, MouseButtonEventArgs e)
     {
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
-        NavigationFrame.Navigate(new SubscriptionsControl());
+        NavigationFrame.Navigate(new SubscriptionTransitioner());
     }
 
     private void SubscriptionsCard_OnMouseEnter(object sender, MouseEventArgs e)

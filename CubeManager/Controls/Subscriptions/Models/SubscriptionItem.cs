@@ -1,14 +1,8 @@
-using System.Windows.Media;
+using System.Drawing;
 
-namespace CubeManager.Models.Subscriptions;
+namespace CubeManager.Controls.Subscriptions.Models;
 
-public class SubscriptionsData
-{
-    public List<Subscription> Subscriptions { get; set; } = new();
-    public Color BackgroundColor { get; set; }
-}
-
-public class Subscription
+public class SubscriptionItem
 {
     public Guid Id { get; set; } // 12345678-1234-1234-1234-123456789012
     public string? Title { get; set; } // Netflix
