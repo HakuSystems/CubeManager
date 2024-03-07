@@ -3,12 +3,12 @@ using System.Text;
 using CubeManager.CustomMessageBox;
 using CubeManager.Helpers;
 using Newtonsoft.Json;
-using Wpf.Ui.Common;
 
 namespace CubeManager.API;
 
 public class APICalls
 {
+    //Todo: Add Loggout
     private static string Url { get; } = "https://cubemanager.zkwolf.com/api/v1/";
     private static HttpClient Client { get; } = new();
 
@@ -33,7 +33,7 @@ public class APICalls
 
 
     //login with username and password
-    public static async void Login(string username, string password)
+    public static async Task<bool> Login(string username, string password)
     {
         var content = new StringContent(JsonConvert.SerializeObject(new LoginResponse
         {
@@ -49,7 +49,7 @@ public class APICalls
         var response = await MakeApiCall(request);
         var result = await response.Content.ReadAsStringAsync();
         var json = JsonConvert.DeserializeObject<BaseResponse<LoginResponse>>(result);
-        
+
         if (!response.IsSuccessStatusCode)
         {
             var customMessageBoxWindow = new CubeMessageBox
@@ -59,7 +59,7 @@ public class APICalls
             };
 
             customMessageBoxWindow.ShowDialog();
-            return;
+            return false;
         }
 
         ConfigManager.Instance.UpdateConfig(config =>
@@ -69,10 +69,11 @@ public class APICalls
             config.UserData.IsBanned = json.Data.IsBanned;
             config.UserData.UserLevel = json.Data.UserLevel;
         });
+        return true;
     }
 
     //login with AuthToken
-    public static async void Login(string token)
+    public static async Task<bool> Login(string token)
     {
         var content = new StringContent(JsonConvert.SerializeObject(new LoginResponse
         {
@@ -97,7 +98,7 @@ public class APICalls
             };
 
             customMessageBoxWindow.ShowDialog();
-            return;
+            return false;
         }
 
         ConfigManager.Instance.UpdateConfig(config =>
@@ -106,10 +107,11 @@ public class APICalls
             config.UserData.IsBanned = json.Data.IsBanned;
             config.UserData.UserLevel = json.Data.UserLevel;
         });
+        return true;
     }
 
     //register
-    public static async void Register(string username, string password, string email)
+    public static async Task<bool> Register(string username, string password, string email)
     {
         var content = new StringContent(JsonConvert.SerializeObject(new RegisterResponse
         {
@@ -137,7 +139,7 @@ public class APICalls
             };
 
             customMessageBoxWindow.ShowDialog();
-            return;
+            return false;
         }
 
         ConfigManager.Instance.UpdateConfig(config => { config.UserData.Token = json.Data.Token; });
@@ -148,6 +150,7 @@ public class APICalls
         };
 
         customMessageBoxWindow2.ShowDialog();
+        return true;
     }
 
     // version request
@@ -160,7 +163,7 @@ public class APICalls
     }
 
     // /check_license (token == login AuthToken from user)
-    public static async void CheckLicense(string token)
+    public static async Task<bool> CheckLicense(string token)
     {
         var content = new StringContent(JsonConvert.SerializeObject(new LicenseResponse
         {
@@ -176,7 +179,8 @@ public class APICalls
         var result = await response.Content.ReadAsStringAsync();
         var json = JsonConvert.DeserializeObject<BaseResponse<LicenseResponse>>(result);
 
-        if (response.IsSuccessStatusCode) return;
+        if (response.IsSuccessStatusCode) return true;
+
         var customMessageBoxWindow = new CubeMessageBox
         {
             TitleText = { Text = "License Error" },
@@ -185,10 +189,11 @@ public class APICalls
         };
 
         customMessageBoxWindow.ShowDialog();
+        return false;
     }
 
     // /redeem (token == login AuthToken from user)
-    public static async void RedeemLicense(string token, string licenseKey)
+    public static async Task<bool> RedeemLicense(string token, string licenseKey)
     {
         var content = new StringContent(JsonConvert.SerializeObject(new LicenseResponse
         {
@@ -205,7 +210,8 @@ public class APICalls
         var result = await response.Content.ReadAsStringAsync();
         var json = JsonConvert.DeserializeObject<BaseResponse<LicenseResponse>>(result);
 
-        if (response.IsSuccessStatusCode) return;
+        if (response.IsSuccessStatusCode) return true;
+
         var customMessageBoxWindow = new CubeMessageBox
         {
             TitleText = { Text = "Redeem Error" },
@@ -214,6 +220,7 @@ public class APICalls
         };
 
         customMessageBoxWindow.ShowDialog();
+        return false;
     }
 
     public static void Dispose()

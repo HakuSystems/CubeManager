@@ -5,6 +5,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using CubeManager.CubeManagerFinal;
+using CubeManager.CustomMessageBox;
 using CubeManager.FirstRun;
 using CubeManager.Helpers;
 using MaterialDesignThemes.Wpf;
@@ -572,14 +573,14 @@ public partial class SettingsWindow : UiWindow
             var cubemanagerWindow = new CubeManagerDashboard();
             cubemanagerWindow.Show();
         }
-        
+
         Close();
     }
 
     private void DopamineEffectsQuestionmarkBtn_OnClick(object sender, RoutedEventArgs e)
     {
         _soundManager.PlayAudio(CurrentClickSound);
-        var customMessageBox = new CustomMessageBox.CubeMessageBox();
+        var customMessageBox = new CubeMessageBox();
         customMessageBox.TitleText.Text = "Dopamine Effects";
         customMessageBox.MessageText.Text =
             "Dopamine effects are visual effects that are shown when you complete a task or level. They are meant to make you feel good about yourself and motivate you to keep going.";
@@ -589,7 +590,7 @@ public partial class SettingsWindow : UiWindow
     private void SettingsQuestionmarkBtn_OnClick(object sender, RoutedEventArgs e)
     {
         _soundManager.PlayAudio(CurrentClickSound);
-        var customMessageBox = new CustomMessageBox.CubeMessageBox();
+        var customMessageBox = new CubeMessageBox();
         customMessageBox.TitleText.Text = "Sound";
         customMessageBox.MessageText.Text =
             "Sound allows you to hear sounds when you click on buttons, complete tasks, etc.";

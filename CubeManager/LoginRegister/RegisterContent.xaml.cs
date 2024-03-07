@@ -1,19 +1,18 @@
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using CubeManager.API;
-using CubeManager.CustomMessageBox;
 using CubeManager.Helpers;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.VisualBasic.ApplicationServices;
+using CubeManager.Settings;
 using Wpf.Ui.Controls;
 
 namespace CubeManager.LoginRegister;
 
 public partial class RegisterContent : UiPage
 {
+    //Todo: Handle Login Window not closing after successful register
     private SoundManager SoundManager { get; } = new();
     private ConfigManager ConfigManager { get; } = ConfigManager.Instance;
+
     public RegisterContent()
     {
         InitializeComponent();
@@ -22,23 +21,26 @@ public partial class RegisterContent : UiPage
     private void LoginBtn_OnClick(object sender, RoutedEventArgs e)
     {
         SoundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
-        var loginWindow = (LoginWindow) Window.GetWindow(this);
+        var loginWindow = (LoginWindow)Window.GetWindow(this);
         loginWindow.PageContent.Source = new Uri("LoginContent.xaml", UriKind.Relative);
     }
 
     private async void RegisterBtn_OnClick(object sender, RoutedEventArgs e)
     {
         SoundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
-        //Api Call
-        APICalls.Register(UsernameBox.Text, PasswordBox.Password, EmailBox.Text);
 
-        // var customMessageBoxWindow = new CubeMessageBox
-        // {
-        //     TitleText = {Text = "Register Error"},
-        //     MessageText = {Text = response.Message}
-        // };
-        //
-        // customMessageBoxWindow.ShowDialog();
+        var registerSuccessful = await APICalls.Register(UsernameBox.Text, PasswordBox.Password, EmailBox.Text);
+        if (!registerSuccessful) return;
+
+        var loginSuccessful = await APICalls.Login(UsernameBox.Text, PasswordBox.Password);
+        if (!loginSuccessful) return;
+
+        await Application.Current.Dispatcher.InvokeAsync(() =>
+        {
+            var settingsWindow = SettingsWindow.Instance;
+            settingsWindow.Show();
+            Window.GetWindow(LoginWindow.Instance)?.Close();
+        });
     }
 
     private void RegisterBtn_OnMouseEnter(object sender, MouseEventArgs e)

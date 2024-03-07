@@ -9,6 +9,7 @@
         <LangVersion>default</LangVersion>
         <PackageIcon>Resources\Logo.png</PackageIcon>
         <ApplicationIcon>Resources\Logo.ico</ApplicationIcon>
+        <StartupObject>CubeManager.Program</StartupObject>
     </PropertyGroup>
 
     <ItemGroup>

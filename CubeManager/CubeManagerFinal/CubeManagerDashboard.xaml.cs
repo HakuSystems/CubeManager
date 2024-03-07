@@ -4,7 +4,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using CubeManager.Controls;
 using CubeManager.Controls.Subscriptions;
 using CubeManager.Helpers;
 using CubeManager.Settings;
@@ -64,7 +63,7 @@ public partial class CubeManagerDashboard : UiWindow
     {
         var random = new Random();
         LvlProgbar.Value += random.Next(0, 11);
-    
+
         if (LvlProgbar.Value >= 100)
         {
             LvlTxtBox.Text = $"LvL: {++CurrentLevelValue}";
@@ -73,7 +72,6 @@ public partial class CubeManagerDashboard : UiWindow
             LevelUp();
             _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.TaskComplete);
         }
-    
     }
 
     private void LevelUp()
@@ -386,6 +384,8 @@ public partial class CubeManagerDashboard : UiWindow
     {
         ZenquouteText.Text = new FetchQuote().RetrieveQuote();
         ZenquouteTextAuthor.Text = $"- {new FetchQuote().RetrieveQuoteAuthor()}";
+        if (ConfigManager.Instance.Config.UserData.Username != null)
+            WelcomeText.Text = "Welcome, " + ConfigManager.Instance.Config.UserData.Username;
     }
 
     private void CanvasMouseView_OnPaintSurface(object? sender, SKPaintSurfaceEventArgs e)

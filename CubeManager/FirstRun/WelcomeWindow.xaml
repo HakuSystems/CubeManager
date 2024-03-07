@@ -166,7 +166,7 @@
                                          >
                                     <StackPanel>
                                         <TextBlock Text="Enter a valid License" />
-                                        <ui:TextBox Margin="5"/>
+                                        <ui:TextBox x:Name="LicenseBox" Margin="5"/>
                                     </StackPanel>
                                 </Border>
                                 <Button
