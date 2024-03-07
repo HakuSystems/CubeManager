@@ -3,12 +3,13 @@ using System.Text;
 using CubeManager.CustomMessageBox;
 using CubeManager.Helpers;
 using Newtonsoft.Json;
+using Wpf.Ui.Common;
 
 namespace CubeManager.API;
 
 public class APICalls
 {
-    private static string Url { get; } = "https://cubemanager.zkwolf.com/api/";
+    private static string Url { get; } = "https://cubemanager.zkwolf.com/api/v1/";
     private static HttpClient Client { get; } = new();
 
     private static async Task<HttpResponseMessage> MakeApiCall(HttpRequestMessage request)
@@ -48,7 +49,7 @@ public class APICalls
         var response = await MakeApiCall(request);
         var result = await response.Content.ReadAsStringAsync();
         var json = JsonConvert.DeserializeObject<BaseResponse<LoginResponse>>(result);
-
+        
         if (!response.IsSuccessStatusCode)
         {
             var customMessageBoxWindow = new CubeMessageBox
@@ -143,7 +144,7 @@ public class APICalls
         var customMessageBoxWindow2 = new CubeMessageBox
         {
             TitleText = { Text = "Success" },
-            MessageText = { Text = json?.Message ?? "You have successfully registered." }
+            MessageText = { Text = "You have successfully registered." }
         };
 
         customMessageBoxWindow2.ShowDialog();

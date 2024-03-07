@@ -11,7 +11,7 @@
              BorderThickness="0"
              BorderBrush="Transparent"
              Width="924"
-             ShowInTaskbar="False"
+             ShowInTaskbar="true"
              FontFamily="Poppins"
              WindowStartupLocation="CenterScreen"
              ResizeMode="NoResize"
