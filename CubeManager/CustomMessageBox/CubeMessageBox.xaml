@@ -59,7 +59,7 @@
                     <TextBlock
                         Text="Dopamine effects are visual effects that are shown when you complete a task or level. They are meant to make you feel good about yourself and motivate you to keep going."
                         FontSize="20" x:Name="MessageText"
-                        TextWrapping="WrapWithOverflow" Margin="15,0,0,0" FontStyle="Italic"
+                        TextWrapping="Wrap" Margin="15,0,0,0" FontStyle="Italic"
                         FontWeight="Bold"
                         Foreground="{StaticResource MaterialDesignDarkForeground}"
                         HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.8" />

@@ -1,4 +1,5 @@
 using CubeManager.Controls.Subscriptions.Models;
+using CubeManager.LoginRegister;
 using CubeManager.Models.ScoreBoard;
 using CubeManager.Models.Version;
 using CubeManager.Settings;
@@ -17,4 +18,5 @@ public class ConfigData
     public SubscriptionsData Subscriptions { get; set; } = new();
     public TodoData Todo { get; set; } = new();
     public QuoteData Quote { get; set; } = new();
+    public UserData UserData { get; set; } = new();
 }
