@@ -118,6 +118,14 @@
                                 </Button.Content>
                             </Button>
                         </StackPanel>
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}" x:Name="LogoutBtn" Click="LogoutBtn_OnClick" MouseEnter="LogoutBtn_OnMouseEnter">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Logout" Foreground="White" Margin="5" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Logout" Foreground="White" HorizontalAlignment="Stretch"  VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                         <TextBlock Style="{DynamicResource MaterialDesignTextBlock}"

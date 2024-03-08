@@ -60,4 +60,18 @@ public partial class WelcomeWindow : UiWindow
         if (e.ChangedButton == MouseButton.Left)
             DragMove();
     }
+
+    private async void WelcomeWindow_OnLoaded(object sender, RoutedEventArgs e)
+    {
+        if (ConfigManager.Instance.Config.UserData.Token == null) return;
+        var checkSuccessful = await APICalls.CheckLicense(ConfigManager.Instance.Config.UserData.Token);
+        if (!checkSuccessful) return;
+
+        await Application.Current.Dispatcher.InvokeAsync(() =>
+        {
+            var finalWindow = new CubeManagerDashboard();
+            finalWindow.Show();
+            Close();
+        });
+    }
 }

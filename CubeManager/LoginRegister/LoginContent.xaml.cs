@@ -9,7 +9,6 @@ namespace CubeManager.LoginRegister;
 
 public partial class LoginContent : UiPage
 {
-    //Todo: Handle Login Window not closing after successful login
     private SoundManager SoundManager { get; } = new();
 
     private ConfigManager ConfigManager { get; } = ConfigManager.Instance;
@@ -22,16 +21,16 @@ public partial class LoginContent : UiPage
     private async void LoginBtn_OnClick(object sender, RoutedEventArgs e)
     {
         SoundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
-        var loginWindow = Window.GetWindow(LoginWindow.Instance);
 
         var loginSuccessful = await APICalls.Login(UsernameBox.Text, PasswordBox.Password);
         if (!loginSuccessful) return;
 
         await Application.Current.Dispatcher.InvokeAsync(() =>
         {
-            var settingsWindow = SettingsWindow.Instance;
+            var settingsWindow = new SettingsWindow();
+            settingsWindow.InitializeComponent();
             settingsWindow.Show();
-            loginWindow?.Close();
+            Window.GetWindow(this).Close();
         });
     }
 
@@ -54,10 +53,8 @@ public partial class LoginContent : UiPage
 
     private async void LoginContent_OnLoaded(object sender, RoutedEventArgs e)
     {
-        var loginWindow = Window.GetWindow(LoginWindow.Instance);
         if (ConfigManager.Instance.Config.UserData.Username != null)
         {
-            LoginWindow.Instance.IsEnabled = false;
             var loginSuccessful = await APICalls.Login(ConfigManager.Instance.Config.UserData.Token);
             if (!loginSuccessful) return;
 
@@ -65,7 +62,7 @@ public partial class LoginContent : UiPage
             {
                 var settingsWindow = SettingsWindow.Instance;
                 settingsWindow.Show();
-                loginWindow?.Close();
+                Window.GetWindow(this).Close();
             });
         }
     }

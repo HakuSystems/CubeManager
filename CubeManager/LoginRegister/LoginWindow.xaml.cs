@@ -12,17 +12,13 @@ public partial class LoginWindow : UiWindow
 {
     private float _rotationAngle;
     private SKPoint _mousePosition;
-    private static LoginWindow instance;
 
     public LoginWindow()
     {
         InitializeComponent();
         CompositionTarget.Rendering += OnRendering;
     }
-
-    public static LoginWindow Instance => instance ??= new LoginWindow();
-
-
+    
     private void OnRendering(object sender, EventArgs e)
     {
         _rotationAngle += 0.1f; //speed

@@ -9,7 +9,6 @@ namespace CubeManager.LoginRegister;
 
 public partial class RegisterContent : UiPage
 {
-    //Todo: Handle Login Window not closing after successful register
     private SoundManager SoundManager { get; } = new();
     private ConfigManager ConfigManager { get; } = ConfigManager.Instance;
 
@@ -17,7 +16,6 @@ public partial class RegisterContent : UiPage
     {
         InitializeComponent();
     }
-
     private void LoginBtn_OnClick(object sender, RoutedEventArgs e)
     {
         SoundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
@@ -39,7 +37,7 @@ public partial class RegisterContent : UiPage
         {
             var settingsWindow = SettingsWindow.Instance;
             settingsWindow.Show();
-            Window.GetWindow(LoginWindow.Instance)?.Close();
+            Window.GetWindow(this).Close();
         });
     }
 

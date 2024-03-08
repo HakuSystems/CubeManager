@@ -4,8 +4,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using CubeManager.API;
 using CubeManager.Controls.Subscriptions;
 using CubeManager.Helpers;
+using CubeManager.LoginRegister;
 using CubeManager.Settings;
 using CubeManager.Todos;
 using CubeManager.ZenQuotes;
@@ -405,5 +407,25 @@ public partial class CubeManagerDashboard : UiWindow
                 _mousePosition.Y + 50);
             canvas.DrawRect(glowRect, paint);
         }
+    }
+
+    private  async void LogoutBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
+        
+        var logoutSuccessful = await APICalls.Logout();
+        if (!logoutSuccessful) return;
+        
+        await Application.Current.Dispatcher.InvokeAsync(() =>
+        {
+            var loginWindow = new LoginWindow();
+            loginWindow.Show();
+            Close();
+        });
+    }
+
+    private void LogoutBtn_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
     }
 }

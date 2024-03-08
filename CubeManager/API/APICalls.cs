@@ -8,7 +8,6 @@ namespace CubeManager.API;
 
 public class APICalls
 {
-    //Todo: Add Loggout
     private static string Url { get; } = "https://cubemanager.zkwolf.com/api/v1/";
     private static HttpClient Client { get; } = new();
 
@@ -73,7 +72,7 @@ public class APICalls
     }
 
     //login with AuthToken
-    public static async Task<bool> Login(string token)
+    public static async Task<bool> Login(string? token)
     {
         var content = new StringContent(JsonConvert.SerializeObject(new LoginResponse
         {
@@ -107,6 +106,46 @@ public class APICalls
             config.UserData.IsBanned = json.Data.IsBanned;
             config.UserData.UserLevel = json.Data.UserLevel;
         });
+        return true;
+    }
+
+    public static async Task<bool> Logout()
+    {
+        var content = new StringContent(JsonConvert.SerializeObject(new LogoutResponse()), Encoding.UTF8, "application/json");
+        var request = new HttpRequestMessage
+        {
+            Method = HttpMethod.Post,
+            RequestUri = new Uri(Url + "logout"),
+            Content = content
+        };
+        var response = await MakeApiCall(request);
+        var result = await response.Content.ReadAsStringAsync();
+        var json = JsonConvert.DeserializeObject<BaseResponse<LogoutResponse>>(result);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var customMessageBoxWindow = new CubeMessageBox
+            {
+                TitleText = { Text = "Logout Error" },
+                MessageText = { Text = json?.Message ?? "An error occurred while logging out. Please try again later." }
+            };
+
+            customMessageBoxWindow.ShowDialog();
+            return false;
+        }
+
+        ConfigManager.Instance.UpdateConfig(config =>
+        {
+            config.UserData.Token = null;
+            config.UserData.Username = null;
+        });
+        var customMessageBoxWindow2 = new CubeMessageBox
+        {
+            TitleText = { Text = "Success" },
+            MessageText = { Text = "You have successfully logged out." }
+        };
+
+        customMessageBoxWindow2.ShowDialog();
         return true;
     }
 
@@ -163,7 +202,7 @@ public class APICalls
     }
 
     // /check_license (token == login AuthToken from user)
-    public static async Task<bool> CheckLicense(string token)
+    public static async Task<bool> CheckLicense(string? token)
     {
         var content = new StringContent(JsonConvert.SerializeObject(new LicenseResponse
         {
@@ -193,7 +232,7 @@ public class APICalls
     }
 
     // /redeem (token == login AuthToken from user)
-    public static async Task<bool> RedeemLicense(string token, string licenseKey)
+    public static async Task<bool> RedeemLicense(string? token, string licenseKey)
     {
         var content = new StringContent(JsonConvert.SerializeObject(new LicenseResponse
         {

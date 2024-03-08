@@ -17,6 +17,7 @@
         WindowStartupLocation="CenterScreen"
         WindowState="Normal"
         MouseDown="WelcomeWindow_OnMouseDown"
+        Loaded="WelcomeWindow_OnLoaded"
         ResizeMode="CanResizeWithGrip"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="DemiBold"
