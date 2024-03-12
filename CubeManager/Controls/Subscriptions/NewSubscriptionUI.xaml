@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             Background="Transparent"
+             Background="Black"
              Loaded="NewSubscriptionUI_OnLoaded"
              Foreground="White"
              FontFamily="Poppins"
@@ -44,6 +44,12 @@
                         <StackPanel>
                             <ui:Card Padding="5" Margin="5">
                                 <StackPanel>
+                                    <TextBox Style="{DynamicResource MaterialDesignTextBox}"
+                                             Margin="10"
+                                             FontSize="26"
+                                             materialDesign:HintAssist.Hint="Price"
+                                             x:Name="PiceBox"
+                                             TextChanged="PiceBox_OnTextChanged"/>
                                     <TextBox Style="{DynamicResource MaterialDesignTextBox}"
                                              Margin="10"
                                              FontSize="16"
@@ -127,6 +133,9 @@
                                              materialDesign:HintAssist.Hint="Note"
                                              Text="{Binding NewSubscriptionPersonalNotes, UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
+                            </ui:Card>
+                            <ui:Card>
+                                <Button Content="Create" Foreground="White" x:Name="CreateSubBtn" Click="CreateSubBtn_OnClick"/>
                             </ui:Card>
                         </StackPanel>
                     </ui:Card>

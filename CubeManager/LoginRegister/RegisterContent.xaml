@@ -33,6 +33,7 @@
                             Margin="0 5" />
                 <Label Content="Email:" Margin="0,0,0,5" />
                 <ui:TextBox Name="EmailBox" Icon="Mail24" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                            TextChanged="EmailBox_OnTextChanged"
                             Margin="0 5" />
                 <Label Content="Password:" Margin="0,10,0,5" />
                 <ui:PasswordBox Name="PasswordBox" Icon="LockClosed24" HorizontalAlignment="Stretch"

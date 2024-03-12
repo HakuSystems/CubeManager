@@ -14,19 +14,6 @@ public class APICalls
     private static async Task<HttpResponseMessage> MakeApiCall(HttpRequestMessage request)
     {
         var response = await Client.SendAsync(request);
-
-        if (!response.IsSuccessStatusCode)
-        {
-            var errorContent = await response.Content.ReadAsStringAsync();
-            var customMessageBoxWindow = new CubeMessageBox
-            {
-                TitleText = { Text = "API CALL Error" },
-                MessageText = { Text = errorContent ?? "An error occurred while logging in. Please try again later." }
-            };
-
-            customMessageBoxWindow.ShowDialog();
-        }
-
         return response;
     }
 

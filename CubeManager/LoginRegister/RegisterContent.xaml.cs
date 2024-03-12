@@ -1,5 +1,7 @@
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using CubeManager.API;
 using CubeManager.Helpers;
 using CubeManager.Settings;
@@ -49,5 +51,19 @@ public partial class RegisterContent : UiPage
     private void LoginBtn_OnMouseEnter(object sender, MouseEventArgs e)
     {
         SoundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
+    }
+
+    private void EmailBox_OnTextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (InputChecker.ValidateEmail(EmailBox.Text))
+        {
+            RegisterBtn.IsEnabled = true;
+            EmailBox.Background = Brushes.Transparent;
+        }
+        else
+        {
+            RegisterBtn.IsEnabled = false;
+            EmailBox.Background = Brushes.DarkRed;
+        }
     }
 }
