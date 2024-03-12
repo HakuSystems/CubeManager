@@ -12,26 +12,4 @@ public partial class SubscriptionManager
         Month,
         Year
     }
-    
-    
-    public static bool ValidateString(string stringToValidate)
-    {
-        var invalidChars = SpecialChars();
-        return !invalidChars.IsMatch(stringToValidate);
-    }
-
-    [GeneratedRegex("[0-9!@#$%^&*()_+=\\[{\\]};:<>|./?,-]")]
-    private static partial Regex SpecialChars();
-    
-    //Validate Date
-    public static bool ValidateDate(string date)
-    {
-        return DateTime.TryParse(date, out _);
-    }
-    
-    //Validate Only Nubers allowed
-    public static bool ValidateNumber(string number)
-    {
-        return int.TryParse(number, out _);
-    }
 }

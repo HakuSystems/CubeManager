@@ -14,19 +14,19 @@ public partial class NewSubscriptionUI : UserControl
 
     private void SubscriptionName_OnTextChanged(object sender, TextChangedEventArgs e)
     {
-        SubscriptionName.Background = !SubscriptionManager.ValidateString(SubscriptionName.Text)
+        SubscriptionName.Background = !InputChecker.ValidateString(SubscriptionName.Text)
             ? Brushes.DarkRed
             : Brushes.Transparent;
     }
 
     private void Period_OnTextChanged(object sender, TextChangedEventArgs e)
     {
-        Period.Background = !SubscriptionManager.ValidateNumber(Period.Text) ? Brushes.DarkRed : Brushes.Transparent;
+        Period.Background = !InputChecker.ValidateNumber(Period.Text) ? Brushes.DarkRed : Brushes.Transparent;
     }
 
     private void FirstPaymentDate_OnSelectedDateChanged(object? sender, SelectionChangedEventArgs e)
     {
-        FirstPaymentDate.Background = !SubscriptionManager.ValidateDate(FirstPaymentDate.Text)
+        FirstPaymentDate.Background = !InputChecker.ValidateDate(FirstPaymentDate.Text)
             ? Brushes.DarkRed
             : Brushes.Transparent;
     }

@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace CubeManager.Helpers;
 
-public class InputChecker
+public partial class InputChecker
 {
     public static bool ValidateEmail(string email)
     {
@@ -14,4 +14,23 @@ public class InputChecker
         price = price.Replace(',', '.');
         return decimal.TryParse(price, out _);
     }
+    
+    public static bool ValidateDate(string date)
+    {
+        return DateTime.TryParse(date, out _);
+    }
+    
+    public static bool ValidateNumber(string number)
+    {
+        return int.TryParse(number, out _);
+    }
+    
+    public static bool ValidateString(string stringToValidate)
+    {
+        var invalidChars = SpecialChars();
+        return !invalidChars.IsMatch(stringToValidate);
+    }
+
+    [GeneratedRegex("[0-9!@#$%^&*()_+=\\[{\\]};:<>|./?,-]")]
+    private static partial Regex SpecialChars();
 }
