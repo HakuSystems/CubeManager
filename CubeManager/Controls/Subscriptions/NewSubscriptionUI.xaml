@@ -48,8 +48,12 @@
                                              Margin="10"
                                              FontSize="26"
                                              materialDesign:HintAssist.Hint="Price"
-                                             x:Name="PiceBox"
+                                             x:Name="PriceBox"
                                              TextChanged="PiceBox_OnTextChanged"/>
+                                    <ComboBox x:Name="CurrencyComboBox" Margin="5">
+                                        <ComboBoxItem Content="EUR" />
+                                        <ComboBoxItem Content="USD" />
+                                    </ComboBox>
                                     <TextBox Style="{DynamicResource MaterialDesignTextBox}"
                                              Margin="10"
                                              FontSize="16"
@@ -58,6 +62,7 @@
                                              TextChanged="SubscriptionName_OnTextChanged" />
                                     <TextBox Style="{DynamicResource MaterialDesignTextBox}"
                                              Margin="10"
+                                             x:Name="Description"
                                              FontSize="16"
                                              materialDesign:HintAssist.Hint="Description"
                                              Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
@@ -66,7 +71,8 @@
                             <ui:Card Padding="5" Margin="5">
                                 <StackPanel>
                                     <TextBlock
-                                        Text="Billing Period"
+                                        Text="Billing date"
+                                        x:Name="BillingPeriodTextBlock"
                                         Style="{DynamicResource MaterialDesignTextBlock}"
                                         FontSize="16"
                                         Margin="10"
@@ -104,6 +110,7 @@
                                                 FontSize="16"
                                                 materialDesign:HintAssist.Hint="First Payment Date"
                                                 SelectedDate="{Binding FirstPaymentDate, UpdateSourceTrigger=PropertyChanged}" />
+                                    <CheckBox Content="One Time Payment?" x:Name="IsOneTimePayment" Unchecked="IsOneTimePayment_OnUnchecked" Checked="IsOneTimePayment_OnChecked"/>
                                 </StackPanel>
                             </ui:Card>
                             <TextBlock
@@ -116,7 +123,7 @@
                             <materialDesign:ColorPicker Style="{DynamicResource MaterialDesignColorPicker}"
                                                         Margin="10"
                                                         x:Name="ColorPicker"
-                                                        IsEnabled="False"
+                                                        ColorChanged="ColorPicker_OnColorChanged"
                                                        FontSize="16"
                                                         materialDesign:HintAssist.Hint="Card Background Color" />
                             <ui:Card Padding="5" Margin="5">

@@ -6,8 +6,6 @@ public class SubscriptionsSettings
 {
 
     public string ActiveTransitionContent { get; set; }
-    public Color LastBackgroundColor { get; set; }
-    
     public double MonthlyCost { get; set; }
     public double YearlyCost { get; set; }
     public double TotalCost { get; set; }

@@ -7,7 +7,7 @@ namespace CubeManager.Controls.Subscriptions;
 public partial class SubscriptionTransitioner : UserControl
 {
     private readonly ConfigManager _configManager = ConfigManager.Instance;
-    
+
     public SubscriptionTransitioner()
     {
         InitializeComponent();
@@ -15,13 +15,21 @@ public partial class SubscriptionTransitioner : UserControl
 
     private void SubscriptionTransitioner_OnLoaded(object sender, RoutedEventArgs e)
     {
-       if(_configManager.Config.Subscriptions.Subscriptions.Count == 0)
-       {
-           ActiveTransitionContent.Navigate(new NewSubscriptionUI());
-       }
-       else
-       {
-           ActiveTransitionContent.Navigate(new SubscriptionUI());
-       }
+        if (_configManager.Config.Subscriptions.Subscriptions.Count == 0)
+        {
+            ActiveTransitionContent.Navigate(new NewSubscriptionUI());
+            
+            var settings = ConfigManager.Instance.Config.Subscriptions.Settings;
+            settings.ActiveTransitionContent = "NewSubscriptionUI";
+            ConfigManager.Instance.UpdateConfig(config => { config.Subscriptions.Settings = settings; });
+        }
+        else
+        {
+            ActiveTransitionContent.Navigate(new SubscriptionUI());
+            
+            var settings = ConfigManager.Instance.Config.Subscriptions.Settings;
+            settings.ActiveTransitionContent = "SubscriptionUI";
+            ConfigManager.Instance.UpdateConfig(config => { config.Subscriptions.Settings = settings; });
+        }
     }
 }

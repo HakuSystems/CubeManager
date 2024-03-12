@@ -1,4 +1,4 @@
-using System.Drawing;
+using System.Windows.Media;
 
 namespace CubeManager.Controls.Subscriptions.Models;
 
@@ -16,4 +16,6 @@ public class SubscriptionItem
 
     public DateTime NextPaymentDate { get; set; } // today + 1 month (Period)
     public Color CardColor { get; set; } // #FF0000
+    public string? PaymentMethod { get; set; } // Optional
+    public string? Notes { get; set; } // Optional
 }
