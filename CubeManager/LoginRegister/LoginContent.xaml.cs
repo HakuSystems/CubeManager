@@ -1,4 +1,5 @@
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using CubeManager.API;
 using CubeManager.Helpers;
@@ -7,7 +8,7 @@ using Wpf.Ui.Controls;
 
 namespace CubeManager.LoginRegister;
 
-public partial class LoginContent : UiPage
+public partial class LoginContent : Page
 {
     private SoundManager SoundManager { get; } = new();
 

@@ -7,7 +7,7 @@ using Wpf.Ui.Controls;
 
 namespace CubeManager.FirstRun;
 
-public partial class WelcomeWindow : UiWindow
+public partial class WelcomeWindow : FluentWindow
 {
     private readonly SoundManager _soundManager = new();
 

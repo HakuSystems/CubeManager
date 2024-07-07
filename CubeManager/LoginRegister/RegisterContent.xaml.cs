@@ -9,7 +9,7 @@ using Wpf.Ui.Controls;
 
 namespace CubeManager.LoginRegister;
 
-public partial class RegisterContent : UiPage
+public partial class RegisterContent : Page
 {
     private SoundManager SoundManager { get; } = new();
     private ConfigManager ConfigManager { get; } = ConfigManager.Instance;

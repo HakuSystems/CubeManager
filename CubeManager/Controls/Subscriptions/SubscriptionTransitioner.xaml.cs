@@ -12,6 +12,13 @@ public partial class SubscriptionTransitioner : UserControl
     {
         InitializeComponent();
     }
+    public void ChangeNavigationContent(UserControl content)
+    {
+        var settings = ConfigManager.Instance.Config.Subscriptions.Settings;
+        settings.ActiveTransitionContent = content.GetType().Name;
+        ActiveTransitionContent.Navigate(content, typeof(UserControl));
+        ConfigManager.Instance.UpdateConfig(config => { config.Subscriptions.Settings = settings; });
+    }
 
     private void SubscriptionTransitioner_OnLoaded(object sender, RoutedEventArgs e)
     {

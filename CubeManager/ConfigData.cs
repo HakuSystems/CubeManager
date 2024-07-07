@@ -1,9 +1,9 @@
 using CubeManager.Controls.Subscriptions.Models;
+using CubeManager.Controls.Todos.Models;
 using CubeManager.LoginRegister;
 using CubeManager.Models.ScoreBoard;
 using CubeManager.Models.Version;
 using CubeManager.Settings;
-using CubeManager.Todos;
 using CubeManager.ZenQuotes;
 
 namespace CubeManager;
@@ -16,7 +16,7 @@ public class ConfigData
     public SettingsData Settings { get; set; } = new();
     public SoundSettings SoundSettings { get; set; } = new();
     public SubscriptionsData Subscriptions { get; set; } = new();
-    public TodoData Todo { get; set; } = new();
+    public List<TodoModel> Todos { get; set; } = new();
     public QuoteData Quote { get; set; } = new();
     public UserData UserData { get; set; } = new();
 }

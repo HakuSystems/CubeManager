@@ -11,10 +11,11 @@ using CubeManager.Helpers;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 using Wpf.Ui.Controls;
+using TextBlock = Wpf.Ui.Controls.TextBlock;
 
 namespace CubeManager.Settings;
 
-public partial class SettingsWindow : UiWindow
+public partial class SettingsWindow : FluentWindow
 {
     private readonly Logger _logger;
     private readonly SoundManager _soundManager = new();
@@ -158,7 +159,7 @@ public partial class SettingsWindow : UiWindow
         colorAnimation.To = (Color)ColorConverter.ConvertFromString(toColor);
         colorAnimation.Duration = new Duration(TimeSpan.FromSeconds(durationInSeconds));
 
-        PropertyPath colorTargetPath;
+        PropertyPath colorTargetPath = new PropertyPath("Foreground.Color");
         switch (element)
         {
             case TextBlock:
@@ -168,8 +169,6 @@ public partial class SettingsWindow : UiWindow
             case Control:
                 colorTargetPath = new PropertyPath("Background.Color");
                 break;
-            default:
-                throw new InvalidOperationException($"Unsupported type {element.GetType()}");
         }
 
         var sb = new Storyboard();

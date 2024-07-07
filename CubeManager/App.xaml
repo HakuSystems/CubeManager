@@ -11,12 +11,14 @@
                 <ui:ThemesDictionary Theme="Dark" />
                 <ui:ControlsDictionary />
                 <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="Pink" SecondaryColor="Blue" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" /> 
+                
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign2.Defaults.xaml" /> 
             </ResourceDictionary.MergedDictionaries>
             <SolidColorBrush x:Key="CubeTextNotFocus" Color="#5a696f" />
             <SolidColorBrush x:Key="CubeBackground" Color="#181818" />
             <SolidColorBrush x:Key="CubeCard" Color="#292929" />
             <BitmapImage x:Key="CubeLogo" UriSource="pack://application:,,,/CubeManager;component/Resources/Logo.png" />
+            <FontFamily x:Key="SegoeFluentIcons">pack://application:,,,/;component/Fonts/#Segoe Fluent Icons</FontFamily>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

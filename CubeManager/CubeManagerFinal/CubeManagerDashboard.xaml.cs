@@ -4,21 +4,24 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using CubeManager.API;
 using CubeManager.Controls.Subscriptions;
+using CubeManager.Controls.Todos;
 using CubeManager.Helpers;
 using CubeManager.LoginRegister;
 using CubeManager.Settings;
-using CubeManager.Todos;
 using CubeManager.ZenQuotes;
 using MaterialDesignThemes.Wpf;
+using Microsoft.VisualBasic.ApplicationServices;
 using SkiaSharp;
 using SkiaSharp.Views.Desktop;
 using Wpf.Ui.Controls;
+using TextBlock = Wpf.Ui.Controls.TextBlock;
 
 namespace CubeManager.CubeManagerFinal;
 
-public partial class CubeManagerDashboard : UiWindow
+public partial class CubeManagerDashboard : FluentWindow
 {
     private readonly Logger _logger;
 
@@ -29,6 +32,7 @@ public partial class CubeManagerDashboard : UiWindow
 
     public CubeManagerDashboard()
     {
+        DataContext = this;
         _logger = new Logger();
         InitializeComponent();
         _logger.Info("CubeManagerWindow initialized");
@@ -135,7 +139,7 @@ public partial class CubeManagerDashboard : UiWindow
         colorAnimation.To = (Color)ColorConverter.ConvertFromString(toColor);
         colorAnimation.Duration = new Duration(TimeSpan.FromSeconds(durationInSeconds));
 
-        PropertyPath colorTargetPath;
+        var colorTargetPath = new PropertyPath("Foreground.Color");
         switch (element)
         {
             case TextBlock:
@@ -145,8 +149,6 @@ public partial class CubeManagerDashboard : UiWindow
             case Control:
                 colorTargetPath = new PropertyPath("Background.Color");
                 break;
-            default:
-                throw new InvalidOperationException($"Unsupported type {element.GetType()}");
         }
 
         var sb = new Storyboard();
@@ -196,186 +198,6 @@ public partial class CubeManagerDashboard : UiWindow
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
     }
 
-    private void RoutineCard_OnMouseEnter(object sender, MouseEventArgs e)
-    {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
-
-        ApplyColorAnimation(RoutineCard, "#181818", "#292929");
-        ApplyColorAnimation(RoutineTasksIcon, "#000000", "#ffffff");
-        ApplyColorAnimation(RoutineTasksText, "#5a696f", "#ffffff");
-        RoutineTasksText.Visibility = Visibility.Visible;
-    }
-
-    private void RoutineCard_OnMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
-    }
-
-    private void TodoCard_OnMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
-        NavigationFrame.Navigate(new TodoControl());
-        _logger.Info("Navigated to TodoControl");
-    }
-
-    private void TodoCard_OnMouseEnter(object sender, MouseEventArgs e)
-    {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
-        ApplyColorAnimation(TodoCard, "#181818", "#292929");
-        ApplyColorAnimation(TodoTasksIcon, "#000000", "#ffffff");
-        ApplyColorAnimation(TodoTasksText, "#5a696f", "#ffffff");
-        TodoTasksText.Visibility = Visibility.Visible;
-    }
-
-    private void SubscriptionsCard_OnMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
-        NavigationFrame.Navigate(new SubscriptionTransitioner());
-    }
-
-    private void SubscriptionsCard_OnMouseEnter(object sender, MouseEventArgs e)
-    {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
-        ApplyColorAnimation(SubscriptionsCard, "#181818", "#292929");
-        ApplyColorAnimation(SubscriptionsIcon, "#000000", "#ffffff");
-        ApplyColorAnimation(SubscriptionsText, "#5a696f", "#ffffff");
-        SubscriptionsText.Visibility = Visibility.Visible;
-    }
-
-    private void LifeGoalsCard_OnMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
-    }
-
-    private void LifeGoalsCard_OnMouseEnter(object sender, MouseEventArgs e)
-    {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
-        ApplyColorAnimation(LifeGoalsCard, "#181818", "#292929");
-        ApplyColorAnimation(LifeGoalsIcon, "#000000", "#ffffff");
-        ApplyColorAnimation(LifeGoalsText, "#5a696f", "#ffffff");
-        LifeGoalsText.Visibility = Visibility.Visible;
-    }
-
-    private void BirthdaysCard_OnMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
-    }
-
-    private void BirthdaysCard_OnMouseEnter(object sender, MouseEventArgs e)
-    {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
-        ApplyColorAnimation(BirthdaysCard, "#181818", "#292929");
-        ApplyColorAnimation(BirthdaysIcon, "#000000", "#ffffff");
-        ApplyColorAnimation(BirthdaysText, "#5a696f", "#ffffff");
-        BirthdaysText.Visibility = Visibility.Visible;
-    }
-
-    private void FamilyCard_OnMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
-    }
-
-    private void FamilyCard_OnMouseEnter(object sender, MouseEventArgs e)
-    {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
-        ApplyColorAnimation(FamilyCard, "#181818", "#292929");
-        ApplyColorAnimation(FamilyIcon, "#000000", "#ffffff");
-        ApplyColorAnimation(FamilyText, "#5a696f", "#ffffff");
-        FamilyText.Visibility = Visibility.Visible;
-    }
-
-    private void GamesCard_OnMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
-    }
-
-    private void GamesCard_OnMouseEnter(object sender, MouseEventArgs e)
-    {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
-        ApplyColorAnimation(GamesCard, "#181818", "#292929");
-        ApplyColorAnimation(GamesIcon, "#000000", "#ffffff");
-        ApplyColorAnimation(GamesText, "#5a696f", "#ffffff");
-        GamesText.Visibility = Visibility.Visible;
-    }
-
-    private void PlayTimeCard_OnMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
-    }
-
-    private void PlayTimeCard_OnMouseEnter(object sender, MouseEventArgs e)
-    {
-        _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
-        ApplyColorAnimation(PlayTimeCard, "#181818", "#292929");
-        ApplyColorAnimation(PlayTimeIcon, "#000000", "#ffffff");
-        ApplyColorAnimation(PlayTimeText, "#5a696f", "#ffffff");
-        PlayTimeText.Visibility = Visibility.Visible;
-    }
-
-    private void RoutineCard_OnMouseLeave(object sender, MouseEventArgs e)
-    {
-        ApplyColorAnimation(RoutineCard, "#292929", "#181818");
-        ApplyColorAnimation(RoutineTasksIcon, "#ffffff", "#000000");
-        ApplyColorAnimation(RoutineTasksText, "#ffffff", "#5a696f");
-        RoutineTasksText.Visibility = Visibility.Collapsed;
-    }
-
-    private void TodoCard_OnMouseLeave(object sender, MouseEventArgs e)
-    {
-        ApplyColorAnimation(TodoCard, "#292929", "#181818");
-        ApplyColorAnimation(TodoTasksIcon, "#ffffff", "#000000");
-        ApplyColorAnimation(TodoTasksText, "#ffffff", "#5a696f");
-        TodoTasksText.Visibility = Visibility.Collapsed;
-    }
-
-    private void SubscriptionsCard_OnMouseLeave(object sender, MouseEventArgs e)
-    {
-        ApplyColorAnimation(SubscriptionsCard, "#292929", "#181818");
-        ApplyColorAnimation(SubscriptionsIcon, "#ffffff", "#000000");
-        ApplyColorAnimation(SubscriptionsText, "#ffffff", "#5a696f");
-        SubscriptionsText.Visibility = Visibility.Collapsed;
-    }
-
-    private void LifeGoalsCard_OnMouseLeave(object sender, MouseEventArgs e)
-    {
-        ApplyColorAnimation(LifeGoalsCard, "#292929", "#181818");
-        ApplyColorAnimation(LifeGoalsIcon, "#ffffff", "#000000");
-        ApplyColorAnimation(LifeGoalsText, "#ffffff", "#5a696f");
-        LifeGoalsText.Visibility = Visibility.Collapsed;
-    }
-
-    private void BirthdaysCard_OnMouseLeave(object sender, MouseEventArgs e)
-    {
-        ApplyColorAnimation(BirthdaysCard, "#292929", "#181818");
-        ApplyColorAnimation(BirthdaysIcon, "#ffffff", "#000000");
-        ApplyColorAnimation(BirthdaysText, "#ffffff", "#5a696f");
-        BirthdaysText.Visibility = Visibility.Collapsed;
-    }
-
-    private void FamilyCard_OnMouseLeave(object sender, MouseEventArgs e)
-    {
-        ApplyColorAnimation(FamilyCard, "#292929", "#181818");
-        ApplyColorAnimation(FamilyIcon, "#ffffff", "#000000");
-        ApplyColorAnimation(FamilyText, "#ffffff", "#5a696f");
-        FamilyText.Visibility = Visibility.Collapsed;
-    }
-
-    private void GamesCard_OnMouseLeave(object sender, MouseEventArgs e)
-    {
-        ApplyColorAnimation(GamesCard, "#292929", "#181818");
-        ApplyColorAnimation(GamesIcon, "#ffffff", "#000000");
-        ApplyColorAnimation(GamesText, "#ffffff", "#5a696f");
-        GamesText.Visibility = Visibility.Collapsed;
-    }
-
-    private void PlayTimeCard_OnMouseLeave(object sender, MouseEventArgs e)
-    {
-        ApplyColorAnimation(PlayTimeCard, "#292929", "#181818");
-        ApplyColorAnimation(PlayTimeIcon, "#ffffff", "#000000");
-        ApplyColorAnimation(PlayTimeText, "#ffffff", "#5a696f");
-        PlayTimeText.Visibility = Visibility.Collapsed;
-    }
-
     private void ScoreBoardButton_OnClick(object sender, RoutedEventArgs e)
     {
         DoLevelUp();
@@ -389,6 +211,7 @@ public partial class CubeManagerDashboard : UiWindow
         if (ConfigManager.Instance.Config.UserData.Username != null)
             WelcomeText.Text = "Welcome, " + ConfigManager.Instance.Config.UserData.Username;
     }
+
 
     private void CanvasMouseView_OnPaintSurface(object? sender, SKPaintSurfaceEventArgs e)
     {
@@ -409,13 +232,13 @@ public partial class CubeManagerDashboard : UiWindow
         }
     }
 
-    private  async void LogoutBtn_OnClick(object sender, RoutedEventArgs e)
+    private async void LogoutBtn_OnClick(object sender, RoutedEventArgs e)
     {
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
-        
+
         var logoutSuccessful = await APICalls.Logout();
         if (!logoutSuccessful) return;
-        
+
         await Application.Current.Dispatcher.InvokeAsync(() =>
         {
             var loginWindow = new LoginWindow();
@@ -427,5 +250,15 @@ public partial class CubeManagerDashboard : UiWindow
     private void LogoutBtn_OnMouseEnter(object sender, MouseEventArgs e)
     {
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonHover);
+    }
+
+    private void SubscriptionsNavView_OnClick(object sender, RoutedEventArgs e)
+    {
+        NavigationFrame.Navigate(new SubscriptionTransitioner());
+    }
+
+    private void TodosNavView_OnClick(object sender, RoutedEventArgs e)
+    {
+        NavigationFrame.Navigate(new TodoControl());
     }
 }

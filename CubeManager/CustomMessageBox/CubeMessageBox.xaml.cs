@@ -5,7 +5,7 @@ using Wpf.Ui.Controls;
 
 namespace CubeManager.CustomMessageBox;
 
-public partial class CubeMessageBox : UiWindow
+public partial class CubeMessageBox : FluentWindow
 {
     private static SoundManager _soundManager = new SoundManager();
     public CubeMessageBox()

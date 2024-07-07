@@ -52,7 +52,6 @@
                                              TextChanged="PiceBox_OnTextChanged"/>
                                     <ComboBox x:Name="CurrencyComboBox" Margin="5">
                                         <ComboBoxItem Content="EUR" />
-                                        <ComboBoxItem Content="USD" />
                                     </ComboBox>
                                     <TextBox Style="{DynamicResource MaterialDesignTextBox}"
                                              Margin="10"

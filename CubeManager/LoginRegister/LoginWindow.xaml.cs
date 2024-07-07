@@ -8,7 +8,7 @@ using Wpf.Ui.Controls;
 
 namespace CubeManager.LoginRegister;
 
-public partial class LoginWindow : UiWindow
+public partial class LoginWindow : FluentWindow
 {
     private float _rotationAngle;
     private SKPoint _mousePosition;

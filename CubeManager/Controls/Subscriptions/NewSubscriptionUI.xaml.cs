@@ -43,35 +43,40 @@ public partial class NewSubscriptionUI : UserControl
     {
         PriceBox.Background = InputChecker.ValidatePrice(PriceBox.Text) ? Brushes.Transparent : Brushes.DarkRed;
     }
+
     private void CreateSubBtn_OnClick(object sender, RoutedEventArgs e)
     {
         if (InputChecker.ValidateString(SubscriptionName.Text) && InputChecker.ValidateNumber(Period.Text) &&
             InputChecker.ValidateDate(FirstPaymentDate.Text) && InputChecker.ValidatePrice(PriceBox.Text))
         {
-            var periodType = (PeriodTypeValue) PeriodType.SelectedItem;
+            var periodType = (PeriodTypeValue)PeriodType.SelectedItem;
             var color = ColorPicker.Color;
             SubscriptionManager.CreateSubscription(SubscriptionName.Text, Description.Text, PriceBox.Text,
-                CurrencyComboBox.Text, int.Parse(Period.Text), periodType.ToString(), IsOneTimePayment.IsChecked ?? false,
+                CurrencyComboBox.Text, int.Parse(Period.Text), periodType.ToString(),
+                IsOneTimePayment.IsChecked ?? false,
                 FirstPaymentDate.SelectedDate ?? DateTime.Now, color);
             var customMessageBoxWindow = new CubeMessageBox
             {
-                TitleText = {Text = "Success"},
-                MessageText = {Text = "Subscription created successfully"}
+                TitleText = { Text = "Success" },
+                MessageText = { Text = "Subscription created successfully" }
             };
 
             customMessageBoxWindow.ShowDialog();
+            var subscriptionTransitioner = new SubscriptionTransitioner();  
+            subscriptionTransitioner.ChangeNavigationContent(new SubscriptionUI());
         }
         else
         {
             var customMessageBoxWindow = new CubeMessageBox
             {
-                TitleText = {Text = "Error"},
-                MessageText = {Text = "Please fill all fields correctly"}
+                TitleText = { Text = "Error" },
+                MessageText = { Text = "Please fill all fields correctly" }
             };
 
             customMessageBoxWindow.ShowDialog();
         }
     }
+
     public enum PeriodTypeValue
     {
         Day,

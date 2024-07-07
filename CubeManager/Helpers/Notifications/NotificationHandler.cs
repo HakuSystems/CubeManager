@@ -37,7 +37,7 @@ public class NotificationHandler
         try
         {
             _logger.Info("ProcessDueDates called");
-            ConfigDates = LoadAllDatesFromConfig();
+            //ConfigDates = LoadAllDatesFromConfig();
 
             _logger.Info($"ConfigDates has {ConfigDates.Count} items");
 
@@ -83,13 +83,13 @@ public class NotificationHandler
         }
     }
 
-    private List<NotificationData> LoadAllDatesFromConfig()
+    /*private List<NotificationData> LoadAllDatesFromConfig()
     {
         var config = ConfigManager.Instance.Config;
 
-        var dates = config.Todo.Todos
+        var dates = config.Todos
             .Select(todo =>
-                new NotificationData(todo.DueTime, NotificationType.Todo, todo.Description, todo.Id, todo.Title))
+                new NotificationData(todo.DueDate, NotificationType.Todo, todo.Description, todo.Id, todo.Title))
             .ToList();
 
         dates.AddRange(config.Subscriptions.Subscriptions.Select(subscription =>
@@ -97,5 +97,5 @@ public class NotificationHandler
                 subscription.Description, subscription.Id, subscription.Title)));
 
         return dates;
-    }
+    }*/
 }
