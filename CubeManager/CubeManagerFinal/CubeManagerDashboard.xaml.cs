@@ -4,16 +4,14 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using CubeManager.API;
+using CubeManager.Controls.CompactSettings;
 using CubeManager.Controls.Subscriptions;
 using CubeManager.Controls.Todos;
 using CubeManager.Helpers;
 using CubeManager.LoginRegister;
-using CubeManager.Settings;
 using CubeManager.ZenQuotes;
 using MaterialDesignThemes.Wpf;
-using Microsoft.VisualBasic.ApplicationServices;
 using SkiaSharp;
 using SkiaSharp.Views.Desktop;
 using Wpf.Ui.Controls;
@@ -174,12 +172,13 @@ public partial class CubeManagerDashboard : FluentWindow
         _logger.Info("Navigated to SettingsControl");
         _soundManager.PlayAudio(ConfigManager.Instance.Config.SoundSettings.ButtonClick);
 
-        var settingsWindow = new SettingsWindow();
-        settingsWindow.InitializeComponent();
-        settingsWindow.ShowDialog();
-
-        var thisWindow = (CubeManagerDashboard)GetWindow(this);
-        thisWindow.Close();
+        NavigationFrame.Navigate(new CompactSettings());
+        // var settingsWindow = new SettingsWindow();
+        // settingsWindow.InitializeComponent();
+        // settingsWindow.ShowDialog();
+        //
+        // var thisWindow = (CubeManagerDashboard)GetWindow(this);
+        // thisWindow.Close();
     }
 
     private void DiscordBtn_OnClick(object sender, RoutedEventArgs e)
@@ -208,8 +207,9 @@ public partial class CubeManagerDashboard : FluentWindow
     {
         ZenquouteText.Text = new FetchQuote().RetrieveQuote();
         ZenquouteTextAuthor.Text = $"- {new FetchQuote().RetrieveQuoteAuthor()}";
-        if (ConfigManager.Instance.Config.UserData.Username != null)
-            WelcomeText.Text = "Welcome, " + ConfigManager.Instance.Config.UserData.Username;
+        if (ConfigManager.Instance.Config.UserData.Username == null) return;
+        WelcomeText.Text = "Welcome, " + ConfigManager.Instance.Config.UserData.Username;
+        NavView.PaneTitle = "Nice to See you, " + ConfigManager.Instance.Config.UserData.Username + "!";
     }
 
 

@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using CubeManager.API;
+using CubeManager.CubeManagerFinal;
 using CubeManager.Helpers;
 using CubeManager.Settings;
 using Wpf.Ui.Controls;
@@ -28,9 +29,10 @@ public partial class LoginContent : Page
 
         await Application.Current.Dispatcher.InvokeAsync(() =>
         {
-            var settingsWindow = new SettingsWindow();
-            settingsWindow.InitializeComponent();
-            settingsWindow.Show();
+            //Open Dashboard
+            var dashboard = new CubeManagerDashboard();
+            dashboard.InitializeComponent();
+            dashboard.Show();
             Window.GetWindow(this).Close();
         });
     }
@@ -61,8 +63,10 @@ public partial class LoginContent : Page
 
             await Application.Current.Dispatcher.InvokeAsync(() =>
             {
-                var settingsWindow = SettingsWindow.Instance;
-                settingsWindow.Show();
+                //Open Dashboard
+                var dashboard = new CubeManagerDashboard();
+                dashboard.InitializeComponent();
+                dashboard.Show();
                 Window.GetWindow(this).Close();
             });
         }

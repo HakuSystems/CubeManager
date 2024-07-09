@@ -75,7 +75,7 @@
                                     Background="{DynamicResource CubeBackground}">
                                 <Grid>
                                     <ui:Card materialDesign:ShadowAssist.Darken="True"
-                                             Background="{DynamicResource CubeBackground}" Padding="20">
+                                             Background="{DynamicResource CubeBackground}" Padding="10">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
@@ -85,13 +85,6 @@
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            <!-- Premium Badge -->
-                                            <ui:Badge Content="PREMIUM"
-                                                      x:Name="PremiumBadge"
-                                                      HorizontalAlignment="Left"
-                                                      VerticalAlignment="Top"
-                                                      FontWeight="Bold"
-                                                      Appearance="Info" />
                                             <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal"
                                                         VerticalAlignment="Center">
                                                 <ui:Image x:Name="ProfileImage" Width="80" Height="80"
@@ -135,20 +128,36 @@
                                                             Margin="0,0,0,0" />
                                                     </StackPanel>
                                                 </Button>
-                                                <Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                                        x:Name="LogoutBtn"
-                                                        Click="LogoutBtn_OnClick"
-                                                        MouseEnter="LogoutBtn_OnMouseEnter">
-                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                        <materialDesign:PackIcon Kind="Logout" Foreground="White"
-                                                            Margin="0,0,5,0" />
-                                                        <TextBlock Text="Logout" Foreground="White"
-                                                                   HorizontalAlignment="Stretch"
-                                                                   VerticalAlignment="Center" />
-                                                    </StackPanel>
-                                                </Button>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <ui:Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                                               x:Name="LogoutBtn"
+                                                               Click="LogoutBtn_OnClick"
+                                                               MouseEnter="LogoutBtn_OnMouseEnter">
+                                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                            <materialDesign:PackIcon Kind="Logout" Foreground="White"
+                                                                Margin="0,0,5,0" />
+                                                            <TextBlock Text="Logout" Foreground="White"
+                                                                       HorizontalAlignment="Stretch"
+                                                                       VerticalAlignment="Center" />
+                                                        </StackPanel>
+                                                    </ui:Button>
+                                                    <ui:Button Style="{DynamicResource MaterialDesignFlatButton}"
+                                                               x:Name="SettingsButton"
+                                                               Click="SettingsBtn_OnClick"
+                                                               MouseEnter="SettingsBtn_OnMouseEnter">
+                                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                            <materialDesign:PackIcon Kind="Settings" Foreground="White"
+                                                                Margin="0,0,5,0" />
+                                                            <TextBlock Text="Settings" Foreground="White"
+                                                                       HorizontalAlignment="Stretch"
+                                                                       VerticalAlignment="Center" />
+                                                        </StackPanel>
+                                                    </ui:Button>
+                                                </StackPanel>
                                             </StackPanel>
+
                                         </Grid>
+
                                     </ui:Card>
                                 </Grid>
                             </Border>
@@ -182,22 +191,7 @@
                                                    Opacity="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
                                     </StackPanel>
                                 </ui:Card>
-                                <ui:Button x:Name="SettingsButton" Margin="5" BorderThickness="0" Padding="5"
-                                           Click="SettingsBtn_OnClick" MouseEnter="SettingsBtn_OnMouseEnter"
-                                           Visibility="Visible" VerticalAlignment="Bottom"
-                                           Background="{StaticResource CubeBackground}" HorizontalAlignment="Stretch">
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"
-                                                VerticalAlignment="Center">
-                                        <materialDesign:PackIcon Kind="Settings" Height="20" Width="20"
-                                                                 HorizontalAlignment="Center" Foreground="White"
-                                                                 x:Name="SettingsIcon" Margin="0,10,0,10"
-                                                                 VerticalAlignment="Top" />
-                                        <TextBlock Text="Settings" TextAlignment="Center" VerticalAlignment="Center"
-                                                   x:Name="SettingsText" Foreground="White"
-                                                   Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                                   FontSize="15" Margin="10,0,0,0" />
-                                    </StackPanel>
-                                </ui:Button>
+
                             </StackPanel>
                         </Grid>
                     </ui:Card>
@@ -273,6 +267,27 @@
                                                    VerticalContentAlignment="Stretch"
                                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                                                    Icon="{ui:SymbolIcon Games24}" />
+                            <ui:Button Grid.Row="2" Grid.Column="0" x:Name="DiscordButton"
+                                       Margin="5" BorderThickness="0" Padding="5" Click="DiscordBtn_OnClick"
+                                       MouseEnter="DiscordBtn_OnMouseEnter"
+                                       Visibility="Visible" Background="{StaticResource CubeBackground}"
+                                       VerticalAlignment="Bottom"
+                                       HorizontalAlignment="Stretch">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                            VerticalAlignment="Center">
+                                    <ui:SymbolIcon Symbol="Server24" Height="20" Width="20"
+                                                   HorizontalAlignment="Center"
+                                                   Foreground="White" x:Name="DiscordIcon"
+                                                   Margin="0,10,0,10"
+                                                   VerticalAlignment="Top" />
+                                    <TextBlock Text="Discord Server" TextAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               x:Name="DiscordText" Foreground="White"
+                                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                               FontSize="15"
+                                               Margin="10,0,0,0" />
+                                </StackPanel>
+                            </ui:Button>
                         </ui:NavigationView.MenuItems>
                     </ui:NavigationView>
                 </TabItem>
@@ -280,20 +295,6 @@
             <skia:SKElement Grid.Row="0" Grid.Column="0" IsHitTestVisible="False"
                             PaintSurface="CanvasMouseView_OnPaintSurface" />
 
-            <ui:Button Grid.Row="2" Grid.Column="0" x:Name="DiscordButton" BorderThickness="0" Padding="5"
-                       Margin="15,15,15,25" Click="DiscordBtn_OnClick" MouseEnter="DiscordBtn_OnMouseEnter"
-                       Visibility="Visible" Background="{StaticResource CubeBackground}" VerticalAlignment="Bottom"
-                       HorizontalAlignment="Stretch">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <ui:SymbolIcon Symbol="Server24" Height="20" Width="20" HorizontalAlignment="Center"
-                                   Foreground="White" x:Name="DiscordIcon" Margin="0,10,0,10"
-                                   VerticalAlignment="Top" />
-                    <TextBlock Text="Discord Server" TextAlignment="Center" VerticalAlignment="Center"
-                               x:Name="DiscordText" Foreground="White"
-                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}" FontSize="15"
-                               Margin="10,0,0,0" />
-                </StackPanel>
-            </ui:Button>
         </Grid>
         <Frame Grid.Row="1" Grid.Column="1" x:Name="NavigationFrame"
                NavigationUIVisibility="Hidden" />

@@ -7,7 +7,6 @@
            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
            mc:Ignorable="d"
            FontFamily="Poppins"
-           Background="Black"
            Height="auto" Width="auto">
     <Page.Resources>
         <Style x:Key="TitleTextBlockStyle" TargetType="TextBlock">
