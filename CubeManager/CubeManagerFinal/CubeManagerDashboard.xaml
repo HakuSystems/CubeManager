@@ -1,29 +1,30 @@
-<ui:FluentWindow x:Class="CubeManager.CubeManagerFinal.CubeManagerDashboard"
-                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                 xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-                 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-                 xmlns:skia="clr-namespace:SkiaSharp.Views.WPF;assembly=SkiaSharp.Views.WPF"
-                 mc:Ignorable="d"
-                 Height="auto"
-                 Width="auto"
-                 Loaded="CubeManagerDashboard_OnLoaded"
-                 Foreground="{DynamicResource MaterialDesignBody}"
-                 FontFamily="{DynamicResource SegoeFluentIcons}"
-                 WindowStyle="None"
-                 AllowsTransparency="False"
-                 Title="CubeManager"
-                 WindowStartupLocation="CenterScreen"
-                 WindowState="Normal"
-                 ResizeMode="CanResizeWithGrip"
-                 TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-                 TextElement.FontWeight="DemiBold"
-                 TextElement.FontSize="13"
-                 TextOptions.TextFormattingMode="Ideal"
-                 TextOptions.TextRenderingMode="Auto"
-                 Background="{DynamicResource MaterialDesignPaper}">
+<ui:FluentWindow
+    AllowsTransparency="False"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="{DynamicResource SegoeFluentIcons}"
+    Foreground="{DynamicResource MaterialDesignBody}"
+    Height="auto"
+    Loaded="CubeManagerDashboard_OnLoaded"
+    ResizeMode="CanResizeWithGrip"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="DemiBold"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    Title="CubeManager"
+    Width="auto"
+    WindowStartupLocation="CenterScreen"
+    WindowState="Normal"
+    WindowStyle="None"
+    mc:Ignorable="d"
+    x:Class="CubeManager.CubeManagerFinal.CubeManagerDashboard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:skia="clr-namespace:SkiaSharp.Views.WPF;assembly=SkiaSharp.Views.WPF"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -34,12 +35,16 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <ui:TitleBar HorizontalAlignment="Stretch" Title="CubeManager"
-                     Background="{DynamicResource MaterialDesignDarkSeparatorBackground}"
-                     Grid.ColumnSpan="2" />
+        <ui:TitleBar
+            Background="{DynamicResource MaterialDesignDarkSeparatorBackground}"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Stretch"
+            Title="CubeManager" />
 
-        <Grid Grid.Row="1" Grid.Column="0"
-              Background="{DynamicResource MaterialDesignDarkSeparatorBackground}">
+        <Grid
+            Background="{DynamicResource MaterialDesignDarkSeparatorBackground}"
+            Grid.Column="0"
+            Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -53,15 +58,16 @@
                 <TabItem Background="Transparent" BorderBrush="Transparent">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <ui:SymbolIcon Margin="0,0,6,0"
-                                           VerticalAlignment="Center"
-                                           Foreground="{DynamicResource AccentTextFillColorSecondaryBrush}"
-                                           Symbol="ViewDesktop24" />
+                            <ui:SymbolIcon
+                                Foreground="{DynamicResource AccentTextFillColorSecondaryBrush}"
+                                Margin="0,0,6,0"
+                                Symbol="ViewDesktop24"
+                                VerticalAlignment="Center" />
                             <TextBlock Text="Dashboard" />
                         </StackPanel>
                     </TabItem.Header>
 
-                    <ui:Card BorderThickness="0" Background="Transparent">
+                    <ui:Card Background="Transparent" BorderThickness="0">
                         <Grid Margin="5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -71,11 +77,17 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <Border CornerRadius="10" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                                    Background="{DynamicResource CubeBackground}">
+                            <Border
+                                Background="{DynamicResource CubeBackground}"
+                                CornerRadius="10"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Grid.Row="0">
                                 <Grid>
-                                    <ui:Card materialDesign:ShadowAssist.Darken="True"
-                                             Background="{DynamicResource CubeBackground}" Padding="10">
+                                    <ui:Card
+                                        Background="{DynamicResource CubeBackground}"
+                                        Padding="10"
+                                        materialDesign:ShadowAssist.Darken="True">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
@@ -85,72 +97,107 @@
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal"
-                                                        VerticalAlignment="Center">
-                                                <ui:Image x:Name="ProfileImage" Width="80" Height="80"
-                                                          Margin="0,0,10,0"
-                                                          Source="{DynamicResource CubeLogo}"
-                                                          VerticalAlignment="Center" />
+                                            <StackPanel
+                                                Grid.Column="0"
+                                                Grid.Row="1"
+                                                Orientation="Horizontal"
+                                                VerticalAlignment="Center">
+                                                <ui:Image
+                                                    Height="80"
+                                                    Margin="0,0,10,0"
+                                                    Source="{DynamicResource CubeLogo}"
+                                                    VerticalAlignment="Center"
+                                                    Width="80"
+                                                    x:Name="ProfileImage" />
                                             </StackPanel>
 
-                                            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical"
-                                                        Margin="10,0,0,0"
+                                            <StackPanel
+                                                Grid.Column="1"
+                                                Grid.Row="1"
+                                                Margin="10,0,0,0"
+                                                Orientation="Vertical"
+                                                VerticalAlignment="Center">
+                                                <TextBlock
+                                                    FontWeight="Bold"
+                                                    Margin="0,0,0,10"
+                                                    Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
+                                                    Text="Welcome, username"
+                                                    x:Name="WelcomeText" />
+                                                <Button
+                                                    Background="Transparent"
+                                                    BorderBrush="Transparent"
+                                                    Click="ScoreBoardButton_OnClick"
+                                                    HorizontalAlignment="Stretch"
+                                                    Margin="0,0,0,10"
+                                                    VerticalAlignment="Center"
+                                                    materialDesign:ShadowAssist.Darken="True"
+                                                    materialDesign:ShadowAssist.ShadowAnimationDuration="0:0:0.10"
+                                                    x:Name="ScoreBoardButton">
+                                                    <StackPanel
+                                                        HorizontalAlignment="Stretch"
+                                                        Orientation="Horizontal"
                                                         VerticalAlignment="Center">
-                                                <TextBlock Text="Welcome, username" x:Name="WelcomeText"
-                                                           Margin="0,0,0,10"
-                                                           Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
-                                                           FontWeight="Bold" />
-                                                <Button materialDesign:ShadowAssist.Darken="True"
-                                                        materialDesign:ShadowAssist.ShadowAnimationDuration="0:0:0.10"
-                                                        Background="Transparent"
-                                                        BorderBrush="Transparent" HorizontalAlignment="Stretch"
-                                                        VerticalAlignment="Center"
-                                                        Click="ScoreBoardButton_OnClick" x:Name="ScoreBoardButton"
-                                                        Margin="0,0,0,10">
-                                                    <StackPanel Orientation="Horizontal"
-                                                                HorizontalAlignment="Stretch"
-                                                                VerticalAlignment="Center">
-                                                        <TextBlock x:Name="LvlTxtBox" Text="LvL: 0"
-                                                                   Margin="0,0,10,0" Foreground="White"
-                                                                   FontWeight="Bold"
-                                                                   Style="{DynamicResource MaterialDesignTextBlock}" />
-                                                        <ProgressBar x:Name="LvlProgbar"
-                                                                     Background="{DynamicResource MaterialDesignBody}"
-                                                                     BorderBrush="{DynamicResource MaterialDesignBody}"
-                                                                     ValueChanged="LvlProgbar_OnValueChanged"
-                                                                     Style="{DynamicResource MaterialDesignLinearProgressBar}"
-                                                                     HorizontalAlignment="Stretch" MinWidth="120"
-                                                                     Width="Auto" Height="5"
-                                                                     Margin="0,0,10,0" />
-                                                        <materialDesign:PackIcon Kind="Sparkles" x:Name="Sparkles"
+                                                        <TextBlock
+                                                            FontWeight="Bold"
                                                             Foreground="White"
-                                                            Height="20" Width="20" VerticalAlignment="Center"
-                                                            Margin="0,0,0,0" />
+                                                            Margin="0,0,10,0"
+                                                            Style="{DynamicResource MaterialDesignTextBlock}"
+                                                            Text="LvL: 0"
+                                                            x:Name="LvlTxtBox" />
+                                                        <ProgressBar
+                                                            Background="{DynamicResource MaterialDesignBody}"
+                                                            BorderBrush="{DynamicResource MaterialDesignBody}"
+                                                            Height="5"
+                                                            HorizontalAlignment="Stretch"
+                                                            Margin="0,0,10,0"
+                                                            MinWidth="120"
+                                                            Style="{DynamicResource MaterialDesignLinearProgressBar}"
+                                                            ValueChanged="LvlProgbar_OnValueChanged"
+                                                            Width="Auto"
+                                                            x:Name="LvlProgbar" />
+                                                        <materialDesign:PackIcon
+                                                            Foreground="White"
+                                                            Height="20"
+                                                            Kind="Sparkles"
+                                                            Margin="0,0,0,0"
+                                                            VerticalAlignment="Center"
+                                                            Width="20"
+                                                            x:Name="Sparkles" />
                                                     </StackPanel>
                                                 </Button>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <ui:Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                                               x:Name="LogoutBtn"
-                                                               Click="LogoutBtn_OnClick"
-                                                               MouseEnter="LogoutBtn_OnMouseEnter">
+                                                    <ui:Button
+                                                        Click="LogoutBtn_OnClick"
+                                                        MouseEnter="LogoutBtn_OnMouseEnter"
+                                                        Style="{DynamicResource MaterialDesignFlatButton}"
+                                                        x:Name="LogoutBtn">
                                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                            <materialDesign:PackIcon Kind="Logout" Foreground="White"
+                                                            <materialDesign:PackIcon
+                                                                Foreground="White"
+                                                                Kind="Logout"
                                                                 Margin="0,0,5,0" />
-                                                            <TextBlock Text="Logout" Foreground="White"
-                                                                       HorizontalAlignment="Stretch"
-                                                                       VerticalAlignment="Center" />
+                                                            <TextBlock
+                                                                Foreground="White"
+                                                                HorizontalAlignment="Stretch"
+                                                                Text="Logout"
+                                                                VerticalAlignment="Center" />
                                                         </StackPanel>
                                                     </ui:Button>
-                                                    <ui:Button Style="{DynamicResource MaterialDesignFlatButton}"
-                                                               x:Name="SettingsButton"
-                                                               Click="SettingsBtn_OnClick"
-                                                               MouseEnter="SettingsBtn_OnMouseEnter">
+                                                    <ui:Button
+                                                        Click="SettingsBtn_OnClick"
+                                                        MouseEnter="SettingsBtn_OnMouseEnter"
+                                                        Style="{DynamicResource MaterialDesignFlatButton}"
+                                                        x:Name="SettingsButton">
                                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                            <materialDesign:PackIcon Kind="Settings" Foreground="White"
+                                                            <materialDesign:PackIcon
+                                                                Foreground="White"
+                                                                Kind="Settings"
                                                                 Margin="0,0,5,0" />
-                                                            <TextBlock Text="Settings" Foreground="White"
-                                                                       HorizontalAlignment="Stretch"
-                                                                       VerticalAlignment="Center" />
+                                                            <TextBlock
+                                                                Foreground="White"
+                                                                HorizontalAlignment="Stretch"
+                                                                Text="Settings"
+                                                                VerticalAlignment="Center" />
                                                         </StackPanel>
                                                     </ui:Button>
                                                 </StackPanel>
@@ -163,32 +210,69 @@
                             </Border>
 
 
-                            <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                                <TextBlock Style="{DynamicResource MaterialDesignTextBlock}" Opacity="0.5"
-                                           Text="Next up" />
-                                <TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
-                                           Text="No tasks found" FontWeight="Bold" />
-                                <TextBlock Style="{DynamicResource MaterialDesignTextBlock}" Opacity="0.5"
-                                           Text="Tomorrow" />
-                                <TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
-                                           Text="No tasks found" FontWeight="Bold" />
+                            <StackPanel
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Grid.Row="1">
+                                <TextBlock
+                                    Opacity="0.5"
+                                    Style="{DynamicResource MaterialDesignTextBlock}"
+                                    Text="Next up" />
+                                <TextBlock
+                                    FontWeight="Bold"
+                                    Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
+                                    Text="No tasks found" />
+                                <TextBlock
+                                    Opacity="0.5"
+                                    Style="{DynamicResource MaterialDesignTextBlock}"
+                                    Text="Tomorrow" />
+                                <TextBlock
+                                    FontWeight="Bold"
+                                    Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
+                                    Text="No tasks found" />
 
-                                <ui:TextBox Margin="0,10,0,10" BorderThickness="0" PlaceholderText="Quick Notes"
-                                            TextWrapping="Wrap" PlaceholderEnabled="True" HorizontalAlignment="Stretch"
-                                            Height="150" VerticalAlignment="Stretch" />
+                                <ui:TextBox
+                                    BorderThickness="0"
+                                    Height="150"
+                                    HorizontalAlignment="Stretch"
+                                    Margin="0,10,0,10"
+                                    PlaceholderEnabled="True"
+                                    PlaceholderText="Quick Notes"
+                                    TextWrapping="Wrap"
+                                    VerticalAlignment="Stretch" />
 
                                 <ui:Card VerticalAlignment="Center">
                                     <StackPanel>
-                                        <materialDesign:PackIcon Kind="FormatQuoteOpen" Height="20" Width="20"
-                                                                 HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-                                        <TextBlock x:Name="ZenquouteText" Margin="5" Text="Quote of the day"
-                                                   TextWrapping="Wrap" MaxWidth="300" Opacity="0.5"
-                                                   HorizontalAlignment="Center" VerticalAlignment="Bottom" />
-                                        <materialDesign:PackIcon Kind="FormatQuoteClose" Height="20" Width="20"
-                                                                 HorizontalAlignment="Right" VerticalAlignment="Bottom" />
-                                        <TextBlock x:Name="ZenquouteTextAuthor" Margin="5"
-                                                   Text="Quote of the day Author" TextWrapping="Wrap" MaxWidth="300"
-                                                   Opacity="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                                        <materialDesign:PackIcon
+                                            Height="20"
+                                            HorizontalAlignment="Left"
+                                            Kind="FormatQuoteOpen"
+                                            VerticalAlignment="Bottom"
+                                            Width="20" />
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            Margin="5"
+                                            MaxWidth="300"
+                                            Opacity="0.5"
+                                            Text="Quote of the day"
+                                            TextWrapping="Wrap"
+                                            VerticalAlignment="Bottom"
+                                            x:Name="ZenquouteText" />
+                                        <materialDesign:PackIcon
+                                            Height="20"
+                                            HorizontalAlignment="Right"
+                                            Kind="FormatQuoteClose"
+                                            VerticalAlignment="Bottom"
+                                            Width="20" />
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            Margin="5"
+                                            MaxWidth="300"
+                                            Opacity="1"
+                                            Text="Quote of the day Author"
+                                            TextWrapping="Wrap"
+                                            VerticalAlignment="Bottom"
+                                            x:Name="ZenquouteTextAuthor" />
                                     </StackPanel>
                                 </ui:Card>
 
@@ -199,104 +283,155 @@
                 <TabItem>
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
-                            <ui:SymbolIcon Margin="0,0,6,0"
-                                           VerticalAlignment="Center"
-                                           Foreground="{DynamicResource AccentTextFillColorSecondaryBrush}"
-                                           Symbol="Navigation24" />
+                            <ui:SymbolIcon
+                                Foreground="{DynamicResource AccentTextFillColorSecondaryBrush}"
+                                Margin="0,0,6,0"
+                                Symbol="Navigation24"
+                                VerticalAlignment="Center" />
                             <TextBlock Text="Navigation" />
                         </StackPanel>
                     </TabItem.Header>
-                    <ui:NavigationView x:Name="NavView"
-                                       Background="{DynamicResource MaterialDesignDarkSeparatorBackground}"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                                       VerticalContentAlignment="Stretch"
-                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}" FontWeight="DemiBold"
-                                       Transition="FadeInWithSlide" PaneDisplayMode="Left"
-                                       IsBackButtonVisible="Collapsed">
+                    <ui:NavigationView
+                        Background="{DynamicResource MaterialDesignDarkSeparatorBackground}"
+                        FontWeight="DemiBold"
+                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        IsBackButtonVisible="Collapsed"
+                        PaneDisplayMode="Left"
+                        Transition="FadeInWithSlide"
+                        VerticalAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        x:Name="NavView">
                         <ui:NavigationView.MenuItems>
-                            <ui:NavigationViewItem Content="Routine Tasks" TargetPageTag="RoutineTasks"
-                                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                                   HorizontalContentAlignment="Stretch"
-                                                   VerticalContentAlignment="Stretch"
-                                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                   Icon="{ui:SymbolIcon ArrowRepeatAll24}" />
-                            <ui:NavigationViewItem Content="Todos" TargetPageTag="Todos"
-                                                   x:Name="TodosNavView"
-                                                   Click="TodosNavView_OnClick"
-                                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                                   HorizontalContentAlignment="Stretch"
-                                                   VerticalContentAlignment="Stretch"
-                                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                   Icon="{ui:SymbolIcon Check24}" />
-                            <ui:NavigationViewItem Content="Subscriptions" TargetPageTag="Subscriptions"
-                                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                                   Click="SubscriptionsNavView_OnClick"
-                                                   x:Name="SubscriptionsNavView"
-                                                   HorizontalContentAlignment="Stretch"
-                                                   VerticalContentAlignment="Stretch"
-                                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                   Icon="{ui:SymbolIcon Money24}" />
-                            <ui:NavigationViewItem Content="Life Goals" TargetPageTag="LifeGoals"
-                                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                                   HorizontalContentAlignment="Stretch"
-                                                   VerticalContentAlignment="Stretch"
-                                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                   Icon="{ui:SymbolIcon Trophy24}" />
-                            <ui:NavigationViewItem Content="Birthdays" TargetPageTag="Birthdays"
-                                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                                   HorizontalContentAlignment="Stretch"
-                                                   VerticalContentAlignment="Stretch"
-                                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                   Icon="{ui:SymbolIcon FoodCake24}" />
-                            <ui:NavigationViewItem Content="Family Calendar" TargetPageTag="FamilyCalendar"
-                                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                                   HorizontalContentAlignment="Stretch"
-                                                   VerticalContentAlignment="Stretch"
-                                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                   Icon="{ui:SymbolIcon People24}" />
-                            <ui:NavigationViewItem Content="Games Releases" TargetPageTag="GamesReleases"
-                                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                                   HorizontalContentAlignment="Stretch"
-                                                   VerticalContentAlignment="Stretch"
-                                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                   Icon="{ui:SymbolIcon Radar20}" />
-                            <ui:NavigationViewItem Content="Play Time" TargetPageTag="PlayTime"
-                                                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                                   HorizontalContentAlignment="Stretch"
-                                                   VerticalContentAlignment="Stretch"
-                                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-                                                   Icon="{ui:SymbolIcon Games24}" />
-                            <ui:Button Grid.Row="2" Grid.Column="0" x:Name="DiscordButton"
-                                       Margin="5" BorderThickness="0" Padding="5" Click="DiscordBtn_OnClick"
-                                       MouseEnter="DiscordBtn_OnMouseEnter"
-                                       Visibility="Visible" Background="{StaticResource CubeBackground}"
-                                       VerticalAlignment="Bottom"
-                                       HorizontalAlignment="Stretch">
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
-                                            VerticalAlignment="Center">
-                                    <ui:SymbolIcon Symbol="Server24" Height="20" Width="20"
-                                                   HorizontalAlignment="Center"
-                                                   Foreground="White" x:Name="DiscordIcon"
-                                                   Margin="0,10,0,10"
-                                                   VerticalAlignment="Top" />
-                                    <TextBlock Text="Discord Server" TextAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               x:Name="DiscordText" Foreground="White"
-                                               Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                               FontSize="15"
-                                               Margin="10,0,0,0" />
+                            <ui:NavigationViewItem
+                                Content="Routine Tasks"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                Icon="{ui:SymbolIcon ArrowRepeatAll24}"
+                                TargetPageTag="RoutineTasks"
+                                VerticalAlignment="Stretch"
+                                VerticalContentAlignment="Stretch" />
+                            <ui:NavigationViewItem
+                                Click="TodosNavView_OnClick"
+                                Content="Todos"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                Icon="{ui:SymbolIcon Check24}"
+                                TargetPageTag="Todos"
+                                VerticalAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
+                                x:Name="TodosNavView" />
+                            <ui:NavigationViewItem
+                                Click="SubscriptionsNavView_OnClick"
+                                Content="Subscriptions"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                Icon="{ui:SymbolIcon Money24}"
+                                TargetPageTag="Subscriptions"
+                                VerticalAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
+                                x:Name="SubscriptionsNavView" />
+                            <ui:NavigationViewItem
+                                Content="Life Goals"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                Icon="{ui:SymbolIcon Trophy24}"
+                                TargetPageTag="LifeGoals"
+                                VerticalAlignment="Stretch"
+                                VerticalContentAlignment="Stretch" />
+                            <ui:NavigationViewItem
+                                Content="Birthdays"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                Icon="{ui:SymbolIcon FoodCake24}"
+                                TargetPageTag="Birthdays"
+                                VerticalAlignment="Stretch"
+                                VerticalContentAlignment="Stretch" />
+                            <ui:NavigationViewItem
+                                Content="Family Calendar"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                Icon="{ui:SymbolIcon People24}"
+                                TargetPageTag="FamilyCalendar"
+                                VerticalAlignment="Stretch"
+                                VerticalContentAlignment="Stretch" />
+                            <ui:NavigationViewItem
+                                Content="Games Releases"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                Icon="{ui:SymbolIcon Radar20}"
+                                TargetPageTag="GamesReleases"
+                                VerticalAlignment="Stretch"
+                                VerticalContentAlignment="Stretch" />
+                            <ui:NavigationViewItem
+                                Content="Play Time"
+                                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                Icon="{ui:SymbolIcon Games24}"
+                                TargetPageTag="PlayTime"
+                                VerticalAlignment="Stretch"
+                                VerticalContentAlignment="Stretch" />
+                            <ui:Button
+                                Background="{StaticResource CubeBackground}"
+                                BorderThickness="0"
+                                Click="DiscordBtn_OnClick"
+                                Grid.Column="0"
+                                Grid.Row="2"
+                                HorizontalAlignment="Stretch"
+                                Margin="5"
+                                MouseEnter="DiscordBtn_OnMouseEnter"
+                                Padding="5"
+                                VerticalAlignment="Bottom"
+                                Visibility="Visible"
+                                x:Name="DiscordButton">
+                                <StackPanel
+                                    HorizontalAlignment="Center"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+                                    <ui:SymbolIcon
+                                        Foreground="White"
+                                        Height="20"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,10,0,10"
+                                        Symbol="Server24"
+                                        VerticalAlignment="Top"
+                                        Width="20"
+                                        x:Name="DiscordIcon" />
+                                    <TextBlock
+                                        FontSize="15"
+                                        Foreground="White"
+                                        Margin="10,0,0,0"
+                                        Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                        Text="Discord Server"
+                                        TextAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        x:Name="DiscordText" />
                                 </StackPanel>
                             </ui:Button>
                         </ui:NavigationView.MenuItems>
                     </ui:NavigationView>
                 </TabItem>
             </TabControl>
-            <skia:SKElement Grid.Row="0" Grid.Column="0" IsHitTestVisible="False"
-                            PaintSurface="CanvasMouseView_OnPaintSurface" />
+            <skia:SKElement
+                Grid.Column="0"
+                Grid.Row="0"
+                IsHitTestVisible="False"
+                PaintSurface="CanvasMouseView_OnPaintSurface" />
 
         </Grid>
-        <Frame Grid.Row="1" Grid.Column="1" x:Name="NavigationFrame"
-               NavigationUIVisibility="Hidden" />
+        <Frame
+            Grid.Column="1"
+            Grid.Row="1"
+            NavigationUIVisibility="Hidden"
+            x:Name="NavigationFrame" />
     </Grid>
 </ui:FluentWindow>

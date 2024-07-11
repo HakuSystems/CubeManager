@@ -1,16 +1,18 @@
-<UserControl x:Class="CubeManager.Controls.Subscriptions.NewSubscriptionUI"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             Background="Black"
-             Loaded="NewSubscriptionUI_OnLoaded"
-             Foreground="White"
-             FontFamily="Poppins"
-             mc:Ignorable="d"
-             d:DesignHeight="auto" d:DesignWidth="auto">
+<UserControl
+    Background="Black"
+    FontFamily="Poppins"
+    Foreground="White"
+    Loaded="NewSubscriptionUI_OnLoaded"
+    d:DesignHeight="auto"
+    d:DesignWidth="auto"
+    mc:Ignorable="d"
+    x:Class="CubeManager.Controls.Subscriptions.NewSubscriptionUI"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <materialDesign:TransitioningContent>
         <materialDesign:TransitioningContent.OpeningEffects>
@@ -29,119 +31,145 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <ui:Card Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Margin="15" Padding="15">
+            <ui:Card
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                Grid.Row="1"
+                Margin="15"
+                Padding="15">
                 <StackPanel>
-                    <TextBlock Style="{DynamicResource MaterialDesignTextBlock}"
-                               Text="New Subscription Process"
-                               FontSize="18"
-                               Margin="10"
-                               FontWeight="Bold"
-                               HorizontalAlignment="Center" />
+                    <TextBlock
+                        FontSize="18"
+                        FontWeight="Bold"
+                        HorizontalAlignment="Center"
+                        Margin="10"
+                        Style="{DynamicResource MaterialDesignTextBlock}"
+                        Text="New Subscription Process" />
 
 
-                    <ui:Card Padding="5" Margin="5" x:Name="ColorCard">
+                    <ui:Card
+                        Margin="5"
+                        Padding="5"
+                        x:Name="ColorCard">
 
                         <StackPanel>
-                            <ui:Card Padding="5" Margin="5">
+                            <ui:Card Margin="5" Padding="5">
                                 <StackPanel>
-                                    <TextBox Style="{DynamicResource MaterialDesignTextBox}"
-                                             Margin="10"
-                                             FontSize="26"
-                                             materialDesign:HintAssist.Hint="Price"
-                                             x:Name="PriceBox"
-                                             TextChanged="PiceBox_OnTextChanged"/>
-                                    <ComboBox x:Name="CurrencyComboBox" Margin="5">
+                                    <TextBox
+                                        FontSize="26"
+                                        Margin="10"
+                                        Style="{DynamicResource MaterialDesignTextBox}"
+                                        TextChanged="PiceBox_OnTextChanged"
+                                        materialDesign:HintAssist.Hint="Price"
+                                        x:Name="PriceBox" />
+                                    <ComboBox Margin="5" x:Name="CurrencyComboBox">
                                         <ComboBoxItem Content="EUR" />
                                     </ComboBox>
-                                    <TextBox Style="{DynamicResource MaterialDesignTextBox}"
-                                             Margin="10"
-                                             FontSize="16"
-                                             materialDesign:HintAssist.Hint="Subscription Name"
-                                             x:Name="SubscriptionName"
-                                             TextChanged="SubscriptionName_OnTextChanged" />
-                                    <TextBox Style="{DynamicResource MaterialDesignTextBox}"
-                                             Margin="10"
-                                             x:Name="Description"
-                                             FontSize="16"
-                                             materialDesign:HintAssist.Hint="Description"
-                                             Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
-                                </StackPanel>
-                            </ui:Card>
-                            <ui:Card Padding="5" Margin="5">
-                                <StackPanel>
-                                    <TextBlock
-                                        Text="Billing date"
-                                        x:Name="BillingPeriodTextBlock"
-                                        Style="{DynamicResource MaterialDesignTextBlock}"
+                                    <TextBox
                                         FontSize="16"
                                         Margin="10"
-                                        FontWeight="Bold" />
+                                        Style="{DynamicResource MaterialDesignTextBox}"
+                                        TextChanged="SubscriptionName_OnTextChanged"
+                                        materialDesign:HintAssist.Hint="Subscription Name"
+                                        x:Name="SubscriptionName" />
+                                    <TextBox
+                                        FontSize="16"
+                                        Margin="10"
+                                        Style="{DynamicResource MaterialDesignTextBox}"
+                                        Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
+                                        materialDesign:HintAssist.Hint="Description"
+                                        x:Name="Description" />
+                                </StackPanel>
+                            </ui:Card>
+                            <ui:Card Margin="5" Padding="5">
+                                <StackPanel>
+                                    <TextBlock
+                                        FontSize="16"
+                                        FontWeight="Bold"
+                                        Margin="10"
+                                        Style="{DynamicResource MaterialDesignTextBlock}"
+                                        Text="Billing date"
+                                        x:Name="BillingPeriodTextBlock" />
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock
-                                            Text="Every"
-                                            Style="{DynamicResource MaterialDesignTextBlock}"
                                             FontSize="16"
-                                            Opacity="0.5"
+                                            FontWeight="Bold"
                                             Margin="10"
-                                            FontWeight="Bold" />
-                                        <TextBox Style="{DynamicResource MaterialDesignTextBox}"
-                                                 Margin="10"
-                                                 FontSize="16"
-                                                 x:Name="Period"
-                                                 TextChanged="Period_OnTextChanged"
-                                                 materialDesign:HintAssist.HelperTextFontSize="12"
-                                                 materialDesign:HintAssist.Hint="1"
-                                                 HorizontalContentAlignment="Center"
-                                                 Text="1"
-                                                 Width="50" />
+                                            Opacity="0.5"
+                                            Style="{DynamicResource MaterialDesignTextBlock}"
+                                            Text="Every" />
+                                        <TextBox
+                                            FontSize="16"
+                                            HorizontalContentAlignment="Center"
+                                            Margin="10"
+                                            Style="{DynamicResource MaterialDesignTextBox}"
+                                            Text="1"
+                                            TextChanged="Period_OnTextChanged"
+                                            Width="50"
+                                            materialDesign:HintAssist.HelperTextFontSize="12"
+                                            materialDesign:HintAssist.Hint="1"
+                                            x:Name="Period" />
 
-                                        <ComboBox Style="{DynamicResource MaterialDesignComboBox}"
-                                                  Margin="10"
-                                                  FontSize="16"
-                                                  x:Name="PeriodType"
-                                                  materialDesign:HintAssist.Hint="Month" />
+                                        <ComboBox
+                                            FontSize="16"
+                                            Margin="10"
+                                            Style="{DynamicResource MaterialDesignComboBox}"
+                                            materialDesign:HintAssist.Hint="Month"
+                                            x:Name="PeriodType" />
                                     </StackPanel>
 
-                                    <DatePicker Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"
-                                                Margin="10"
-                                                x:Name="FirstPaymentDate"
-                                                SelectedDateChanged="FirstPaymentDate_OnSelectedDateChanged"
-                                                FontSize="16"
-                                                materialDesign:HintAssist.Hint="First Payment Date"
-                                                SelectedDate="{Binding FirstPaymentDate, UpdateSourceTrigger=PropertyChanged}" />
-                                    <CheckBox Content="One Time Payment?" x:Name="IsOneTimePayment" Unchecked="IsOneTimePayment_OnUnchecked" Checked="IsOneTimePayment_OnChecked"/>
+                                    <DatePicker
+                                        FontSize="16"
+                                        Margin="10"
+                                        SelectedDate="{Binding FirstPaymentDate, UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedDateChanged="FirstPaymentDate_OnSelectedDateChanged"
+                                        Style="{DynamicResource MaterialDesignFloatingHintDatePicker}"
+                                        materialDesign:HintAssist.Hint="First Payment Date"
+                                        x:Name="FirstPaymentDate" />
+                                    <CheckBox
+                                        Checked="IsOneTimePayment_OnChecked"
+                                        Content="One Time Payment?"
+                                        Unchecked="IsOneTimePayment_OnUnchecked"
+                                        x:Name="IsOneTimePayment" />
                                 </StackPanel>
                             </ui:Card>
                             <TextBlock
+                                FontSize="16"
+                                FontWeight="Bold"
                                 IsEnabled="False"
-                                Text="Card Background Color"
+                                Margin="10"
                                 Style="{DynamicResource MaterialDesignTextBlock}"
+                                Text="Card Background Color" />
+                            <materialDesign:ColorPicker
+                                ColorChanged="ColorPicker_OnColorChanged"
                                 FontSize="16"
                                 Margin="10"
-                                FontWeight="Bold" />
-                            <materialDesign:ColorPicker Style="{DynamicResource MaterialDesignColorPicker}"
-                                                        Margin="10"
-                                                        x:Name="ColorPicker"
-                                                        ColorChanged="ColorPicker_OnColorChanged"
-                                                       FontSize="16"
-                                                        materialDesign:HintAssist.Hint="Card Background Color" />
-                            <ui:Card Padding="5" Margin="5">
+                                Style="{DynamicResource MaterialDesignColorPicker}"
+                                materialDesign:HintAssist.Hint="Card Background Color"
+                                x:Name="ColorPicker" />
+                            <ui:Card Margin="5" Padding="5">
                                 <StackPanel>
-                                    <TextBox Style="{DynamicResource MaterialDesignTextBox}"
-                                             Margin="10"
-                                             FontSize="16"
-                                             materialDesign:HintAssist.Hint="Payment Method"
-                                             Text="{Binding NewSubscriptionPaymentMethod, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox
+                                        FontSize="16"
+                                        Margin="10"
+                                        Style="{DynamicResource MaterialDesignTextBox}"
+                                        Text="{Binding NewSubscriptionPaymentMethod, UpdateSourceTrigger=PropertyChanged}"
+                                        materialDesign:HintAssist.Hint="Payment Method" />
 
-                                    <TextBox Style="{DynamicResource MaterialDesignTextBox}"
-                                             Margin="10"
-                                             FontSize="16"
-                                             materialDesign:HintAssist.Hint="Note"
-                                             Text="{Binding NewSubscriptionPersonalNotes, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox
+                                        FontSize="16"
+                                        Margin="10"
+                                        Style="{DynamicResource MaterialDesignTextBox}"
+                                        Text="{Binding NewSubscriptionPersonalNotes, UpdateSourceTrigger=PropertyChanged}"
+                                        materialDesign:HintAssist.Hint="Note" />
                                 </StackPanel>
                             </ui:Card>
                             <ui:Card>
-                                <Button Content="Create" Foreground="White" x:Name="CreateSubBtn" Click="CreateSubBtn_OnClick"/>
+                                <Button
+                                    Click="CreateSubBtn_OnClick"
+                                    Content="Create"
+                                    Foreground="White"
+                                    x:Name="CreateSubBtn" />
                             </ui:Card>
                         </StackPanel>
                     </ui:Card>

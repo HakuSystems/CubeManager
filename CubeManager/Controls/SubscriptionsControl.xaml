@@ -1,15 +1,17 @@
-<UserControl x:Class="CubeManager.Controls.SubscriptionsControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d"
-             FontFamily="Poppins"
-             Foreground="{DynamicResource MaterialDesignDarkForeground}"
-             Background="{DynamicResource MaterialDesignDarkBackground}"
-             Loaded="SubscriptionsControl_OnLoaded"
-             d:DesignHeight="500" d:DesignWidth="1000">
+<UserControl
+    Background="{DynamicResource MaterialDesignDarkBackground}"
+    FontFamily="Poppins"
+    Foreground="{DynamicResource MaterialDesignDarkForeground}"
+    Loaded="SubscriptionsControl_OnLoaded"
+    d:DesignHeight="500"
+    d:DesignWidth="1000"
+    mc:Ignorable="d"
+    x:Class="CubeManager.Controls.SubscriptionsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100*" />
@@ -21,103 +23,130 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Grid.ColumnSpan="3">
-            <materialDesign:PackIcon Kind="Money" Height="35" Width="35" VerticalAlignment="Center"
-                                     Margin="5" />
-            <Label Content="Subscriptions" FontSize="24" FontWeight="Bold" VerticalAlignment="Center" />
+        <StackPanel
+            Grid.ColumnSpan="3"
+            Grid.Row="0"
+            Orientation="Horizontal">
+            <materialDesign:PackIcon
+                Height="35"
+                Kind="Money"
+                Margin="5"
+                VerticalAlignment="Center"
+                Width="35" />
+            <Label
+                Content="Subscriptions"
+                FontSize="24"
+                FontWeight="Bold"
+                VerticalAlignment="Center" />
         </StackPanel>
         <StackPanel
+            Grid.Column="0"
+            Grid.Row="1"
             Margin="5"
-            Grid.Row="1" Grid.Column="0" ZIndex="100">
+            ZIndex="100">
             <Button
-                x:Name="AddSubscriptionButton"
-                HorizontalAlignment="Left"
                 Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                HorizontalAlignment="Left"
                 Margin="5"
-                Style="{StaticResource MaterialDesignFlatButton}">
+                Style="{StaticResource MaterialDesignFlatButton}"
+                x:Name="AddSubscriptionButton">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Plus"
-                                                 VerticalAlignment="Center"
-                                                 Margin="5"
-                                                 Foreground="{StaticResource MaterialDesignDarkForeground}" />
-                        <TextBlock Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                   Text="Add Subscription"
-                                   VerticalAlignment="Center"
-                                   Margin="5,0,0,0"
-                                   HorizontalAlignment="Left"
-                                   FontSize="15"
-                                   FontWeight="Bold"
-                                   TextWrapping="Wrap"
-                                   TextTrimming="CharacterEllipsis"
-                                   Width="Auto"
-                                   Height="Auto" />
+                        <materialDesign:PackIcon
+                            Foreground="{StaticResource MaterialDesignDarkForeground}"
+                            Kind="Plus"
+                            Margin="5"
+                            VerticalAlignment="Center" />
+                        <TextBlock
+                            FontSize="15"
+                            FontWeight="Bold"
+                            Foreground="{StaticResource MaterialDesignDarkForeground}"
+                            Height="Auto"
+                            HorizontalAlignment="Left"
+                            Margin="5,0,0,0"
+                            Text="Add Subscription"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="Wrap"
+                            VerticalAlignment="Center"
+                            Width="Auto" />
 
                     </StackPanel>
                 </Button.Content>
             </Button>
             <materialDesign:Snackbar
-                x:Name="ErrorHandlingSnackbar"
-                MessageQueue="{materialDesign:MessageQueue}"
                 Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
-                Foreground="White"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Bottom"
-                Margin="5"
-                Padding="5"
-                Width="Auto"
-                Height="Auto"
-                HorizontalContentAlignment="Left"
-                VerticalContentAlignment="Bottom"
                 FontSize="15"
                 FontWeight="Bold"
-                Opacity="0.8" />
+                Foreground="White"
+                Height="Auto"
+                HorizontalAlignment="Left"
+                HorizontalContentAlignment="Left"
+                Margin="5"
+                MessageQueue="{materialDesign:MessageQueue}"
+                Opacity="0.8"
+                Padding="5"
+                VerticalAlignment="Bottom"
+                VerticalContentAlignment="Bottom"
+                Width="Auto"
+                x:Name="ErrorHandlingSnackbar" />
         </StackPanel>
 
-        <!-- Start Of Edit Mode -->
-        <ScrollViewer Grid.Row="1" Grid.Column="1" Visibility="Visible" x:Name="EditModeScroller"
-                      VerticalScrollBarVisibility="Auto">
+        <!--  Start Of Edit Mode  -->
+        <ScrollViewer
+            Grid.Column="1"
+            Grid.Row="1"
+            VerticalScrollBarVisibility="Auto"
+            Visibility="Visible"
+            x:Name="EditModeScroller">
             <materialDesign:DialogHost
                 CloseOnClickAway="True"
                 DialogTheme="Dark"
-                MinWidth="500"
                 MinHeight="400"
+                MinWidth="500"
                 x:Name="DialogHostOperation">
 
                 <materialDesign:DialogHost.DialogContent>
                     <materialDesign:Card
-                        Padding="15"
+                        MinHeight="400"
                         MinWidth="500"
-                        MinHeight="400">
+                        Padding="15">
                         <StackPanel>
-                            <Calendar x:Name="PaymentDateCalendarOnDialog" Visibility="Collapsed" />
+                            <Calendar Visibility="Collapsed" x:Name="PaymentDateCalendarOnDialog" />
                             <Button
-                                x:Name="SelectDateBtnOnDialog"
-                                Visibility="Collapsed"
+                                Content="Select Date"
                                 FontSize="15"
-                                Margin="5"
                                 Foreground="White"
+                                Margin="5"
                                 Style="{StaticResource MaterialDesignFlatButton}"
-                                Content="Select Date" />
-                            <materialDesign:ColorPicker Visibility="Collapsed"
-                                                        Height="450"
-                                                        x:Name="ColorPickerOnDialog"
-                                                        VerticalAlignment="Bottom" />
-                            <Button x:Name="SelectColorBtnOnDialog" Visibility="Collapsed" Margin="5"
-                                   >
+                                Visibility="Collapsed"
+                                x:Name="SelectDateBtnOnDialog" />
+                            <materialDesign:ColorPicker
+                                Height="450"
+                                VerticalAlignment="Bottom"
+                                Visibility="Collapsed"
+                                x:Name="ColorPickerOnDialog" />
+                            <Button
+                                Margin="5"
+                                Visibility="Collapsed"
+                                x:Name="SelectColorBtnOnDialog">
                                 <Button.Content>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
-                                                VerticalAlignment="Stretch">
+                                    <StackPanel
+                                        HorizontalAlignment="Center"
+                                        Orientation="Horizontal"
+                                        VerticalAlignment="Stretch">
 
-                                        <materialDesign:PackIcon Kind="Colorize"
-                                                                 VerticalAlignment="Center"
-                                                                 Foreground="{DynamicResource MaterialDesignDarkForeground}"
-                                                                 Height="30" Width="30" />
-                                        <TextBlock Text="Change Color"
-                                                   VerticalAlignment="Center"
-                                                   Foreground="{DynamicResource MaterialDesignDarkForeground}"
-                                                   FontSize="20"
-                                                   FontWeight="Bold" />
+                                        <materialDesign:PackIcon
+                                            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                                            Height="30"
+                                            Kind="Colorize"
+                                            VerticalAlignment="Center"
+                                            Width="30" />
+                                        <TextBlock
+                                            FontSize="20"
+                                            FontWeight="Bold"
+                                            Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                                            Text="Change Color"
+                                            VerticalAlignment="Center" />
                                     </StackPanel>
 
                                 </Button.Content>
@@ -129,68 +158,82 @@
                 </materialDesign:DialogHost.DialogContent>
 
 
-                <StackPanel ZIndex="100" VerticalAlignment="Top" Orientation="Vertical">
+                <StackPanel
+                    Orientation="Vertical"
+                    VerticalAlignment="Top"
+                    ZIndex="100">
                     <GroupBox Header="Edit this Example">
-                        <materialDesign:Card x:Name="EditableCard"
-                                             Margin="0,0,0,10" Padding="10">
+                        <materialDesign:Card
+                            Margin="0,0,0,10"
+                            Padding="10"
+                            x:Name="EditableCard">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition Width="auto" />
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
-                                    <StackPanel
-                                        Orientation="Vertical"
-                                        HorizontalAlignment="Stretch">
+                                    <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
 
-                                        <TextBox materialDesign:HintAssist.Hint="Subscription Title"
-                                                 FontWeight="SemiBold"
-                                                 x:Name="SubscriptionNameTextBox" />
-                                        <TextBox materialDesign:HintAssist.Hint="Price"
-                                                 x:Name="SubscriptionCostTextBox"
-                                                 HorizontalAlignment="Left"
-                                                 FontSize="24" FontWeight="Bold" VerticalAlignment="Center" />
-                                        <Expander Header="Currency:"
-                                                  Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
-                                                  materialDesign:ShadowAssist.Darken="True"
-                                                  x:Name="CurrencyExpander">
+                                        <TextBox
+                                            FontWeight="SemiBold"
+                                            materialDesign:HintAssist.Hint="Subscription Title"
+                                            x:Name="SubscriptionNameTextBox" />
+                                        <TextBox
+                                            FontSize="24"
+                                            FontWeight="Bold"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            materialDesign:HintAssist.Hint="Price"
+                                            x:Name="SubscriptionCostTextBox" />
+                                        <Expander
+                                            Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                                            Header="Currency:"
+                                            materialDesign:ShadowAssist.Darken="True"
+                                            x:Name="CurrencyExpander">
                                             <StackPanel Orientation="Vertical">
                                                 <Button
-                                                    x:Name="EuroButton"
                                                     HorizontalContentAlignment="Left"
                                                     Margin="5"
-                                                    Style="{StaticResource MaterialDesignFlatButton}">
+                                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                                    x:Name="EuroButton">
                                                     <Button.Content>
                                                         <StackPanel Orientation="Horizontal">
-                                                            <materialDesign:PackIcon Margin="5"
+                                                            <materialDesign:PackIcon
                                                                 Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                                VerticalAlignment="Center" Kind="CurrencyEur"
-                                                                HorizontalAlignment="Left" />
-                                                            <TextBlock Text="Euro"
-                                                                       Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                                       FontSize="15"
-                                                                       VerticalAlignment="Center"
-                                                                       HorizontalAlignment="Left" />
+                                                                HorizontalAlignment="Left"
+                                                                Kind="CurrencyEur"
+                                                                Margin="5"
+                                                                VerticalAlignment="Center" />
+                                                            <TextBlock
+                                                                FontSize="15"
+                                                                Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                                HorizontalAlignment="Left"
+                                                                Text="Euro"
+                                                                VerticalAlignment="Center" />
 
                                                         </StackPanel>
                                                     </Button.Content>
                                                 </Button>
                                                 <Button
-                                                    x:Name="UsdButton"
                                                     HorizontalContentAlignment="Left"
                                                     Margin="5"
-                                                    Style="{StaticResource MaterialDesignFlatButton}">
+                                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                                    x:Name="UsdButton">
                                                     <Button.Content>
                                                         <StackPanel Orientation="Horizontal">
-                                                            <materialDesign:PackIcon Margin="5"
+                                                            <materialDesign:PackIcon
                                                                 Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                                VerticalAlignment="Center" Kind="CurrencyUsd"
-                                                                HorizontalAlignment="Left" />
-                                                            <TextBlock Text="US Dollar"
-                                                                       Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                                       FontSize="15"
-                                                                       VerticalAlignment="Center"
-                                                                       HorizontalAlignment="Left" />
+                                                                HorizontalAlignment="Left"
+                                                                Kind="CurrencyUsd"
+                                                                Margin="5"
+                                                                VerticalAlignment="Center" />
+                                                            <TextBlock
+                                                                FontSize="15"
+                                                                Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                                HorizontalAlignment="Left"
+                                                                Text="US Dollar"
+                                                                VerticalAlignment="Center" />
 
                                                         </StackPanel>
                                                     </Button.Content>
@@ -199,15 +242,15 @@
                                         </Expander>
                                     </StackPanel>
                                     <TextBox
+                                        FontSize="12"
+                                        FontStyle="Italic"
+                                        Opacity="0.7"
                                         materialDesign:HintAssist.Hint="Description of the subscription"
-                                        x:Name="SubscriptionDescriptionTextBox"
-                                        FontStyle="Italic" FontSize="12" Opacity="0.7" />
+                                        x:Name="SubscriptionDescriptionTextBox" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <materialDesign:Card
-                                        Padding="10"
-                                        Background="{DynamicResource MaterialDesignDarkSeparatorBackground}">
+                                    <materialDesign:Card Background="{DynamicResource MaterialDesignDarkSeparatorBackground}" Padding="10">
                                         <StackPanel Orientation="Vertical">
                                             <Button IsEnabled="False" Style="{StaticResource MaterialDesignIconButton}">
                                                 <Button.Content>
@@ -215,11 +258,16 @@
                                                 </Button.Content>
                                             </Button>
                                             <StackPanel Orientation="Vertical">
-                                                <TextBlock Text="D/M/Y" HorizontalAlignment="Center" FontSize="24"
-                                                           FontWeight="Bold" />
-                                                <TextBlock Text="LEFT"
-                                                           HorizontalAlignment="Center" FontSize="15"
-                                                           FontWeight="SemiBold" />
+                                                <TextBlock
+                                                    FontSize="24"
+                                                    FontWeight="Bold"
+                                                    HorizontalAlignment="Center"
+                                                    Text="D/M/Y" />
+                                                <TextBlock
+                                                    FontSize="15"
+                                                    FontWeight="SemiBold"
+                                                    HorizontalAlignment="Center"
+                                                    Text="LEFT" />
                                             </StackPanel>
                                             <Button IsEnabled="False" Style="{StaticResource MaterialDesignIconButton}">
                                                 <Button.Content>
@@ -234,113 +282,140 @@
                     </GroupBox>
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Billed Every" Margin="5" FontSize="24" FontWeight="Bold"
-                                       x:Name="BilledEveryTextBlock"
-                                       VerticalAlignment="Center" />
-                            <TextBox materialDesign:HintAssist.Hint="1"
-                                     x:Name="BillingPeriodTextBox"
-                                     Width="50"
-                                     MaxWidth="50"
-                                     Margin="5"
-                                     VerticalContentAlignment="Center"
-                                     HorizontalContentAlignment="Center"
-                                     FontSize="24" FontWeight="Bold" />
-                            <Expander Header="Select Billing Period"
-                                      Margin="5"
-                                      Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
-                                      materialDesign:ShadowAssist.Darken="True"
-                                      x:Name="BillingExpander">
+                            <TextBlock
+                                FontSize="24"
+                                FontWeight="Bold"
+                                Margin="5"
+                                Text="Billed Every"
+                                VerticalAlignment="Center"
+                                x:Name="BilledEveryTextBlock" />
+                            <TextBox
+                                FontSize="24"
+                                FontWeight="Bold"
+                                HorizontalContentAlignment="Center"
+                                Margin="5"
+                                MaxWidth="50"
+                                VerticalContentAlignment="Center"
+                                Width="50"
+                                materialDesign:HintAssist.Hint="1"
+                                x:Name="BillingPeriodTextBox" />
+                            <Expander
+                                Background="{StaticResource MaterialDesignDarkSeparatorBackground}"
+                                Header="Select Billing Period"
+                                Margin="5"
+                                materialDesign:ShadowAssist.Darken="True"
+                                x:Name="BillingExpander">
                                 <StackPanel Orientation="Vertical">
                                     <Button
-                                        x:Name="DayBillingBtn"
                                         HorizontalContentAlignment="Left"
                                         Margin="5"
-                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        x:Name="DayBillingBtn">
                                         <Button.Content>
                                             <StackPanel Orientation="Horizontal">
-                                                <materialDesign:PackIcon Margin="5"
-                                                                         Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                                         VerticalAlignment="Center" Kind="Schedule"
-                                                                         HorizontalAlignment="Left" />
-                                                <TextBlock Text="Day"
-                                                           Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                           FontSize="15"
-                                                           VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                                <materialDesign:PackIcon
+                                                    Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                    HorizontalAlignment="Left"
+                                                    Kind="Schedule"
+                                                    Margin="5"
+                                                    VerticalAlignment="Center" />
+                                                <TextBlock
+                                                    FontSize="15"
+                                                    Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                    HorizontalAlignment="Left"
+                                                    Text="Day"
+                                                    VerticalAlignment="Center" />
 
                                             </StackPanel>
                                         </Button.Content>
                                     </Button>
                                     <Button
-                                        x:Name="WeekBillingBtn"
                                         HorizontalContentAlignment="Left"
                                         Margin="5"
-                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        x:Name="WeekBillingBtn">
                                         <Button.Content>
                                             <StackPanel Orientation="Horizontal">
-                                                <materialDesign:PackIcon Margin="5"
-                                                                         Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                                         VerticalAlignment="Center" Kind="Schedule"
-                                                                         HorizontalAlignment="Left" />
-                                                <TextBlock Text="Week"
-                                                           Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                           FontSize="15"
-                                                           VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                                <materialDesign:PackIcon
+                                                    Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                    HorizontalAlignment="Left"
+                                                    Kind="Schedule"
+                                                    Margin="5"
+                                                    VerticalAlignment="Center" />
+                                                <TextBlock
+                                                    FontSize="15"
+                                                    Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                    HorizontalAlignment="Left"
+                                                    Text="Week"
+                                                    VerticalAlignment="Center" />
 
                                             </StackPanel>
                                         </Button.Content>
                                     </Button>
                                     <Button
-                                        x:Name="MonthBillingBtn"
                                         HorizontalContentAlignment="Left"
                                         Margin="5"
-                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        x:Name="MonthBillingBtn">
                                         <Button.Content>
                                             <StackPanel Orientation="Horizontal">
-                                                <materialDesign:PackIcon Margin="5"
-                                                                         Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                                         VerticalAlignment="Center" Kind="Schedule"
-                                                                         HorizontalAlignment="Left" />
-                                                <TextBlock Text="Month"
-                                                           Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                           FontSize="15"
-                                                           VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                                <materialDesign:PackIcon
+                                                    Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                    HorizontalAlignment="Left"
+                                                    Kind="Schedule"
+                                                    Margin="5"
+                                                    VerticalAlignment="Center" />
+                                                <TextBlock
+                                                    FontSize="15"
+                                                    Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                    HorizontalAlignment="Left"
+                                                    Text="Month"
+                                                    VerticalAlignment="Center" />
 
                                             </StackPanel>
                                         </Button.Content>
                                     </Button>
                                     <Button
-                                        x:Name="YearBillingBtn"
                                         HorizontalContentAlignment="Left"
                                         Margin="5"
-                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        x:Name="YearBillingBtn">
                                         <Button.Content>
                                             <StackPanel Orientation="Horizontal">
-                                                <materialDesign:PackIcon Margin="5"
-                                                                         Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                                         VerticalAlignment="Center" Kind="Schedule"
-                                                                         HorizontalAlignment="Left" />
-                                                <TextBlock Text="Year"
-                                                           Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                           FontSize="15"
-                                                           VerticalAlignment="Center" HorizontalAlignment="Left" />
+                                                <materialDesign:PackIcon
+                                                    Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                    HorizontalAlignment="Left"
+                                                    Kind="Schedule"
+                                                    Margin="5"
+                                                    VerticalAlignment="Center" />
+                                                <TextBlock
+                                                    FontSize="15"
+                                                    Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                                    HorizontalAlignment="Left"
+                                                    Text="Year"
+                                                    VerticalAlignment="Center" />
 
                                             </StackPanel>
                                         </Button.Content>
                                     </Button>
                                 </StackPanel>
                             </Expander>
-                            <Button Style="{StaticResource MaterialDesignFlatButton}"
-                                    x:Name="ChangeBackgroundBtn"
-                                    HorizontalAlignment="Right"
-                                    VerticalContentAlignment="Center">
+                            <Button
+                                HorizontalAlignment="Right"
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                VerticalContentAlignment="Center"
+                                x:Name="ChangeBackgroundBtn">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal">
-                                        <materialDesign:PackIcon Kind="Color"
-                                                                 Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                                 VerticalAlignment="Center" Margin="5" />
-                                        <TextBlock Text="Change Background Color "
-                                                   Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                   VerticalAlignment="Center" />
+                                        <materialDesign:PackIcon
+                                            Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                            Kind="Color"
+                                            Margin="5"
+                                            VerticalAlignment="Center" />
+                                        <TextBlock
+                                            Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                            Text="Change Background Color "
+                                            VerticalAlignment="Center" />
 
                                     </StackPanel>
                                 </Button.Content>
@@ -349,26 +424,32 @@
                         <materialDesign:Card Background="{StaticResource MaterialDesignDarkSeparatorBackground}">
                             <StackPanel Orientation="Horizontal">
                                 <Button
-                                    x:Name="OpenCalenderBtn"
+                                    Content="Select First Payment Date"
                                     FontSize="15"
                                     Margin="5"
                                     Style="{StaticResource MaterialDesignFlatButton}"
-                                    Content="Select First Payment Date" />
+                                    x:Name="OpenCalenderBtn" />
                             </StackPanel>
                         </materialDesign:Card>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <StackPanel
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Top">
                             <Button
                                 HorizontalAlignment="Right"
-                                x:Name="SaveSubscriptionBtn"
-                                VerticalContentAlignment="Center">
+                                VerticalContentAlignment="Center"
+                                x:Name="SaveSubscriptionBtn">
                                 <Button.Content>
                                     <StackPanel Orientation="Horizontal">
-                                        <materialDesign:PackIcon Kind="ContentSave"
-                                                                 Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                                 VerticalAlignment="Center" Margin="5" />
-                                        <TextBlock Text="Save subscriiption"
-                                                   Foreground="{StaticResource MaterialDesignDarkForeground}"
-                                                   VerticalAlignment="Center" />
+                                        <materialDesign:PackIcon
+                                            Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                            Kind="ContentSave"
+                                            Margin="5"
+                                            VerticalAlignment="Center" />
+                                        <TextBlock
+                                            Foreground="{StaticResource MaterialDesignDarkForeground}"
+                                            Text="Save subscriiption"
+                                            VerticalAlignment="Center" />
 
                                     </StackPanel>
                                 </Button.Content>
@@ -379,14 +460,18 @@
                 </StackPanel>
             </materialDesign:DialogHost>
         </ScrollViewer>
-        <!-- End Of Edit Mode -->
+        <!--  End Of Edit Mode  -->
 
-        <!-- Start Of Subscriptions -->
-        <ScrollViewer Grid.Row="1" Grid.Column="1" Visibility="Collapsed" x:Name="SubscriptionScroller"
-                      VerticalScrollBarVisibility="Auto">
+        <!--  Start Of Subscriptions  -->
+        <ScrollViewer
+            Grid.Column="1"
+            Grid.Row="1"
+            VerticalScrollBarVisibility="Auto"
+            Visibility="Collapsed"
+            x:Name="SubscriptionScroller">
             <StackPanel Margin="20" x:Name="SubscriptionsStackPanel" />
         </ScrollViewer>
-        <!-- End Of Subscriptions -->
+        <!--  End Of Subscriptions  -->
 
     </Grid>
 </UserControl>
