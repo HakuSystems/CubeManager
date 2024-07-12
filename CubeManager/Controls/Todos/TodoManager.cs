@@ -1,58 +1,98 @@
 using CubeManager.Controls.Todos.Enums;
 using CubeManager.Controls.Todos.Models;
+using CubeManager.Helpers;
 
 namespace CubeManager.Controls.Todos;
 
 public class TodoManager
 {
-    private readonly ConfigData _configData;
+    private readonly ConfigManager _configManager = ConfigManager.Instance;
 
-    public void AddTodo(Guid todoId, string Name, DateOnly DueDate, TimeOnly DueTime, TodoRepeatableType repeatableType,
-        TodoStatusType todoStatus, TodoFilesAttachedModel? filesAttached, TodoNotesModel? notes, TodoLinksModel? links,
-        TodoCategoryModel? category = null)
+    public TodoManager()
+    {
+        AddDefaultCategories();
+    }
+
+    private void AddDefaultCategories()
+    {
+        if (_configManager.Config.Todos.Categories.Count != 0) return;
+        var categories = new List<TodoCategoryModel>
+        {
+            new() {CategoryName = TodoCategorys.All, CustomCategoryName = "All"},
+            new() {CategoryName = TodoCategorys.Work, CustomCategoryName = "Work"},
+            new() {CategoryName = TodoCategorys.Personal, CustomCategoryName = "Personal"},
+            new() {CategoryName = TodoCategorys.School, CustomCategoryName = "School"},
+            new() {CategoryName = TodoCategorys.Home,CustomCategoryName = "Home"},
+            new() {CategoryName = TodoCategorys.Shopping, CustomCategoryName = "Shopping"},
+            new() {CategoryName = TodoCategorys.Health, CustomCategoryName = "Health"},
+            new() {CategoryName = TodoCategorys.Finance, CustomCategoryName = "Finance"},
+            new() {CategoryName = TodoCategorys.Entertainment, CustomCategoryName = "Entertainment"},
+            new() {CategoryName = TodoCategorys.Custom, CustomCategoryName = "Add a Custom One"}
+        };
+        _configManager.UpdateConfig(config => config.Todos.Categories.AddRange(categories));
+    }
+
+    public void AddTodo(Guid todoId, string name, DateTime dueDate, DateTime dueTime, TodoRepeatableType repeatableType,
+        TodoStatusType todoStatus, List<TodoFilesAttachedModel> filesAttached, List<string> notes, List<string>? links,
+        List<TodoCategoryModel>? category = null)
     {
         var todo = new TodoModel
         {
-            TodoId = todoId == Guid.Empty ? Guid.NewGuid() : todoId,
-            TodoName = Name,
-            DueDate = DueDate == DateOnly.MinValue ? DateOnly.FromDateTime(DateTime.Now) : DueDate,
-            DueTime = DueTime == TimeOnly.MinValue ? TimeOnly.FromDateTime(DateTime.Now) : DueTime,
-            TodoRepeatableType = repeatableType == TodoRepeatableType.None ? TodoRepeatableType.None : repeatableType,
-            TodoStatus = todoStatus == TodoStatusType.None ? TodoStatusType.None : todoStatus,
-            FilesAttached = filesAttached == null ? new TodoFilesAttachedModel() : filesAttached,
-            Notes = notes ?? new TodoNotesModel(),
-            Links = links ?? new TodoLinksModel(),
-            Category = category ?? new TodoCategoryModel()
+            TodoId = todoId,
+            TodoName = name,
+            DueDate = dueDate,
+            DueTime = dueTime,
+            TodoRepeatableType = repeatableType,
+            TodoStatus = todoStatus,
+            FilesAttached = filesAttached,
+            Notes = notes,
+            Links = links ?? new List<string>(),
+            Category = category ?? new List<TodoCategoryModel>()
         };
-
-        _configData.Todos.Add(todo);
+        _configManager.UpdateConfig(config => config.Todos.Todos.Add(todo));
     }
+
     public void RemoveTodoById(Guid todoId)
     {
-        var todo = _configData.Todos.FirstOrDefault(x => x.TodoId == todoId);
-        if (todo != null)
+        _configManager.UpdateConfig(config =>
         {
-            _configData.Todos.Remove(todo);
-        }
+            var index = config.Todos.Todos.FindIndex(x => x.TodoId == todoId);
+            config.Todos.Todos.RemoveAt(index);
+        });
     }
-    
-    public void UpdateTodoById(Guid todoId, string Name, DateOnly DueDate, TimeOnly DueTime, TodoRepeatableType repeatableType,
-        TodoStatusType todoStatus, TodoFilesAttachedModel? filesAttached, TodoNotesModel? notes, TodoLinksModel? links,
-        TodoCategoryModel? category = null)
+
+    public void UpdateTodoById(Guid todoId, string name, DateTime dueDate, DateTime dueTime,
+        TodoRepeatableType repeatableType,
+        TodoStatusType todoStatus, List<TodoFilesAttachedModel>? filesAttached, List<string>? notes, List<string>? links,
+        List<TodoCategoryModel>? category = null)
     {
-        var todo = _configData.Todos.FirstOrDefault(x => x.TodoId == todoId);
-        if (todo != null)
+        var todo = new TodoModel
         {
-            todo.TodoName = Name == string.Empty ? todo.TodoName : Name;
-            todo.DueDate = DueDate == DateOnly.MinValue ? todo.DueDate : DueDate;
-            todo.DueTime = DueTime == TimeOnly.MinValue ? todo.DueTime : DueTime;
-            todo.TodoRepeatableType = repeatableType == TodoRepeatableType.None ? todo.TodoRepeatableType : repeatableType;
-            todo.TodoStatus = todoStatus == TodoStatusType.None ? todo.TodoStatus : todoStatus;
-            todo.FilesAttached = filesAttached == null ? todo.FilesAttached : filesAttached;
-            todo.Notes = notes ?? todo.Notes;
-            todo.Links = links ?? todo.Links;
-            todo.Category = category ?? todo.Category;
-        }
+            TodoId = todoId,
+            TodoName = name,
+            DueDate = dueDate,
+            DueTime = dueTime,
+            TodoRepeatableType = repeatableType,
+            TodoStatus = todoStatus,
+            FilesAttached = filesAttached ?? new List<TodoFilesAttachedModel>(),
+            Notes = notes ?? new List<string>(),
+            Links = links ?? new List<string>(),
+            Category = category ?? new List<TodoCategoryModel>()
+        };
+        _configManager.UpdateConfig(config =>
+        {
+            var index = config.Todos.Todos.FindIndex(x => x.TodoId == todoId);
+            config.Todos.Todos[index] = todo;
+        });
     }
-    
+
+    public void AddCustomCategory(string categoryName)
+    {
+        var category = new TodoCategoryModel
+        {
+            CategoryName = TodoCategorys.Custom,
+            CustomCategoryName = categoryName,
+        };
+        _configManager.UpdateConfig(config => config.Todos.Categories.Add(category));
+    }
 }

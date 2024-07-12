@@ -147,7 +147,7 @@
                                             Text="Personal Note" />
                                         <TextBlock
                                             Margin="10"
-                                            Text="{Binding Notes}"
+                                            Text="{Binding Note}"
                                             TextWrapping="Wrap" />
 
                                     </StackPanel>

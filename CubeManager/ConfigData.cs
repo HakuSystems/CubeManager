@@ -1,5 +1,9 @@
+using System.Collections;
+using System.Windows.Documents;
 using CubeManager.Controls.CompactSettings;
 using CubeManager.Controls.Subscriptions.Models;
+using CubeManager.Controls.Todos;
+using CubeManager.Controls.Todos.Enums;
 using CubeManager.Controls.Todos.Models;
 using CubeManager.LoginRegister;
 using CubeManager.Models.ScoreBoard;
@@ -17,7 +21,7 @@ public class ConfigData
     public CompactSettingsModel Settings { get; set; } = new();
     public SoundSettings SoundSettings { get; set; } = new();
     public SubscriptionsData Subscriptions { get; set; } = new();
-    public List<TodoModel> Todos { get; set; } = new();
+    public TodosData Todos { get; set; } = new();
     public QuoteData Quote { get; set; } = new();
     public UserData UserData { get; set; } = new();
 }

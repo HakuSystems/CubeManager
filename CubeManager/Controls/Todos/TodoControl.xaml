@@ -1,10 +1,533 @@
 <UserControl
-    mc:Ignorable="d"
     x:Class="CubeManager.Controls.Todos.TodoControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:CubeManager.Controls.Todos"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid />
+    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    AllowDrop="True"
+    Background="Transparent"
+    FontFamily="{DynamicResource SegoeFluentIcons}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Loaded="TodoControl_OnLoaded"
+    mc:Ignorable="d">
+    <materialDesign:TransitioningContent>
+        <materialDesign:TransitioningContent.OpeningEffects>
+            <materialDesign:TransitionEffect Kind="FadeIn" />
+        </materialDesign:TransitioningContent.OpeningEffects>
+        <StackPanel Orientation="Vertical">
+            <ui:PassiveScrollViewer
+                x:Name="TodoCreationSection"
+                Visibility="Collapsed"
+                HorizontalScrollBarVisibility="Hidden"
+                VerticalScrollBarVisibility="Hidden">
+                <Grid Margin="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Details Card  -->
+                    <ui:Card
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="10"
+                        Background="{DynamicResource CubeCard}">
+                        <StackPanel Margin="10" Orientation="Vertical">
+                            <TextBox
+                                x:Name="TodoNameTxtBox"
+                                Margin="0,0,0,10"
+                                materialDesign:HintAssist.Hint="Todo Name"
+                                TextChanged="TodoNameTxtBox_OnTextChanged" />
+                            <DatePicker
+                                x:Name="DueDatePicker"
+                                Margin="0,0,0,10"
+                                materialDesign:HintAssist.Hint="Due Date: DD-MM-YYYY"
+                                SelectedDateChanged="DueDatePicker_OnSelectedDateChanged" />
+                            <materialDesign:TimePicker
+                                x:Name="DueTimePicker"
+                                Margin="0,0,0,10"
+                                materialDesign:HintAssist.Hint="Time: HH:MM"
+                                Is24Hours="True"
+                                SelectedTimeChanged="DueTimePicker_OnSelectedTimeChanged" />
+                            <ComboBox
+                                x:Name="FrequencyComboBox"
+                                Margin="0,0,0,10"
+                                materialDesign:HintAssist.Hint="Frequency: Once, Daily, Weekly, Monthly, Yearly"
+                                Loaded="FrequencyComboBox_OnLoaded"
+                                SelectionChanged="FrequencyComboBox_OnSelectionChanged" />
+                            <TextBox
+                                x:Name="NotesTxtBox"
+                                Margin="0,0,0,10"
+                                materialDesign:HintAssist.Hint="Notes"
+                                TextChanged="NotesTxtBox_OnTextChanged" />
+
+                            <ComboBox
+                                x:Name="CategoryComboBox"
+                                Margin="0,0,0,16"
+                                HorizontalAlignment="Stretch"
+                                materialDesign:HintAssist.Hint="Category"
+                                Loaded="CategoryComboBox_OnLoaded"
+                                SelectionChanged="CategoryComboBox_OnSelectionChanged" />
+                            <TextBox
+                                x:Name="CustomCategoryTxtBox"
+                                Margin="0,0,0,10"
+                                HorizontalAlignment="Stretch"
+                                materialDesign:HintAssist.Hint="Custom Category Name"
+                                TextChanged="CustomCategoryTxtBox_OnTextChanged"
+                                Visibility="Collapsed" />
+                        </StackPanel>
+                    </ui:Card>
+
+                    <!--  Links Card  -->
+                    <ui:Card
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="10"
+                        Background="{DynamicResource CubeCard}">
+                        <StackPanel Margin="10" Orientation="Vertical">
+                            <TextBlock
+                                Margin="0,0,0,10"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Text="Links" />
+                            <TextBox
+                                x:Name="LinkTxtBox"
+                                Margin="0,0,0,10"
+                                materialDesign:HintAssist.Hint="Add a link" />
+                            <ui:Button
+                                x:Name="AddLinkBtn"
+                                Margin="0,0,0,0"
+                                Click="AddLinkBtn_OnClick"
+                                Content="Add Link"
+                                Icon="{ui:SymbolIcon Add24}" />
+                        </StackPanel>
+                    </ui:Card>
+
+                    <!--  Files Card  -->
+                    <ui:Card
+                        x:Name="AttachFilesCard"
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="10"
+                        Background="{DynamicResource CubeCard}"
+                        BorderBrush="Transparent"
+                        BorderThickness="2"
+                        DragEnter="AttachFilesCard_OnDragEnter"
+                        DragLeave="AttachFilesCard_OnDragLeave"
+                        Drop="AttachFilesCard_OnDrop">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock
+                                Margin="0,0,0,10"
+                                HorizontalAlignment="Left"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Text="Attach Files" />
+                            <ui:SymbolIcon
+                                HorizontalAlignment="Center"
+                                FontSize="48"
+                                Symbol="Drop24" />
+                            <TextBlock
+                                Margin="0,8,0,0"
+                                HorizontalAlignment="Center"
+                                Text="Drag and drop files here" />
+                        </StackPanel>
+                    </ui:Card>
+
+                    <!--  Add Task Button  -->
+                    <ui:Card
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="10"
+                        Background="{DynamicResource MaterialDesignDarkSeparatorBackground}">
+                        <ui:Button
+                            x:Name="AddNewToDoBtn"
+                            Margin="0,10,0,0"
+                            HorizontalAlignment="Stretch"
+                            Click="AddNewToDoBtn_OnClick"
+                            Content="Add Todo"
+                            Icon="{ui:SymbolIcon Add24}" />
+                    </ui:Card>
+                    <!--  Result Card  -->
+                    <ui:Card
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Background="{DynamicResource CubeBackground}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <StackPanel>
+                                <TextBlock
+                                    x:Name="ExampleName"
+                                    Margin="8,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="20"
+                                    FontWeight="Bold"
+                                    Text="This is a Example Name" />
+                                <!--  Header  -->
+                                <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                                    <TextBlock
+                                        x:Name="ExampleNote"
+                                        Margin="15,0,0,8"
+                                        HorizontalAlignment="Left"
+                                        Text="This is a Example Note."
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                            </StackPanel>
+                            <!--  Due Date and Time with Icons  -->
+                            <StackPanel
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Bottom"
+                                Orientation="Horizontal">
+                                <materialDesign:PackIcon
+                                    Margin="8,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="48"
+                                    Kind="Calendar" />
+                                <TextBlock
+                                    x:Name="ExampleDueDate"
+                                    Margin="8,0"
+                                    VerticalAlignment="Center"
+                                    Text="2024-07-15" />
+                                <materialDesign:PackIcon
+                                    Margin="8,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="16"
+                                    Kind="Clock" />
+                                <TextBlock
+                                    x:Name="ExampleDueTime"
+                                    Margin="8,0"
+                                    VerticalAlignment="Center"
+                                    Text="14:00" />
+                            </StackPanel>
+
+                            <!--  Frequency, Category, and Status in the top right corner  -->
+                            <StackPanel
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Margin="0,0,16,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Orientation="Horizontal">
+                                <StackPanel Margin="0,0,0,8" Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Margin="0,0,8,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Kind="Repeat" />
+                                    <TextBlock
+                                        x:Name="ExampleFrequency"
+                                        Margin="0,0,8,0"
+                                        VerticalAlignment="Center"
+                                        Text="Frequency" />
+                                </StackPanel>
+                                <StackPanel Margin="0,0,0,8" Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Margin="0,0,8,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Kind="Category" />
+                                    <TextBlock
+                                        x:Name="ExampleCategory"
+                                        Margin="0,0,8,0"
+                                        VerticalAlignment="Center"
+                                        Text="Category" />
+                                </StackPanel>
+                                <StackPanel Margin="0,0,0,8" Orientation="Horizontal">
+                                    <ui:SymbolIcon
+                                        Margin="0,0,8,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Symbol="Status24" />
+                                    <TextBlock
+                                        Margin="0,0,8,0"
+                                        VerticalAlignment="Center"
+                                        Text="Status Pending" />
+                                </StackPanel>
+                                <StackPanel Margin="0,0,0,8" Orientation="Horizontal">
+                                    <ui:CardControl
+                                        x:Name="ExampleViewLinksBtn"
+                                        Margin="0,0,8,0"
+                                        Padding="8,0,8,0"
+                                        Visibility="Collapsed">
+                                        <ui:CardControl.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock
+                                                    Margin="5"
+                                                    VerticalAlignment="Center"
+                                                    Text="View" />
+                                                <ui:Badge
+                                                    x:Name="ExampleLinksCounter"
+                                                    Margin="5"
+                                                    Appearance="Info"
+                                                    Content="5" />
+                                                <TextBlock
+                                                    Margin="5"
+                                                    VerticalAlignment="Center"
+                                                    Text="Links" />
+                                            </StackPanel>
+                                        </ui:CardControl.Content>
+                                    </ui:CardControl>
+                                </StackPanel>
+                                <StackPanel Margin="0,0,0,8" Orientation="Horizontal">
+                                    <ui:CardControl
+                                        x:Name="ExampleViewFilesBtn"
+                                        Margin="0,0,8,0"
+                                        Padding="8,0,8,0"
+                                        Visibility="Collapsed">
+                                        <ui:CardControl.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock
+                                                    Margin="5"
+                                                    VerticalAlignment="Center"
+                                                    Text="View" />
+                                                <ui:Badge
+                                                    x:Name="ExampleFilesCounter"
+                                                    Margin="5"
+                                                    Appearance="Info"
+                                                    Content="9" />
+                                                <TextBlock
+                                                    Margin="5"
+                                                    VerticalAlignment="Center"
+                                                    Text="Attached Files" />
+                                            </StackPanel>
+                                        </ui:CardControl.Content>
+                                    </ui:CardControl>
+                                </StackPanel>
+                                <StackPanel Margin="0,0,0,8" Orientation="Horizontal">
+                                    <ui:CardControl
+                                        Margin="0,0,8,0"
+                                        Padding="8,0,8,0"
+                                        VerticalAlignment="Stretch"
+                                        Visibility="Collapsed">
+                                        <ui:CardControl.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <ui:SymbolIcon Margin="5" Symbol="Check24" />
+                                                <TextBlock
+                                                    Margin="5"
+                                                    VerticalAlignment="Center"
+                                                    Text="Mark as Complete" />
+                                            </StackPanel>
+                                        </ui:CardControl.Content>
+                                    </ui:CardControl>
+
+                                </StackPanel>
+                            </StackPanel>
+
+                        </Grid>
+                    </ui:Card>
+
+                </Grid>
+            </ui:PassiveScrollViewer>
+            <ui:PassiveScrollViewer
+                x:Name="TodoViewSection"
+                Visibility="Visible"
+                HorizontalScrollBarVisibility="Hidden"
+                VerticalScrollBarVisibility="Hidden">
+                <Grid Margin="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!--  Result Card  -->
+                    <ui:Card
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Background="{DynamicResource CubeBackground}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <StackPanel>
+                                <TextBlock
+                                    Margin="8,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="20"
+                                    FontWeight="Bold"
+                                    Text="This is a Example Name" />
+                                <!--  Header  -->
+                                <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                                    <TextBlock
+                                        Margin="15,0,0,8"
+                                        HorizontalAlignment="Left"
+                                        Text="This is a Example Note."
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                            </StackPanel>
+                            <!--  Due Date and Time with Icons  -->
+                            <StackPanel
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Bottom"
+                                Orientation="Horizontal">
+                                <materialDesign:PackIcon
+                                    Margin="8,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="48"
+                                    Kind="Calendar" />
+                                <TextBlock
+                                    Margin="8,0"
+                                    VerticalAlignment="Center"
+                                    Text="2024-07-15" />
+                                <materialDesign:PackIcon
+                                    Margin="8,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="16"
+                                    Kind="Clock" />
+                                <TextBlock
+                                    Margin="8,0"
+                                    VerticalAlignment="Center"
+                                    Text="14:00" />
+                            </StackPanel>
+
+                            <!--  Frequency, Category, and Status in the top right corner  -->
+                            <StackPanel
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Margin="0,0,16,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Orientation="Horizontal">
+                                <StackPanel Margin="0,0,0,8" Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Margin="0,0,8,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Kind="Repeat" />
+                                    <TextBlock
+                                        Margin="0,0,8,0"
+                                        VerticalAlignment="Center"
+                                        Text="Frequency" />
+                                </StackPanel>
+                                <StackPanel Margin="0,0,0,8" Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Margin="0,0,8,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Kind="Category" />
+                                    <TextBlock
+                                        Margin="0,0,8,0"
+                                        VerticalAlignment="Center"
+                                        Text="Category" />
+                                </StackPanel>
+                                <StackPanel Margin="0,0,0,8" Orientation="Horizontal">
+                                    <ui:SymbolIcon
+                                        Margin="0,0,8,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Symbol="Status24" />
+                                    <TextBlock
+                                        Margin="0,0,8,0"
+                                        VerticalAlignment="Center"
+                                        Text="Status Pending" />
+                                </StackPanel>
+                                <StackPanel Margin="0,0,0,8" Orientation="Horizontal">
+                                    <ui:CardControl
+                                        Margin="0,0,8,0"
+                                        Padding="8,0,8,0"
+                                        Visibility="Collapsed">
+                                        <ui:CardControl.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock
+                                                    Margin="5"
+                                                    VerticalAlignment="Center"
+                                                    Text="View" />
+                                                <ui:Badge
+                                                    Margin="5"
+                                                    Appearance="Info"
+                                                    Content="5" />
+                                                <TextBlock
+                                                    Margin="5"
+                                                    VerticalAlignment="Center"
+                                                    Text="Links" />
+                                            </StackPanel>
+                                        </ui:CardControl.Content>
+                                    </ui:CardControl>
+                                </StackPanel>
+                                <StackPanel Margin="0,0,0,8" Orientation="Horizontal">
+                                    <ui:CardControl
+                                        Margin="0,0,8,0"
+                                        Padding="8,0,8,0"
+                                        Visibility="Collapsed">
+                                        <ui:CardControl.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock
+                                                    Margin="5"
+                                                    VerticalAlignment="Center"
+                                                    Text="View" />
+                                                <ui:Badge
+                                                    Margin="5"
+                                                    Appearance="Info"
+                                                    Content="9" />
+                                                <TextBlock
+                                                    Margin="5"
+                                                    VerticalAlignment="Center"
+                                                    Text="Attached Files" />
+                                            </StackPanel>
+                                        </ui:CardControl.Content>
+                                    </ui:CardControl>
+                                </StackPanel>
+                                <StackPanel Margin="0,0,0,8" Orientation="Horizontal">
+                                    <ui:CardControl
+                                        Margin="0,0,8,0"
+                                        Padding="8,0,8,0"
+                                        VerticalAlignment="Stretch"
+                                        Visibility="Collapsed">
+                                        <ui:CardControl.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <ui:SymbolIcon Margin="5" Symbol="Check24" />
+                                                <TextBlock
+                                                    Margin="5"
+                                                    VerticalAlignment="Center"
+                                                    Text="Mark as Complete" />
+                                            </StackPanel>
+                                        </ui:CardControl.Content>
+                                    </ui:CardControl>
+
+                                </StackPanel>
+                            </StackPanel>
+
+                        </Grid>
+                    </ui:Card>
+
+                </Grid>
+            </ui:PassiveScrollViewer></StackPanel>
+    </materialDesign:TransitioningContent>
 </UserControl>

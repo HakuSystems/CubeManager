@@ -2,7 +2,7 @@ namespace CubeManager.Controls.Todos.Enums;
 
 public enum TodoRepeatableType
 {
-    None,
+    Once,
     Daily,
     Weekly,
     Monthly,

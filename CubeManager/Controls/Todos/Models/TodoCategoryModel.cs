@@ -1,9 +1,11 @@
-namespace CubeManager.Controls.Todos.Models;
+using System;
+using CubeManager.Controls.Todos.Enums;
 
-public class TodoCategoryModel
+namespace CubeManager.Controls.Todos.Models
 {
-    public Guid CategoryId { get; set; } = Guid.NewGuid();  // unique identifier
-    public string CategoryName { get; set; } = "Default";
-    public string? CategoryDescription { get; set; } // optional
-
+    public class TodoCategoryModel
+    {
+        public TodoCategorys CategoryName { get; set; }
+        public string? CustomCategoryName { get; set; } // optional
+    }
 }
