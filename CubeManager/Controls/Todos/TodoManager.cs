@@ -1,3 +1,4 @@
+using System.Collections;
 using CubeManager.Controls.Todos.Enums;
 using CubeManager.Controls.Todos.Models;
 using CubeManager.Helpers;
@@ -33,7 +34,7 @@ public class TodoManager
     }
 
     public void AddTodo(Guid todoId, string name, DateTime dueDate, DateTime dueTime, TodoRepeatableType repeatableType,
-        TodoStatusType todoStatus, List<TodoFilesAttachedModel> filesAttached, List<string> notes, List<string>? links,
+        TodoStatusType todoStatus, List<TodoFilesAttachedModel> filesAttached, string notes, List<string>? links,
         List<TodoCategoryModel>? category = null)
     {
         var todo = new TodoModel
@@ -45,7 +46,7 @@ public class TodoManager
             TodoRepeatableType = repeatableType,
             TodoStatus = todoStatus,
             FilesAttached = filesAttached,
-            Notes = notes,
+            Notes = notes, 
             Links = links ?? new List<string>(),
             Category = category ?? new List<TodoCategoryModel>()
         };
@@ -63,7 +64,7 @@ public class TodoManager
 
     public void UpdateTodoById(Guid todoId, string name, DateTime dueDate, DateTime dueTime,
         TodoRepeatableType repeatableType,
-        TodoStatusType todoStatus, List<TodoFilesAttachedModel>? filesAttached, List<string>? notes, List<string>? links,
+        TodoStatusType todoStatus, List<TodoFilesAttachedModel>? filesAttached, string notes, List<string>? links,
         List<TodoCategoryModel>? category = null)
     {
         var todo = new TodoModel
@@ -75,7 +76,7 @@ public class TodoManager
             TodoRepeatableType = repeatableType,
             TodoStatus = todoStatus,
             FilesAttached = filesAttached ?? new List<TodoFilesAttachedModel>(),
-            Notes = notes ?? new List<string>(),
+            Notes = notes ?? string.Empty,
             Links = links ?? new List<string>(),
             Category = category ?? new List<TodoCategoryModel>()
         };
@@ -94,5 +95,10 @@ public class TodoManager
             CustomCategoryName = categoryName,
         };
         _configManager.UpdateConfig(config => config.Todos.Categories.Add(category));
+    }
+
+    public IEnumerable GetTodos()
+    {
+        return _configManager.Config.Todos.Todos;
     }
 }

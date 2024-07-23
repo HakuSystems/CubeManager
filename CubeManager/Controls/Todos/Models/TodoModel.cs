@@ -14,7 +14,7 @@ namespace CubeManager.Controls.Todos.Models
         public TodoStatusType TodoStatus { get; set; } // none, completed
         public List<TodoFilesAttachedModel> FilesAttached { get; set; } // optional
         public List<TodoCategoryModel> Category { get; set; } // optional
-        public List<string> Notes { get; set; } // optional
+        public string Notes { get; set; } // optional
         public List<string> Links { get; set; } // optional
     }
 }

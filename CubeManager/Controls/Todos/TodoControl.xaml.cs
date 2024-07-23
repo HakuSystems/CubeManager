@@ -1,11 +1,16 @@
+
+
+using System.Collections;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using CubeManager.Controls.Todos.Enums;
 using CubeManager.Controls.Todos.Models;
 using CubeManager.CustomMessageBox;
 using CubeManager.Helpers;
+using Wpf.Ui.Controls;
 
 namespace CubeManager.Controls.Todos;
 
@@ -34,12 +39,30 @@ public partial class TodoControl : UserControl
 
     private void OnLoadedExistingTodo()
     {
+        AddNewTodoExistingViewBtn.Visibility = Visibility.Visible;
+        AddNewToDoBtn.Visibility = Visibility.Collapsed;
         TodoViewSection.Visibility = Visibility.Visible;
-        //E todo
+        TodoCreationSection.Visibility = Visibility.Collapsed;
+    
+        var todos = _configManager.Config.Todos.Todos;
+        var todoIDs = todos.Select(x => x.TodoId).ToList();
+        var todoNames = todos.Select(x => x.TodoName).ToList();
+        var todoDueDates = todos.Select(x => x.DueDate).ToList();
+        var todoDueTimes = todos.Select(x => x.DueTime).ToList();
+        var todoRepeatableTypes = todos.Select(x => x.TodoRepeatableType).ToList();
+        var todoStatusTypes = todos.Select(x => x.TodoStatus).ToList();
+        var todoFilesAttached = todos.Select(x => x.FilesAttached).ToList();
+        var todoCategories = todos.Select(x => x.Category).ToList();
+        var todoNotes = todos.Select(x => x.Notes).ToList();
+        var todoLinks = todos.Select(x => x.Links).ToList();
+
+        TodosGrid.ItemsSource = todos;
     }
 
     private void OnLoadedNewTodo()
     {
+        AddNewTodoExistingViewBtn.Visibility = Visibility.Collapsed;
+        AddNewToDoBtn.Visibility = Visibility.Visible;
         TodoCreationSection.Visibility = Visibility.Visible;
         ExampleName.Text = TodoNameTxtBox.Text ?? "Example Todo";
         ExampleDueDate.Text = DueDatePicker.SelectedDate?.ToString("dd/MM/yyyy");
@@ -178,7 +201,7 @@ public partial class TodoControl : UserControl
             var dueTime = DueTimePicker.SelectedTime.Value;
             var repeatableType = (TodoRepeatableType)FrequencyComboBox.SelectedIndex;
             var todoStatus = TodoStatusType.None;
-            var notes = new List<string> { NotesTxtBox.Text };
+            var notes = NotesTxtBox.Text;
             var links = _linksAttached;
             var category = new List<TodoCategoryModel>();
             if (CategoryComboBox.SelectedIndex == 9)
@@ -206,6 +229,10 @@ public partial class TodoControl : UserControl
 
             _todoManager.AddTodo(todoId, name, dueDate, dueTime, repeatableType, todoStatus, _filesAttached, notes,
                 links, category);
+            _logger.Info($"New Todo Added: {name}");
+            _filesAttached.Clear();
+            _linksAttached.Clear();
+            OnLoadedExistingTodo();
         }
     }
 
@@ -244,5 +271,28 @@ public partial class TodoControl : UserControl
         if (CategoryComboBox.SelectedIndex != 9 || !string.IsNullOrWhiteSpace(CustomCategoryTxtBox.Text)) return false;
         _todoManager.AddCustomCategory(CustomCategoryTxtBox.Text);
         return true;
+    }
+
+    private void MarkAsCompleteBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        //Todo
+    }
+
+    private void AddNewTodoExistingViewBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        OnLoadedNewTodo();
+    }
+
+    private void GoBackToExistingTodosBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        OnLoadedExistingTodo();
+    }
+
+    private void ItemCard_OnMouseEnter(object sender, MouseEventArgs e)
+    {
+        if (sender is Card card)
+        {
+            card.BorderBrush = new SolidColorBrush(Colors.Aqua);
+        }
     }
 }
