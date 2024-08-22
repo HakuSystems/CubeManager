@@ -1,3 +1,4 @@
+### Cubemanager is currently INDEVELOPMENT and isnt done at all
 # CubeManager
 
 CubeManager is a comprehensive management tool designed to streamline tasks, reminders, and daily activities. With an intuitive interface and a range of features, CubeManager aims to enhance productivity and simplify task management.
