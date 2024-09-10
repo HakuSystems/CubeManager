@@ -1,6 +1,3 @@
-
-
-using System.Collections;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,6 +8,8 @@ using CubeManager.Controls.Todos.Models;
 using CubeManager.CustomMessageBox;
 using CubeManager.Helpers;
 using Wpf.Ui.Controls;
+using Button = Wpf.Ui.Controls.Button;
+using Card = MaterialDesignThemes.Wpf.Card;
 
 namespace CubeManager.Controls.Todos;
 
@@ -290,9 +289,38 @@ public partial class TodoControl : UserControl
 
     private void ItemCard_OnMouseEnter(object sender, MouseEventArgs e)
     {
-        if (sender is Card card)
+        if (sender is Wpf.Ui.Controls.Card card)
         {
-            card.BorderBrush = new SolidColorBrush(Colors.Aqua);
+            var gradientBackground = new LinearGradientBrush
+            {
+                StartPoint = new Point(0, 0),
+                EndPoint = new Point(1, 1)
+            };
+            gradientBackground.GradientStops.Add(new GradientStop(Colors.Red, 0.0));
+            gradientBackground.GradientStops.Add(new GradientStop(Colors.DarkRed, 1.0));
+            card.Background = gradientBackground;
+        }
+    }
+
+    private void DeleteToDoBtn_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button button)
+        {
+            var selectedTodo = (TodoModel)button.DataContext;
+            var customMessageBoxWindow = new CubeMessageBox
+            {
+                TitleText = { Text = "Delete Todo" },
+                MessageText = { Text = $"Are you sure you want to delete {selectedTodo.TodoName}?" }
+            };
+            
+            customMessageBoxWindow.ShowDialog();
+            
+            if (customMessageBoxWindow.DialogResult == true)
+            {
+                _todoManager.RemoveTodoById(selectedTodo.TodoId);
+                _logger.Info($"Todo Deleted: {selectedTodo.TodoName}");
+                OnLoadedExistingTodo();
+            }
         }
     }
 }

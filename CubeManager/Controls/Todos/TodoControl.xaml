@@ -554,6 +554,28 @@
                                                 </ui:CardControl>
 
                                             </StackPanel>
+                                            <StackPanel Margin="0,0,0,8"
+                                                        x:Name="DeleteBtnVisib"
+                                                        Orientation="Horizontal"  >
+                                                <ui:CardControl
+                                                    x:Name="DeleteToDoBtn"
+                                                    Margin="0,0,8,0"
+                                                    Click="DeleteToDoBtn_OnClick"
+                                                    Padding="8,0,8,0"
+                                                    VerticalAlignment="Stretch"
+                                                    Visibility="Visible">
+                                                    <ui:CardControl.Content>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <ui:SymbolIcon Margin="5" Symbol="Delete24" />
+                                                            <TextBlock
+                                                                Margin="5"
+                                                                VerticalAlignment="Center"
+                                                                Text="Delete" />
+                                                        </StackPanel>
+                                                    </ui:CardControl.Content>
+                                                </ui:CardControl>
+
+                                            </StackPanel>
                                         </StackPanel>
 
                                     </Grid>
@@ -561,8 +583,6 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-
-
                 </Grid>
             </ui:PassiveScrollViewer>
         </StackPanel>
