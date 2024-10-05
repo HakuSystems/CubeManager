@@ -67,30 +67,4 @@ public partial class LoginWindow : FluentWindow
         DisplayQuote();
         PageContent.Source = new Uri("LoginContent.xaml", UriKind.Relative);
     }
-
-    private void CanvasMouseView_OnPaintSurface(object? sender, SKPaintSurfaceEventArgs e)
-    {
-        var info = e.Info;
-        var surface = e.Surface;
-        var canvas = surface.Canvas;
-
-        canvas.Clear(SKColors.Transparent);
-
-        using (var paint = new SKPaint())
-        {
-            paint.Color = SKColors.LightBlue.WithAlpha(128); // Semi-transparent light blue
-            paint.MaskFilter = SKMaskFilter.CreateBlur(SKBlurStyle.Normal, 50); // Blur effect
-
-            var glowRect = new SKRect(_mousePosition.X - 50, _mousePosition.Y - 50, _mousePosition.X + 50,
-                _mousePosition.Y + 50);
-            canvas.DrawRect(glowRect, paint);
-        }
-    }
-
-    private void LoginWindow_OnMouseMove(object sender, MouseEventArgs e)
-    {
-        var position = e.GetPosition(CanvasMouseView);
-        _mousePosition = new SKPoint((float)position.X, (float)position.Y);
-        CanvasMouseView.InvalidateVisual();
-    }
 }

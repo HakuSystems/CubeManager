@@ -4,7 +4,6 @@
     Height="auto"
     Loaded="LoginWindow_OnLoaded"
     MouseDown="LoginWindow_OnMouseDown"
-    MouseMove="LoginWindow_OnMouseMove"
     ResizeMode="CanResizeWithGrip"
     Title="CubeManager"
     Width="auto"
@@ -31,11 +30,6 @@
             Grid.ColumnSpan="2"
             PaintSurface="CanvasView_OnPaintSurface"
             x:Name="CanvasView" />
-        <skia:SKElement
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            PaintSurface="CanvasMouseView_OnPaintSurface"
-            x:Name="CanvasMouseView" />
         <Frame
             Grid.Column="0"
             Grid.ColumnSpan="2"
