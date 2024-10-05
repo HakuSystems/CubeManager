@@ -2,11 +2,14 @@
 using System.Configuration;
 using System.Data;
 using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Threading;
 using CubeManager.CustomMessageBox;
 using CubeManager.Helpers;
 using CubeManager.LoginRegister;
 using CubeManager.Notifications;
+using Microsoft.AspNetCore.Components.RenderTree;
 
 namespace CubeManager;
 

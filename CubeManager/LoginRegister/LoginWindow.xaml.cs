@@ -22,8 +22,6 @@ public partial class LoginWindow : FluentWindow
     private void OnRendering(object sender, EventArgs e)
     {
         _rotationAngle += 0.1f; //speed
-        if (_rotationAngle > 360)
-            _rotationAngle -= 360;
         CanvasView.InvalidateVisual();
     }
 

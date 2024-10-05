@@ -1,5 +1,6 @@
 <ui:FluentWindow
     AllowsTransparency="False"
+    ExtendsContentIntoTitleBar="True"
     FontFamily="Poppins"
     Height="auto"
     Loaded="LoginWindow_OnLoaded"
@@ -7,6 +8,7 @@
     ResizeMode="CanResizeWithGrip"
     Title="CubeManager"
     Width="auto"
+    WindowBackdropType="Acrylic"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d"
@@ -42,7 +44,7 @@
             NavigationUIVisibility="Hidden" />
 
         <!--  UI Cards  -->
-        <Border>
+        <Border Grid.Column="0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
